@@ -1,17 +1,157 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>AI Social</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #f5f5f5;
+      color: #111;
+      padding-bottom: 80px;
+    }
+
+    header {
+      background: white;
+      padding: 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #ddd;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    header h1 {
+      font-size: 22px;
+    }
+
+    .ai-button {
+      background: #111;
+      color: white;
+      border: none;
+      padding: 10px 14px;
+      border-radius: 20px;
+    }
+
+    .welcome {
+      padding: 25px 18px;
+    }
+
+    .welcome h2 {
+      margin-bottom: 8px;
+    }
+
+    .post {
+      background: white;
+      margin: 12px;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    .post-header {
+      padding: 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #ddd;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .post-content {
+      padding: 0 15px 15px;
+    }
+
+    .actions {
+      display: flex;
+      gap: 20px;
+      padding: 12px 15px;
+      border-top: 1px solid #eee;
+    }
+
+    .actions button {
+      border: none;
+      background: none;
+      font-size: 16px;
+    }
+
+    nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 65px;
+      background: white;
+      border-top: 1px solid #ddd;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+    }
+
+    nav button {
+      border: none;
+      background: none;
+      font-size: 14px;
+    }
+  </style>
 </head>
 
 <body>
-  <h1>🤖 AI Social</h1>
-  <p>Welcome to your new app!</p>
 
-  <button>🤖 AI Chat</button>
-  <button>📸 Social Feed</button>
-  <button>👤 Profile</button>
+  <header>
+    <h1>✨ AI Social</h1>
+    <button class="ai-button">🤖 AI Chat</button>
+  </header>
+
+  <section class="welcome">
+    <h2>Welcome 👋</h2>
+    <p>Connect, share and chat with AI.</p>
+  </section>
+
+  <div class="post">
+    <div class="post-header">
+      <div class="avatar">👤</div>
+      <strong>AI Social User</strong>
+    </div>
+
+    <div class="post-content">
+      <p>🚀 Welcome to our new social platform!</p>
+    </div>
+
+    <div class="actions">
+      <button>❤️ Like</button>
+      <button>💬 Comment</button>
+      <button>↗️ Share</button>
+    </div>
+  </div>
+
+  <nav>
+    <button>🏠<br>Home</button>
+    <button>🔍<br>Search</button>
+    <button>➕<br>Create</button>
+    <button>🤖<br>AI</button>
+    <button>👤<br>Profile</button>
+  </nav>
+
 </body>
 </html>
