@@ -58,7 +58,26 @@
   <textarea id="postText"
     placeholder="What's on your mind?"></textarea>
 
-  <button onclick="createPost()">Publish Post</button>
+  <button onclick="createPost()">
+  🚀 Post
+</button>
+
+<script>
+function createPost() {
+  const text = document.querySelector("textarea").value.trim();
+
+  if (text === "") {
+    alert("Please write something first!");
+    return;
+  }
+
+  localStorage.setItem("myPost", text);
+
+  alert("Post created successfully! 🎉");
+
+  window.location.href = "index.html";
+}
+</script>
 
 </div>
 
