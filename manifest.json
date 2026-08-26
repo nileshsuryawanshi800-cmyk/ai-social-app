@@ -1,0 +1,9 @@
+{
+  "name": "AI Social",
+  "short_name": "AI Social",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#111111",
+  "description": "AI and social media app"
+}
