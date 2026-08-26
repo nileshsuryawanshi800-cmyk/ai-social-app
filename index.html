@@ -119,110 +119,228 @@
       font-size: 14px;
       cursor: pointer;
     }
+
+    .empty {
+      text-align: center;
+      padding: 30px;
+      color: #777;
+    }
   </style>
 </head>
 
 <body>
 
-  <header>
-    <h1>✨ AI Social</h1>
+<header>
 
-    <button class="ai-button" onclick="openAI()">
-      🤖 AI Chat
-    </button>
-  </header>
+  <h1>✨ AI Social</h1>
 
-  <section class="welcome">
-    <h2>Welcome 👋</h2>
-    <p>Connect, share and chat with AI.</p>
-  </section>
+  <button class="ai-button" onclick="openAI()">
+    🤖 AI Chat
+  </button>
 
-  <div class="post">
+</header>
+
+
+<section class="welcome">
+
+  <h2>Welcome 👋</h2>
+
+  <p>Connect, share and chat with AI.</p>
+
+</section>
+
+
+<!-- Posts will appear here -->
+
+<div id="posts"></div>
+
+
+<nav>
+
+  <button onclick="goHome()">
+    🏠<br>Home
+  </button>
+
+  <button onclick="goSearch()">
+    🔍<br>Search
+  </button>
+
+  <button onclick="goCreate()">
+    ➕<br>Create
+  </button>
+
+  <button onclick="openAI()">
+    🤖<br>AI
+  </button>
+
+  <button onclick="goProfile()">
+    👤<br>Profile
+  </button>
+
+</nav>
+
+
+<script>
+
+function goHome() {
+
+  window.location.href = "index.html";
+
+}
+
+
+function goCreate() {
+
+  window.location.href = "create.html";
+
+}
+
+
+function openAI() {
+
+  window.location.href = "chat.html";
+
+}
+
+
+function goSearch() {
+
+  alert("🔍 Search feature coming soon!");
+
+}
+
+
+function goProfile() {
+
+  alert("👤 Profile feature coming soon!");
+
+}
+
+
+function loadPosts() {
+
+  const postsContainer =
+    document.getElementById("posts");
+
+  const savedPost =
+    localStorage.getItem("newPost");
+
+  postsContainer.innerHTML = "";
+
+
+  if (!savedPost) {
+
+    postsContainer.innerHTML =
+      '<div class="empty">No posts yet. Tap ➕ Create to make your first post! 📸</div>';
+
+    return;
+
+  }
+
+
+  const post = document.createElement("div");
+
+  post.className = "post";
+
+
+  post.innerHTML = `
 
     <div class="post-header">
-      <div class="avatar">👤</div>
-      <strong>AI Social User</strong>
+
+      <div class="avatar">
+        👤
+      </div>
+
+      <strong>
+        You
+      </strong>
+
     </div>
+
 
     <div class="post-content">
-      <p>🚀 Welcome to our new social platform!</p>
+
+      <p></p>
+
     </div>
+
 
     <div class="actions">
-      <button onclick="likePost()">❤️ Like</button>
-      <button onclick="commentPost()">💬 Comment</button>
-      <button onclick="sharePost()">↗️ Share</button>
+
+      <button onclick="likePost()">
+        ❤️ Like
+      </button>
+
+      <button onclick="commentPost()">
+        💬 Comment
+      </button>
+
+      <button onclick="sharePost()">
+        ↗️ Share
+      </button>
+
     </div>
 
-  </div>
+  `;
 
-  <nav>
 
-    <button onclick="goHome()">
-      🏠<br>Home
-    </button>
+  post.querySelector(".post-content p").textContent =
+    savedPost;
 
-    <button onclick="goSearch()">
-      🔍<br>Search
-    </button>
 
-    <button onclick="goCreate()">
-      ➕<br>Create
-    </button>
+  postsContainer.appendChild(post);
 
-    <button onclick="openAI()">
-      🤖<br>AI
-    </button>
+}
 
-    <button onclick="goProfile()">
-      👤<br>Profile
-    </button>
 
-  </nav>
+function likePost() {
 
-  <script>
+  alert("❤️ Liked!");
 
-    function goHome() {
-      window.location.href = "index.html";
-    }
+}
 
-    function goCreate() {
-      window.location.href = "create.html";
-    }
 
-    function openAI() {
-      window.location.href = "chat.html";
-    }
+function commentPost() {
 
-    function goSearch() {
-      alert("🔍 Search page coming soon!");
-    }
+  alert("💬 Comment feature coming soon!");
 
-    function goProfile() {
-      alert("👤 Profile page coming soon!");
-    }
+}
 
-    function likePost() {
-      alert("❤️ Liked!");
-    }
 
-    function commentPost() {
-      alert("💬 Comment feature coming soon!");
-    }
+function sharePost() {
 
-    function sharePost() {
-      alert("↗️ Share feature coming soon!");
-    }
+  alert("↗️ Share feature coming soon!");
 
-  </script>
+}
 
-  <script>
-    if ("serviceWorker" in navigator) {
-      navigator.serviceWorker.register("./sw.js")
-        .then(() => console.log("Service Worker registered"))
-        .catch(error => console.log("Service Worker error:", error));
-    }
-  </script>
+
+loadPosts();
+
+
+if ("serviceWorker" in navigator) {
+
+  navigator.serviceWorker.register("./sw.js")
+
+    .then(() => {
+
+      console.log(
+        "Service Worker registered"
+      );
+
+    })
+
+    .catch(error => {
+
+      console.log(
+        "Service Worker error:",
+        error
+      );
+
+    });
+
+}
+
+</script>
 
 </body>
 </html>
