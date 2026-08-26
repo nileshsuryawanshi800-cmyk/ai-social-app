@@ -91,8 +91,27 @@ function sendMessage() {
 
   input.value = "";
 
-  messages.innerHTML +=
-    '<div class="message"><b>AI:</b> I received your message! We will connect a real AI model next.</div>';
+  let reply = "I'm still learning! 🤖";
+
+if (text.toLowerCase().includes("hello") ||
+    text.toLowerCase().includes("hi")) {
+  reply = "Hello! 👋 How can I help you today?";
+}
+
+else if (text.toLowerCase().includes("your name")) {
+  reply = "I'm AI Social Assistant 🤖";
+}
+
+else if (text.toLowerCase().includes("how are you")) {
+  reply = "I'm doing great! 😊 Thanks for asking.";
+}
+
+else if (text.toLowerCase().includes("help")) {
+  reply = "Sure! Tell me what you need help with. 💡";
+}
+
+messages.innerHTML +=
+  '<div class="message"><b>AI:</b> ' + reply + '</div>';
 
   messages.scrollTop = messages.scrollHeight;
 }
