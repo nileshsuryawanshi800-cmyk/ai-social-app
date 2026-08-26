@@ -31,6 +31,7 @@
       border: none;
       background: none;
       font-size: 26px;
+      cursor: pointer;
     }
 
     header h1 {
@@ -62,6 +63,7 @@
       color: white;
       font-size: 17px;
       font-weight: bold;
+      cursor: pointer;
     }
 
     .message {
@@ -101,146 +103,29 @@ function goHome() {
 
 function createPost() {
 
-  const text = document.getElementById("postText").value.trim();
+  const text =
+    document.getElementById("postText").value.trim();
 
   if (text === "") {
+
     document.getElementById("message").textContent =
       "⚠️ Please write something first.";
+
     return;
   }
 
+  // Save post
   localStorage.setItem("newPost", text);
 
   document.getElementById("message").textContent =
     "✅ Post created successfully!";
 
   setTimeout(function() {
+
     window.location.href = "index.html";
-  }, 1000);
-}
 
-</script>
+  }, 500);
 
-</body>
-</html><!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>Create Post - AI Social</title>
-
-  <style>
-    * {
-      box-sizing: border-box;
-      font-family: Arial, sans-serif;
-    }
-
-    body {
-      margin: 0;
-      background: #f5f5f5;
-      color: #111;
-    }
-
-    header {
-      background: white;
-      padding: 18px;
-      display: flex;
-      align-items: center;
-      gap: 15px;
-      border-bottom: 1px solid #ddd;
-    }
-
-    header button {
-      border: none;
-      background: none;
-      font-size: 26px;
-    }
-
-    header h1 {
-      font-size: 20px;
-    }
-
-    .container {
-      padding: 20px;
-    }
-
-    textarea {
-      width: 100%;
-      height: 180px;
-      padding: 15px;
-      border: 1px solid #ddd;
-      border-radius: 15px;
-      font-size: 16px;
-      resize: none;
-      background: white;
-    }
-
-    .post-button {
-      width: 100%;
-      margin-top: 15px;
-      padding: 15px;
-      border: none;
-      border-radius: 25px;
-      background: #111;
-      color: white;
-      font-size: 17px;
-      font-weight: bold;
-    }
-
-    .message {
-      text-align: center;
-      margin-top: 15px;
-    }
-  </style>
-</head>
-
-<body>
-
-<header>
-  <button onclick="goHome()">←</button>
-  <h1>📸 Create Post</h1>
-</header>
-
-<div class="container">
-
-  <textarea
-    id="postText"
-    placeholder="What's on your mind?"
-  ></textarea>
-
-  <button class="post-button" onclick="createPost()">
-    📤 Publish Post
-  </button>
-
-  <p id="message" class="message"></p>
-
-</div>
-
-<script>
-
-function goHome() {
-  window.location.href = "index.html";
-}
-
-function createPost() {
-
-  const text = document.getElementById("postText").value.trim();
-
-  if (text === "") {
-    document.getElementById("message").textContent =
-      "⚠️ Please write something first.";
-    return;
-  }
-
-  localStorage.setItem("newPost", text);
-
-  document.getElementById("message").textContent =
-    "✅ Post created successfully!";
-
-  setTimeout(function() {
-    window.location.href = "index.html";
-  }, 1000);
 }
 
 </script>
