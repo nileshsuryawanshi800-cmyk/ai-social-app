@@ -154,6 +154,10 @@
     <button>🤖<br>AI</button>
     <button>👤<br>Profile</button>
   </nav>
-
+<script>
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("./sw.js");
+  }
+</script>
 </body>
 </html>
