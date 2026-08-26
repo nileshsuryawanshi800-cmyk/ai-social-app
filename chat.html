@@ -3,26 +3,32 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Chat</title>
+
+  <title>AI Social Chat</title>
 
   <style>
+    * {
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
       background: #f5f5f5;
     }
 
     header {
       background: white;
       padding: 18px;
-      font-size: 22px;
+      font-size: 21px;
       font-weight: bold;
       border-bottom: 1px solid #ddd;
     }
 
     #messages {
-      padding: 20px;
-      height: 70vh;
+      padding: 15px;
+      padding-bottom: 90px;
+      height: calc(100vh - 80px);
       overflow-y: auto;
     }
 
@@ -31,15 +37,28 @@
       padding: 12px;
       margin-bottom: 10px;
       border-radius: 12px;
+      line-height: 1.5;
+    }
+
+    .user {
+      background: #111;
+      color: white;
+      margin-left: 30px;
+    }
+
+    .ai {
+      margin-right: 30px;
     }
 
     .input-area {
       position: fixed;
       bottom: 0;
-      width: 100%;
+      left: 0;
+      right: 0;
       display: flex;
       background: white;
       padding: 10px;
+      border-top: 1px solid #ddd;
     }
 
     input {
@@ -47,6 +66,7 @@
       padding: 12px;
       border: 1px solid #ccc;
       border-radius: 20px;
+      outline: none;
     }
 
     button {
@@ -62,59 +82,121 @@
 
 <body>
 
-<header>🤖 AI Social Chat</header>
+<header>🤖 AI Social</header>
 
 <div id="messages">
-  <div class="message">
-    👋 Hello! I'm your AI assistant.
+  <div class="message ai">
+    👋 Hello! I'm AI Social Assistant. Ask me something!
   </div>
 </div>
 
 <div class="input-area">
-  <input id="messageInput" placeholder="Ask something...">
+
+  <input
+    id="messageInput"
+    placeholder="Ask something..."
+    onkeydown="handleKey(event)"
+  >
+
   <button onclick="sendMessage()">Send</button>
+
 </div>
 
 <script>
+
+function handleKey(event) {
+  if (event.key === "Enter") {
+    sendMessage();
+  }
+}
+
+function addMessage(text, type) {
+
+  const messages = document.getElementById("messages");
+
+  const div = document.createElement("div");
+
+  div.className = "message " + type;
+
+  div.textContent = text;
+
+  messages.appendChild(div);
+
+  messages.scrollTop = messages.scrollHeight;
+}
+
 function sendMessage() {
+
   const input = document.getElementById("messageInput");
+
   const text = input.value.trim();
 
   if (!text) return;
 
-  const messages = document.getElementById("messages");
-
-  messages.innerHTML +=
-    '<div class="message"><b>You:</b> ' +
-    text +
-    '</div>';
+  addMessage("You: " + text, "user");
 
   input.value = "";
 
-  let reply = "I'm still learning! 🤖";
+  setTimeout(function() {
 
-if (text.toLowerCase().includes("hello") ||
-    text.toLowerCase().includes("hi")) {
-  reply = "Hello! 👋 How can I help you today?";
+    const reply = getAIReply(text);
+
+    addMessage("AI: " + reply, "ai");
+
+  }, 400);
 }
 
-else if (text.toLowerCase().includes("your name")) {
-  reply = "I'm AI Social Assistant 🤖";
+function getAIReply(text) {
+
+  const t = text.toLowerCase();
+
+  if (t.includes("hello") || t.includes("hi")) {
+    return "Hello! 👋 How can I help you?";
+  }
+
+  if (t.includes("how are you")) {
+    return "I'm doing great! 😊 Thanks for asking.";
+  }
+
+  if (t.includes("your name")) {
+    return "I'm AI Social Assistant 🤖.";
+  }
+
+  if (t.includes("help")) {
+    return "Sure! Tell me what you need help with.";
+  }
+
+  if (t.includes("time")) {
+    return "You can check the current time on your phone's clock.";
+  }
+
+  if (t.includes("who are you")) {
+    return "I'm the AI assistant inside your AI Social app.";
+  }
+
+  if (t.includes("thank")) {
+    return "You're welcome! 😊";
+  }
+
+  if (t.includes("bye")) {
+    return "Goodbye! 👋";
+  }
+
+  if (t.includes("study")) {
+    return "I can help you make study plans, explain topics and create practice questions.";
+  }
+
+  if (t.includes("python")) {
+    return "Python is a popular programming language used for websites, automation, data science and AI.";
+  }
+
+  if (t.includes("html")) {
+    return "HTML is the language used to structure webpages.";
+  }
+
+  return "I don't know that yet, but we're going to keep improving me! 🤖";
 }
 
-else if (text.toLowerCase().includes("how are you")) {
-  reply = "I'm doing great! 😊 Thanks for asking.";
-}
-
-else if (text.toLowerCase().includes("help")) {
-  reply = "Sure! Tell me what you need help with. 💡";
-}
-
-messages.innerHTML +=
-  '<div class="message"><b>AI:</b> ' + reply + '</div>';
-
-  messages.scrollTop = messages.scrollHeight;
-}
 </script>
 
 </body>
