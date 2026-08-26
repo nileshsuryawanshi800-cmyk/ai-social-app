@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Profile - AI Social</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      background: #f5f5f5;
+      color: #111;
+      padding-bottom: 80px;
+    }
+
+    header {
+      background: white;
+      padding: 18px;
+      border-bottom: 1px solid #ddd;
+      font-size: 21px;
+      font-weight: bold;
+    }
+
+    .profile {
+      background: white;
+      padding: 25px 20px;
+      text-align: center;
+    }
+
+    .avatar {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      background: #ddd;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 45px;
+      margin: auto;
+    }
+
+    .username {
+      margin-top: 12px;
+      font-size: 22px;
+      font-weight: bold;
+    }
+
+    .bio {
+      margin-top: 8px;
+      color: #666;
+    }
+
+    .stats {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 25px;
+    }
+
+    .stat {
+      text-align: center;
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 20px;
+    }
+
+    .stat span {
+      color: #777;
+      font-size: 14px;
+    }
+
+    .edit-button {
+      margin-top: 20px;
+      padding: 10px 25px;
+      border: none;
+      border-radius: 20px;
+      background: #111;
+      color: white;
+    }
+
+    .posts-title {
+      padding: 20px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .post {
+      background: white;
+      margin: 12px;
+      padding: 18px;
+      border-radius: 15px;
+    }
+
+    nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 65px;
+      background: white;
+      border-top: 1px solid #ddd;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+    }
+
+    nav button {
+      border: none;
+      background: none;
+      font-size: 14px;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  👤 Profile
+</header>
+
+<section class="profile">
+
+  <div class="avatar">
+    👤
+  </div>
+
+  <div class="username">
+    AI Social User
+  </div>
+
+  <div class="bio">
+    Welcome to my AI Social profile 🚀
+  </div>
+
+  <div class="stats">
+
+    <div class="stat">
+      <strong id="postCount">0</strong>
+      <span>Posts</span>
+    </div>
+
+    <div class="stat">
+      <strong>0</strong>
+      <span>Followers</span>
+    </div>
+
+    <div class="stat">
+      <strong>0</strong>
+      <span>Following</span>
+    </div>
+
+  </div>
+
+  <button class="edit-button" onclick="editProfile()">
+    ✏️ Edit Profile
+  </button>
+
+</section>
+
+<div class="posts-title">
+  📸 My Posts
+</div>
+
+<div id="myPosts"></div>
+
+<nav>
+
+  <button onclick="goHome()">
+    🏠<br>Home
+  </button>
+
+  <button onclick="goSearch()">
+    🔍<br>Search
+  </button>
+
+  <button onclick="goCreate()">
+    ➕<br>Create
+  </button>
+
+  <button onclick="openAI()">
+    🤖<br>AI
+  </button>
+
+  <button onclick="goProfile()">
+    👤<br>Profile
+  </button>
+
+</nav>
+
+<script>
+
+function goHome() {
+  window.location.href = "index.html";
+}
+
+function goSearch() {
+  alert("🔍 Search coming soon!");
+}
+
+function goCreate() {
+  window.location.href = "create.html";
+}
+
+function openAI() {
+  window.location.href = "chat.html";
+}
+
+function goProfile() {
+  window.location.href = "profile.html";
+}
+
+
+function editProfile() {
+
+  const username = prompt(
+    "Enter your username:"
+  );
+
+  if (username && username.trim() !== "") {
+
+    localStorage.setItem(
+      "username",
+      username.trim()
+    );
+
+    loadProfile();
+  }
+
+}
+
+
+function loadProfile() {
+
+  const username =
+    localStorage.getItem("username");
+
+  if (username) {
+
+    document.querySelector(".username")
+      .textContent = username;
+
+  }
+
+
+  const post =
+    localStorage.getItem("newPost");
+
+  const posts =
+    document.getElementById("myPosts");
+
+  const count =
+    document.getElementById("postCount");
+
+  posts.innerHTML = "";
+
+  if (post) {
+
+    count.textContent = "1";
+
+    const postElement =
+      document.createElement("div");
+
+    postElement.className = "post";
+
+    postElement.textContent = post;
+
+    posts.appendChild(postElement);
+
+  } else {
+
+    count.textContent = "0";
+
+    posts.innerHTML =
+      "<p style='text-align:center;color:#777;'>No posts yet.</p>";
+
+  }
+
+}
+
+
+loadProfile();
+
+</script>
+
+</body>
+  </html>
