@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Chat</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+    }
+
+    header {
+      background: white;
+      padding: 18px;
+      font-size: 22px;
+      font-weight: bold;
+      border-bottom: 1px solid #ddd;
+    }
+
+    #messages {
+      padding: 20px;
+      height: 70vh;
+      overflow-y: auto;
+    }
+
+    .message {
+      background: white;
+      padding: 12px;
+      margin-bottom: 10px;
+      border-radius: 12px;
+    }
+
+    .input-area {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      display: flex;
+      background: white;
+      padding: 10px;
+    }
+
+    input {
+      flex: 1;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 20px;
+    }
+
+    button {
+      margin-left: 8px;
+      padding: 12px 18px;
+      border: none;
+      border-radius: 20px;
+      background: #111;
+      color: white;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>🤖 AI Social Chat</header>
+
+<div id="messages">
+  <div class="message">
+    👋 Hello! I'm your AI assistant.
+  </div>
+</div>
+
+<div class="input-area">
+  <input id="messageInput" placeholder="Ask something...">
+  <button onclick="sendMessage()">Send</button>
+</div>
+
+<script>
+function sendMessage() {
+  const input = document.getElementById("messageInput");
+  const text = input.value.trim();
+
+  if (!text) return;
+
+  const messages = document.getElementById("messages");
+
+  messages.innerHTML +=
+    '<div class="message"><b>You:</b> ' +
+    text +
+    '</div>';
+
+  input.value = "";
+
+  messages.innerHTML +=
+    '<div class="message"><b>AI:</b> I received your message! We will connect a real AI model next.</div>';
+
+  messages.scrollTop = messages.scrollHeight;
+}
+</script>
+
+</body>
+</html>
