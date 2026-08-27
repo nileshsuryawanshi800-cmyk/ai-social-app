@@ -355,7 +355,48 @@ actions.innerHTML = `
 
   post.appendChild(actions);
 
-  posts.appendChild(post);
+
+/* COMMENTS */
+
+const comments =
+  JSON.parse(
+    localStorage.getItem("comments") || "[]"
+  );
+
+if (comments.length > 0) {
+
+  const commentsBox =
+    document.createElement("div");
+
+  commentsBox.style.padding = "0 15px 15px";
+
+  commentsBox.innerHTML =
+    "<strong>💬 Comments</strong>";
+
+  comments.forEach(function(comment) {
+
+    const commentItem =
+      document.createElement("p");
+
+    commentItem.style.marginTop = "8px";
+
+    commentItem.textContent =
+      "👤 " + comment;
+
+    commentsBox.appendChild(
+      commentItem
+    );
+
+  });
+
+  post.appendChild(
+    commentsBox
+  );
+
+}
+
+
+posts.appendChild(post);
 
 }
 
