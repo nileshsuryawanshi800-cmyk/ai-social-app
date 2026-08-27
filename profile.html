@@ -33,27 +33,27 @@
       text-align: center;
     }
 
-    .avatar {
-  width: 90px;
-  height: 90px;
-  border-radius: 50%;
-  background: #ddd;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 45px;
-  margin: auto;
-  overflow: hidden;
-  cursor: pointer;
-  position: relative;
-}
+    /* PROFILE PICTURE */
+    .profile-avatar {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      background: #ddd;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 45px;
+      margin: auto;
+      overflow: hidden;
+      cursor: pointer;
+    }
 
-.avatar img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: none;
-}
+    .profile-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: none;
+    }
 
     .username {
       margin-top: 12px;
@@ -111,6 +111,7 @@
       word-wrap: break-word;
     }
 
+    /* BOTTOM NAVIGATION */
     nav {
       position: fixed;
       bottom: 0;
@@ -130,64 +131,12 @@
       background: none;
       font-size: 14px;
       cursor: pointer;
+      padding: 5px;
     }
 
-    function choosePhoto() {
-  document.getElementById("photoInput").click();
-}
-
-
-function savePhoto(event) {
-
-  const file = event.target.files[0];
-
-  if (!file) {
-    return;
-  }
-
-  if (!file.type.startsWith("image/")) {
-    alert("⚠️ Please select an image.");
-    return;
-  }
-
-  const reader = new FileReader();
-
-  reader.onload = function(e) {
-
-    const imageData = e.target.result;
-
-    localStorage.setItem(
-      "profileImage",
-      imageData
-    );
-
-    showProfilePhoto(imageData);
-
-  };
-
-  reader.readAsDataURL(file);
-}
-
-
-function showProfilePhoto(imageData) {
-
-  const image =
-    document.getElementById("profileImage");
-
-  const icon =
-    document.getElementById("avatarIcon");
-
-  image.src = imageData;
-
-  image.style.display = "block";
-
-  icon.style.display = "none";
-  const savedImage =
-  localStorage.getItem("profileImage");
-
-if (savedImage) {
-  showProfilePhoto(savedImage);
-  }
+    nav button:active {
+      transform: scale(0.95);
+    }
   </style>
 </head>
 
@@ -199,9 +148,23 @@ if (savedImage) {
 
 <section class="profile">
 
-  <div class="avatar">
-    👤
+  <!-- PROFILE PICTURE -->
+  <div class="profile-avatar" onclick="choosePhoto()">
+
+    <img id="profileImage" alt="Profile Picture">
+
+    <span id="avatarIcon">👤</span>
+
   </div>
+
+  <!-- Hidden photo selector -->
+  <input
+    type="file"
+    id="photoInput"
+    accept="image/*"
+    style="display:none"
+    onchange="savePhoto(event)"
+  >
 
   <div class="username" id="username">
     AI Social User
@@ -242,6 +205,8 @@ if (savedImage) {
 
 <div id="myPosts"></div>
 
+<!-- BOTTOM NAVIGATION -->
+
 <nav>
 
   <button onclick="goHome()">
@@ -260,22 +225,17 @@ if (savedImage) {
     🤖<br>AI
   </button>
 
-  <div class="avatar" onclick="choosePhoto()">
-  <img id="profileImage" src="" alt="Profile Picture">
-  <span id="avatarIcon">👤</span>
-</div>
-
-<input
-  type="file"
-  id="photoInput"
-  accept="image/*"
-  style="display:none"
-  onchange="savePhoto(event)"
->
+  <button onclick="goProfile()">
+    👤<br>Profile
+  </button>
 
 </nav>
 
 <script>
+
+/* =========================
+   NAVIGATION
+========================= */
 
 function goHome() {
   window.location.href = "index.html";
@@ -297,6 +257,10 @@ function goProfile() {
   window.location.href = "profile.html";
 }
 
+
+/* =========================
+   EDIT PROFILE
+========================= */
 
 function editProfile() {
 
@@ -352,6 +316,90 @@ function editProfile() {
 }
 
 
+/* =========================
+   CHOOSE PROFILE PHOTO
+========================= */
+
+function choosePhoto() {
+
+  document
+    .getElementById("photoInput")
+    .click();
+
+}
+
+
+/* =========================
+   SAVE PROFILE PHOTO
+========================= */
+
+function savePhoto(event) {
+
+  const file =
+    event.target.files[0];
+
+  if (!file) {
+    return;
+  }
+
+  if (!file.type.startsWith("image/")) {
+
+    alert("⚠️ Please select an image.");
+
+    return;
+  }
+
+
+  const reader =
+    new FileReader();
+
+
+  reader.onload = function(e) {
+
+    const imageData =
+      e.target.result;
+
+    localStorage.setItem(
+      "profileImage",
+      imageData
+    );
+
+    showProfilePhoto(imageData);
+
+  };
+
+
+  reader.readAsDataURL(file);
+
+}
+
+
+/* =========================
+   SHOW PROFILE PHOTO
+========================= */
+
+function showProfilePhoto(imageData) {
+
+  const image =
+    document.getElementById("profileImage");
+
+  const icon =
+    document.getElementById("avatarIcon");
+
+
+  image.src = imageData;
+
+  image.style.display = "block";
+
+  icon.style.display = "none";
+
+}
+
+
+/* =========================
+   LOAD PROFILE
+========================= */
+
 function loadProfile() {
 
   const username =
@@ -406,12 +454,26 @@ function loadProfile() {
 
   }
 
+
+  /* Load saved profile picture */
+
+  const savedImage =
+    localStorage.getItem("profileImage");
+
+  if (savedImage) {
+
+    showProfilePhoto(savedImage);
+
+  }
+
 }
 
+
+/* Start */
 
 loadProfile();
 
 </script>
 
 </body>
-</html>
+  </html>
