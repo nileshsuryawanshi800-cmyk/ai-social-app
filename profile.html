@@ -263,17 +263,19 @@ function editProfile() {
 }
 
 
-function loadProfile() {
+const username =
+  localStorage.getItem("username") ||
+  "AI Social User";
 
-  const username =
-    localStorage.getItem("username");
+const bio =
+  localStorage.getItem("bio") ||
+  "Welcome to my AI Social profile 🚀";
 
-  if (username) {
+document.querySelector(".username")
+  .textContent = username;
 
-    document.querySelector(".username")
-      .textContent = username;
-
-  }
+document.querySelector(".bio")
+  .textContent = bio;
 
 
   const post =
