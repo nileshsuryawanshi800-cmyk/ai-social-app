@@ -131,6 +131,58 @@
       font-size: 14px;
       cursor: pointer;
     }
+
+    function choosePhoto() {
+  document.getElementById("photoInput").click();
+}
+
+
+function savePhoto(event) {
+
+  const file = event.target.files[0];
+
+  if (!file) {
+    return;
+  }
+
+  if (!file.type.startsWith("image/")) {
+    alert("⚠️ Please select an image.");
+    return;
+  }
+
+  const reader = new FileReader();
+
+  reader.onload = function(e) {
+
+    const imageData = e.target.result;
+
+    localStorage.setItem(
+      "profileImage",
+      imageData
+    );
+
+    showProfilePhoto(imageData);
+
+  };
+
+  reader.readAsDataURL(file);
+}
+
+
+function showProfilePhoto(imageData) {
+
+  const image =
+    document.getElementById("profileImage");
+
+  const icon =
+    document.getElementById("avatarIcon");
+
+  image.src = imageData;
+
+  image.style.display = "block";
+
+  icon.style.display = "none";
+  }
   </style>
 </head>
 
