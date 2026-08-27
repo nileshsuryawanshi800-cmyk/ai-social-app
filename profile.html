@@ -83,6 +83,8 @@
       border-radius: 20px;
       background: #111;
       color: white;
+      font-size: 15px;
+      cursor: pointer;
     }
 
     .posts-title {
@@ -96,6 +98,7 @@
       margin: 12px;
       padding: 18px;
       border-radius: 15px;
+      word-wrap: break-word;
     }
 
     nav {
@@ -109,12 +112,14 @@
       display: flex;
       justify-content: space-around;
       align-items: center;
+      z-index: 100;
     }
 
     nav button {
       border: none;
       background: none;
       font-size: 14px;
+      cursor: pointer;
     }
   </style>
 </head>
@@ -131,11 +136,11 @@
     👤
   </div>
 
-  <div class="username">
+  <div class="username" id="username">
     AI Social User
   </div>
 
-  <div class="bio">
+  <div class="bio" id="bio">
     Welcome to my AI Social profile 🚀
   </div>
 
@@ -184,7 +189,7 @@
     ➕<br>Create
   </button>
 
-  <button onclick="openAI()">
+  <button onclick="goAI()">
     🤖<br>AI
   </button>
 
@@ -201,14 +206,14 @@ function goHome() {
 }
 
 function goSearch() {
-  alert("🔍 Search coming soon!");
+  alert("🔍 Search feature coming soon!");
 }
 
 function goCreate() {
   window.location.href = "create.html";
 }
 
-function openAI() {
+function goAI() {
   window.location.href = "chat.html";
 }
 
@@ -219,27 +224,33 @@ function goProfile() {
 
 function editProfile() {
 
-  const oldUsername =
-    localStorage.getItem("username") || "AI Social User";
+  const currentUsername =
+    localStorage.getItem("username") ||
+    "AI Social User";
 
-  const oldBio =
+  const currentBio =
     localStorage.getItem("bio") ||
     "Welcome to my AI Social profile 🚀";
 
 
   const username = prompt(
     "Enter your username:",
-    oldUsername
+    currentUsername
   );
 
-  if (!username || username.trim() === "") {
+  if (username === null) {
+    return;
+  }
+
+  if (username.trim() === "") {
+    alert("⚠️ Username cannot be empty.");
     return;
   }
 
 
   const bio = prompt(
     "Enter your bio:",
-    oldBio
+    currentBio
   );
 
   if (bio === null) {
@@ -260,25 +271,30 @@ function editProfile() {
 
   loadProfile();
 
+  alert("✅ Profile updated!");
+
 }
 
 
-const username =
-  localStorage.getItem("username") ||
-  "AI Social User";
+function loadProfile() {
 
-const bio =
-  localStorage.getItem("bio") ||
-  "Welcome to my AI Social profile 🚀";
+  const username =
+    localStorage.getItem("username") ||
+    "AI Social User";
 
-document.querySelector(".username")
-  .textContent = username;
-
-document.querySelector(".bio")
-  .textContent = bio;
+  const bio =
+    localStorage.getItem("bio") ||
+    "Welcome to my AI Social profile 🚀";
 
 
-  const post =
+  document.getElementById("username")
+    .textContent = username;
+
+  document.getElementById("bio")
+    .textContent = bio;
+
+
+  const savedPost =
     localStorage.getItem("newPost");
 
   const posts =
@@ -287,20 +303,23 @@ document.querySelector(".bio")
   const count =
     document.getElementById("postCount");
 
+
   posts.innerHTML = "";
 
-  if (post) {
+
+  if (savedPost) {
 
     count.textContent = "1";
 
-    const postElement =
+
+    const post =
       document.createElement("div");
 
-    postElement.className = "post";
+    post.className = "post";
 
-    postElement.textContent = post;
+    post.textContent = savedPost;
 
-    posts.appendChild(postElement);
+    posts.appendChild(post);
 
   } else {
 
@@ -319,4 +338,4 @@ loadProfile();
 </script>
 
 </body>
-  </html>
+</html>
