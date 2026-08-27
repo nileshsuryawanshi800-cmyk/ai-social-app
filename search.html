@@ -203,20 +203,26 @@ function search() {
 
   if (username.toLowerCase().includes(query)) {
 
-    const result =
-      document.createElement("div");
+  const result =
+    document.createElement("div");
 
-    result.className = "result";
+  result.className = "result";
 
-    result.innerHTML =
-      "👤 <strong>" +
-      username +
-      "</strong>" +
-      "<p>Profile</p>";
+  result.style.cursor = "pointer";
 
-    results.appendChild(result);
+  result.innerHTML =
+    "👤 <strong>" +
+    username +
+    "</strong>" +
+    "<p>Profile</p>";
 
-    found = true;
+  result.onclick = function() {
+    window.location.href = "profile.html";
+  };
+
+  results.appendChild(result);
+
+  found = true;
   }
 
 
