@@ -366,7 +366,57 @@ actions.innerHTML = `
 
 function likePost() {
 
-  alert("❤️ Liked!");
+  let count =
+    Number(localStorage.getItem("likeCount")) || 0;
+
+  let liked =
+    localStorage.getItem("liked") === "true";
+
+
+  if (liked) {
+
+    count--;
+
+    liked = false;
+
+  } else {
+
+    count++;
+
+    liked = true;
+
+  }
+
+
+  localStorage.setItem(
+    "likeCount",
+    count
+  );
+
+  localStorage.setItem(
+    "liked",
+    liked
+  );
+
+
+  const button =
+    document.getElementById("likeButton");
+
+  const countText =
+    document.getElementById("likeCount");
+
+
+  if (liked) {
+
+    button.innerHTML =
+      `❤️ Unlike <span id="likeCount">${count}</span>`;
+
+  } else {
+
+    button.innerHTML =
+      `🤍 Like <span id="likeCount">${count}</span>`;
+
+  }
 
 }
 
