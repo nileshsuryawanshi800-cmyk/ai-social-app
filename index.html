@@ -45,6 +45,7 @@
       border: none;
       padding: 10px 14px;
       border-radius: 20px;
+      cursor: pointer;
     }
 
     .welcome {
@@ -53,6 +54,10 @@
 
     .welcome h2 {
       margin-bottom: 8px;
+    }
+
+    #posts {
+      width: 100%;
     }
 
     .post {
@@ -70,307 +75,30 @@
       gap: 10px;
     }
 
-    .avatar {
-      width: 40px;
-      height: 40px;
+    .post-avatar {
+      width: 45px;
+      height: 45px;
       border-radius: 50%;
       background: #ddd;
       display: flex;
       align-items: center;
       justify-content: center;
-    }
-
-    .post-content {
-      padding: 0 15px 15px;
-      white-space: pre-wrap;
-      word-wrap: break-word;
-    }
-
-    .actions {
-      display: flex;
-      gap: 20px;
-      padding: 12px 15px;
-      border-top: 1px solid #eee;
-    }
-
-    .actions button {
-      border: none;
-      background: none;
-      font-size: 16px;
-    }
-
-    nav {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 65px;
-      background: white;
-      border-top: 1px solid #ddd;
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      z-index: 20;
-    }
-
-    nav button {
-      border: none;
-      background: none;
-      font-size: 14px;
-    }
-
-    .empty {
-      text-align: center;
-      padding: 30px 20px;
-      color: #777;
-    }
-  </style>
-</head>
-
-<body>
-
-<header>
-  <h1>✨ AI Social</h1>
-
-  <button class="ai-button" onclick="openAI()">
-    🤖 AI Chat
-  </button>
-</header>
-
-<section class="welcome">
-  <h2>Welcome 👋</h2>
-  <p>Connect, share and chat with AI.</p>
-</section>
-
-<!-- POST WILL APPEAR HERE -->
-<div id="posts"></div>
-
-<nav>
-
-  <button onclick="goHome()">
-    🏠<br>Home
-  </button>
-
-  <button onclick="goSearch()">
-    🔍<br>Search
-  </button>
-
-  <button onclick="goCreate()">
-    ➕<br>Create
-  </button>
-
-  <button onclick="openAI()">
-    🤖<br>AI
-  </button>
-
-  <button onclick="goProfile()">
-    👤<br>Profile
-  </button>
-
-</nav>
-
-<script>
-
-function goHome() {
-  window.location.href = "index.html";
-}
-
-function goCreate() {
-  window.location.href = "create.html";
-}
-
-function openAI() {
-  window.location.href = "chat.html";
-}
-
-function goSearch() {
-  alert("🔍 Search feature coming soon!");
-}
-
-
-function goProfile() {
-  window.location.href = "profile.html";
-}
-
-// ===============================
-// LOAD SAVED POST
-// ===============================
-
-function loadPosts() {
-
-  const posts = document.getElementById("posts");
-
-  const savedPost = localStorage.getItem("newPost");
-
-  posts.innerHTML = "";
-
-  if (!savedPost) {
-
-    posts.innerHTML =
-      '<div class="empty">No posts yet.<br>Tap ➕ Create to make your first post! 📸</div>';
-
-    return;
-  }
-
-
-  const post = document.createElement("div");
-
-  post.className = "post";
-
-
-  const header = document.createElement("div");
-
-  header.className = "post-header";
-
-  header.innerHTML =
-    '<div class="avatar">👤</div><strong>You</strong>';
-
-
-  const content = document.createElement("div");
-
-  content.className = "post-content";
-
-  content.textContent = savedPost;
-
-
-  const actions = document.createElement("div");
-
-  actions.className = "actions";
-
-  actions.innerHTML = `
-    <button onclick="likePost()">❤️ Like</button>
-    <button onclick="commentPost()">💬 Comment</button>
-    <button onclick="sharePost()">↗️ Share</button>
-  `;
-
-
-  post.appendChild(header);
-  post.appendChild(content);
-  post.appendChild(actions);
-
-  posts.appendChild(post);
-}
-
-
-function likePost() {
-  alert("❤️ Liked!");
-}
-
-function commentPost() {
-  alert("💬 Comment feature coming soon!");
-}
-
-function sharePost() {
-  alert("↗️ Share feature coming soon!");
-}
-
-
-// LOAD POSTS WHEN HOME OPENS
-loadPosts();
-
-
-// SERVICE WORKER
-if ("serviceWorker" in navigator) {
-
-  navigator.serviceWorker.register("./sw.js")
-    .then(() => {
-      console.log("Service Worker registered");
-    })
-    .catch(error => {
-      console.log("Service Worker error:", error);
-    });
-
-}
-
-</script>
-
-</body>
-</html><!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>AI Social</title>
-
-  <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#111111">
-
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: Arial, sans-serif;
-    }
-
-    body {
-      background: #f5f5f5;
-      color: #111;
-      padding-bottom: 80px;
-    }
-
-    header {
-      background: white;
-      padding: 18px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid #ddd;
-      position: sticky;
-      top: 0;
-      z-index: 10;
-    }
-
-    header h1 {
-      font-size: 22px;
-    }
-
-    .ai-button {
-      background: #111;
-      color: white;
-      border: none;
-      padding: 10px 14px;
-      border-radius: 20px;
-    }
-
-    .welcome {
-      padding: 25px 18px;
-    }
-
-    .welcome h2 {
-      margin-bottom: 8px;
-    }
-
-    .post {
-      background: white;
-      margin: 12px;
-      border-radius: 15px;
       overflow: hidden;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      flex-shrink: 0;
+      font-size: 25px;
     }
 
-    .post-header {
-      padding: 15px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .avatar {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      background: #ddd;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    .post-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
 
     .post-content {
       padding: 0 15px 15px;
       white-space: pre-wrap;
       word-wrap: break-word;
+      font-size: 18px;
     }
 
     .actions {
@@ -384,6 +112,7 @@ if ("serviceWorker" in navigator) {
       border: none;
       background: none;
       font-size: 16px;
+      cursor: pointer;
     }
 
     nav {
@@ -397,13 +126,15 @@ if ("serviceWorker" in navigator) {
       display: flex;
       justify-content: space-around;
       align-items: center;
-      z-index: 20;
+      z-index: 100;
     }
 
     nav button {
       border: none;
       background: none;
       font-size: 14px;
+      cursor: pointer;
+      padding: 5px;
     }
 
     .empty {
@@ -419,7 +150,7 @@ if ("serviceWorker" in navigator) {
 <header>
   <h1>✨ AI Social</h1>
 
-  <button class="ai-button" onclick="openAI()">
+  <button class="ai-button" onclick="goAI()">
     🤖 AI Chat
   </button>
 </header>
@@ -429,9 +160,10 @@ if ("serviceWorker" in navigator) {
   <p>Connect, share and chat with AI.</p>
 </section>
 
-<!-- POST WILL APPEAR HERE -->
+<!-- POSTS -->
 <div id="posts"></div>
 
+<!-- BOTTOM NAVIGATION -->
 <nav>
 
   <button onclick="goHome()">
@@ -446,7 +178,7 @@ if ("serviceWorker" in navigator) {
     ➕<br>Create
   </button>
 
-  <button onclick="openAI()">
+  <button onclick="goAI()">
     🤖<br>AI
   </button>
 
@@ -458,37 +190,53 @@ if ("serviceWorker" in navigator) {
 
 <script>
 
+/* =========================
+   NAVIGATION
+========================= */
+
 function goHome() {
   window.location.href = "index.html";
-}
-
-function goCreate() {
-  window.location.href = "create.html";
-}
-
-function openAI() {
-  window.location.href = "chat.html";
 }
 
 function goSearch() {
   alert("🔍 Search feature coming soon!");
 }
 
+function goCreate() {
+  window.location.href = "create.html";
+}
+
+function goAI() {
+  window.location.href = "chat.html";
+}
+
 function goProfile() {
   window.location.href = "profile.html";
 }
 
-// ===============================
-// LOAD SAVED POST
-// ===============================
+
+/* =========================
+   LOAD POST
+========================= */
 
 function loadPosts() {
 
-  const posts = document.getElementById("posts");
+  const posts =
+    document.getElementById("posts");
 
-  const savedPost = localStorage.getItem("newPost");
+  const savedPost =
+    localStorage.getItem("newPost");
+
+  const username =
+    localStorage.getItem("username") ||
+    "You";
+
+  const profileImage =
+    localStorage.getItem("profileImage");
+
 
   posts.innerHTML = "";
+
 
   if (!savedPost) {
 
@@ -499,71 +247,165 @@ function loadPosts() {
   }
 
 
-  const post = document.createElement("div");
+  const post =
+    document.createElement("div");
 
   post.className = "post";
 
 
-  const header = document.createElement("div");
+  /* POST HEADER */
 
-  header.className = "post-header";
+  const postHeader =
+    document.createElement("div");
 
-  header.innerHTML =
-    '<div class="avatar">👤</div><strong>You</strong>';
-
-
-  const content = document.createElement("div");
-
-  content.className = "post-content";
-
-  content.textContent = savedPost;
+  postHeader.className =
+    "post-header";
 
 
-  const actions = document.createElement("div");
+  /* PROFILE PICTURE */
 
-  actions.className = "actions";
+  const avatar =
+    document.createElement("div");
+
+  avatar.className =
+    "post-avatar";
+
+
+  if (profileImage) {
+
+    const image =
+      document.createElement("img");
+
+    image.src =
+      profileImage;
+
+    image.alt =
+      "Profile picture";
+
+    avatar.appendChild(image);
+
+  } else {
+
+    avatar.textContent =
+      "👤";
+
+  }
+
+
+  /* USERNAME */
+
+  const name =
+    document.createElement("strong");
+
+  name.textContent =
+    username;
+
+
+  postHeader.appendChild(avatar);
+
+  postHeader.appendChild(name);
+
+
+  /* POST TEXT */
+
+  const content =
+    document.createElement("div");
+
+  content.className =
+    "post-content";
+
+  content.textContent =
+    savedPost;
+
+
+  /* ACTIONS */
+
+  const actions =
+    document.createElement("div");
+
+  actions.className =
+    "actions";
+
 
   actions.innerHTML = `
-    <button onclick="likePost()">❤️ Like</button>
-    <button onclick="commentPost()">💬 Comment</button>
-    <button onclick="sharePost()">↗️ Share</button>
+    <button onclick="likePost()">
+      ❤️ Like
+    </button>
+
+    <button onclick="commentPost()">
+      💬 Comment
+    </button>
+
+    <button onclick="sharePost()">
+      ↗️ Share
+    </button>
   `;
 
 
-  post.appendChild(header);
+  post.appendChild(postHeader);
+
   post.appendChild(content);
+
   post.appendChild(actions);
 
   posts.appendChild(post);
+
 }
 
+
+/* =========================
+   BUTTONS
+========================= */
 
 function likePost() {
+
   alert("❤️ Liked!");
+
 }
+
 
 function commentPost() {
+
   alert("💬 Comment feature coming soon!");
+
 }
+
 
 function sharePost() {
+
   alert("↗️ Share feature coming soon!");
+
 }
 
 
-// LOAD POSTS WHEN HOME OPENS
+/* =========================
+   START APP
+========================= */
+
 loadPosts();
 
 
-// SERVICE WORKER
+/* =========================
+   SERVICE WORKER
+========================= */
+
 if ("serviceWorker" in navigator) {
 
   navigator.serviceWorker.register("./sw.js")
     .then(() => {
-      console.log("Service Worker registered");
+
+      console.log(
+        "Service Worker registered"
+      );
+
     })
     .catch(error => {
-      console.log("Service Worker error:", error);
+
+      console.log(
+        "Service Worker error:",
+        error
+      );
+
     });
 
 }
