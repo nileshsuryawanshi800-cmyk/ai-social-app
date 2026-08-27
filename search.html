@@ -210,11 +210,29 @@ function search() {
 
   result.style.cursor = "pointer";
 
+  const profileImage =
+  localStorage.getItem("profileImage");
+
+if (profileImage) {
+
+  result.innerHTML =
+    '<img src="' + profileImage + '" ' +
+    'style="width:45px;height:45px;border-radius:50%;' +
+    'object-fit:cover;vertical-align:middle;margin-right:10px;">' +
+    "<strong>" +
+    username +
+    "</strong>" +
+    "<p>Profile</p>";
+
+} else {
+
   result.innerHTML =
     "👤 <strong>" +
     username +
     "</strong>" +
     "<p>Profile</p>";
+
+}
 
   result.onclick = function() {
     window.location.href = "profile.html";
