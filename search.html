@@ -280,7 +280,55 @@ if (profileImage) {
   found = true;
   }
 
+/* SEARCH COMMENTS */
 
+comments.forEach(function(comment) {
+
+  if (comment.toLowerCase().includes(query)) {
+
+    const result =
+      document.createElement("div");
+
+    result.className = "result";
+
+    result.style.cursor = "pointer";
+
+    let photoHTML = "👤";
+
+    if (profileImage) {
+
+      photoHTML =
+        '<img src="' + profileImage + '" ' +
+        'style="width:45px;height:45px;' +
+        'border-radius:50%;object-fit:cover;' +
+        'vertical-align:middle;margin-right:10px;">';
+
+    }
+
+    result.innerHTML =
+      photoHTML +
+      "<strong>" +
+      username +
+      "</strong>" +
+      "<p>💬 " +
+      comment +
+      "</p>";
+
+    result.onclick = function() {
+
+      window.location.href =
+        "profile.html";
+
+    };
+
+    results.appendChild(result);
+
+    found = true;
+
+  }
+
+});
+  
   if (!found) {
 
     results.innerHTML =
