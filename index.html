@@ -423,11 +423,31 @@ function likePost() {
 
 function commentPost() {
 
-  alert("💬 Comment feature coming soon!");
+  const comment = prompt(
+    "💬 Write your comment:"
+  );
+
+  if (!comment || comment.trim() === "") {
+    return;
+  }
+
+  const comments =
+    JSON.parse(
+      localStorage.getItem("comments") || "[]"
+    );
+
+  comments.push(comment.trim());
+
+  localStorage.setItem(
+    "comments",
+    JSON.stringify(comments)
+  );
+
+  loadPosts();
 
 }
 
-
+  
 function sharePost() {
 
   alert("↗️ Share feature coming soon!");
