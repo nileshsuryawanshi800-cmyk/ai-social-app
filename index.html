@@ -379,6 +379,11 @@ if (comments.length > 0) {
       document.createElement("p");
 
     commentItem.style.marginTop = "8px";
+    commentItem.style.cursor = "pointer";
+
+commentItem.onclick = function() {
+  window.location.href = "profile.html";
+};
 
     const profileImage =
   localStorage.getItem("profileImage");
