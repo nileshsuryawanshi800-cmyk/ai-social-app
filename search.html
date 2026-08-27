@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Search - AI Social</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      background: #f5f5f5;
+      color: #111;
+      padding-bottom: 80px;
+    }
+
+    header {
+      background: white;
+      padding: 18px;
+      border-bottom: 1px solid #ddd;
+      font-size: 21px;
+      font-weight: bold;
+    }
+
+    .search-box {
+      padding: 20px;
+      background: white;
+    }
+
+    input {
+      width: 100%;
+      padding: 14px 18px;
+      border: 1px solid #ccc;
+      border-radius: 25px;
+      font-size: 16px;
+      outline: none;
+    }
+
+    #results {
+      padding: 15px;
+    }
+
+    .result {
+      background: white;
+      padding: 15px;
+      margin-bottom: 10px;
+      border-radius: 15px;
+    }
+
+    .result strong {
+      font-size: 18px;
+    }
+
+    .result p {
+      margin-top: 6px;
+      color: #666;
+    }
+
+    .empty {
+      text-align: center;
+      color: #777;
+      padding: 30px;
+    }
+
+    nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 65px;
+      background: white;
+      border-top: 1px solid #ddd;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      z-index: 100;
+    }
+
+    nav button {
+      border: none;
+      background: none;
+      font-size: 14px;
+      cursor: pointer;
+      padding: 5px;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  🔍 Search
+</header>
+
+<div class="search-box">
+
+  <input
+    id="searchInput"
+    type="text"
+    placeholder="Search users or posts..."
+    oninput="search()"
+  >
+
+</div>
+
+<div id="results">
+
+  <div class="empty">
+    Type something to search 🔍
+  </div>
+
+</div>
+
+<nav>
+
+  <button onclick="goHome()">
+    🏠<br>Home
+  </button>
+
+  <button onclick="goSearch()">
+    🔍<br>Search
+  </button>
+
+  <button onclick="goCreate()">
+    ➕<br>Create
+  </button>
+
+  <button onclick="goAI()">
+    🤖<br>AI
+  </button>
+
+  <button onclick="goProfile()">
+    👤<br>Profile
+  </button>
+
+</nav>
+
+<script>
+
+function goHome() {
+  window.location.href = "index.html";
+}
+
+function goSearch() {
+  window.location.href = "search.html";
+}
+
+function goCreate() {
+  window.location.href = "create.html";
+}
+
+function goAI() {
+  window.location.href = "chat.html";
+}
+
+function goProfile() {
+  window.location.href = "profile.html";
+}
+
+
+function search() {
+
+  const query =
+    document
+      .getElementById("searchInput")
+      .value
+      .toLowerCase()
+      .trim();
+
+  const results =
+    document.getElementById("results");
+
+  results.innerHTML = "";
+
+
+  if (!query) {
+
+    results.innerHTML =
+      '<div class="empty">Type something to search 🔍</div>';
+
+    return;
+  }
+
+
+  const username =
+    localStorage.getItem("username") ||
+    "You";
+
+  const post =
+    localStorage.getItem("newPost") ||
+    "";
+
+
+  let found = false;
+
+
+  /* SEARCH USERNAME */
+
+  if (username.toLowerCase().includes(query)) {
+
+    const result =
+      document.createElement("div");
+
+    result.className = "result";
+
+    result.innerHTML =
+      "👤 <strong>" +
+      username +
+      "</strong>" +
+      "<p>Profile</p>";
+
+    results.appendChild(result);
+
+    found = true;
+  }
+
+
+  /* SEARCH POST */
+
+  if (post.toLowerCase().includes(query)) {
+
+    const result =
+      document.createElement("div");
+
+    result.className = "result";
+
+    result.innerHTML =
+      "📸 <strong>" +
+      username +
+      "</strong>" +
+      "<p>" +
+      post +
+      "</p>";
+
+    results.appendChild(result);
+
+    found = true;
+  }
+
+
+  if (!found) {
+
+    results.innerHTML =
+      '<div class="empty">No results found 🔍</div>';
+
+  }
+
+}
+
+</script>
+
+</body>
+</html>
