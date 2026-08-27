@@ -327,19 +327,26 @@ function loadPosts() {
     "actions";
 
 
-  actions.innerHTML = `
-    <button onclick="likePost()">
-      ❤️ Like
-    </button>
+  const likeCount =
+  localStorage.getItem("likeCount") || "0";
 
-    <button onclick="commentPost()">
-      💬 Comment
-    </button>
+const liked =
+  localStorage.getItem("liked") === "true";
 
-    <button onclick="sharePost()">
-      ↗️ Share
-    </button>
-  `;
+actions.innerHTML = `
+  <button id="likeButton" onclick="likePost()">
+    ${liked ? "❤️" : "🤍"} Like
+    <span id="likeCount">${likeCount}</span>
+  </button>
+
+  <button onclick="commentPost()">
+    💬 Comment
+  </button>
+
+  <button onclick="sharePost()">
+    ↗️ Share
+  </button>
+`;
 
 
   post.appendChild(postHeader);
