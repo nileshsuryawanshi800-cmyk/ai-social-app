@@ -194,6 +194,13 @@ function search() {
   const post =
     localStorage.getItem("newPost") ||
     "";
+  const comments =
+  JSON.parse(
+    localStorage.getItem("comments") || "[]"
+  );
+
+const profileImage =
+  localStorage.getItem("profileImage");
 
 
   let found = false;
