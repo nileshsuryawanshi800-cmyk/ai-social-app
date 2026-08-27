@@ -380,8 +380,36 @@ if (comments.length > 0) {
 
     commentItem.style.marginTop = "8px";
 
-    commentItem.textContent =
-      "👤 " + comment;
+    const profileImage =
+  localStorage.getItem("profileImage");
+
+const username =
+  localStorage.getItem("username") ||
+  "You";
+
+if (profileImage) {
+
+  commentItem.innerHTML =
+    '<img src="' + profileImage + '" ' +
+    'style="width:32px;height:32px;border-radius:50%;' +
+    'object-fit:cover;vertical-align:middle;margin-right:8px;">' +
+    '<strong>' + username + '</strong>' +
+    '<br>' +
+    '<span style="margin-left:40px;">' +
+    comment +
+    '</span>';
+
+} else {
+
+  commentItem.innerHTML =
+    "👤 <strong>" +
+    username +
+    "</strong><br>" +
+    "<span style='margin-left:40px;'>" +
+    comment +
+    "</span>";
+
+}
 
     commentsBox.appendChild(
       commentItem
