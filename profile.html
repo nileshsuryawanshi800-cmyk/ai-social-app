@@ -182,6 +182,11 @@ function showProfilePhoto(imageData) {
   image.style.display = "block";
 
   icon.style.display = "none";
+  const savedImage =
+  localStorage.getItem("profileImage");
+
+if (savedImage) {
+  showProfilePhoto(savedImage);
   }
   </style>
 </head>
