@@ -230,22 +230,29 @@ function search() {
 
   if (post.toLowerCase().includes(query)) {
 
-    const result =
-      document.createElement("div");
+  const result =
+    document.createElement("div");
 
-    result.className = "result";
+  result.className = "result";
 
-    result.innerHTML =
-      "📸 <strong>" +
-      username +
-      "</strong>" +
-      "<p>" +
-      post +
-      "</p>";
+  result.style.cursor = "pointer";
 
-    results.appendChild(result);
+  result.innerHTML =
+    "📸 <strong>" +
+    username +
+    "</strong>" +
+    "<p>" +
+    post +
+    "</p>" +
+    "<small>Tap to open post</small>";
 
-    found = true;
+  result.onclick = function() {
+    window.location.href = "index.html";
+  };
+
+  results.appendChild(result);
+
+  found = true;
   }
 
 
