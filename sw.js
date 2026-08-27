@@ -6,6 +6,7 @@ const FILES = [
   "./chat.html",
   "./create.html",
 "./profile.html",
+  "./search.html",
 "./manifest.json"
 ];
 
