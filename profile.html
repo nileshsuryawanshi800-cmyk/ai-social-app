@@ -219,19 +219,46 @@ function goProfile() {
 
 function editProfile() {
 
+  const oldUsername =
+    localStorage.getItem("username") || "AI Social User";
+
+  const oldBio =
+    localStorage.getItem("bio") ||
+    "Welcome to my AI Social profile 🚀";
+
+
   const username = prompt(
-    "Enter your username:"
+    "Enter your username:",
+    oldUsername
   );
 
-  if (username && username.trim() !== "") {
-
-    localStorage.setItem(
-      "username",
-      username.trim()
-    );
-
-    loadProfile();
+  if (!username || username.trim() === "") {
+    return;
   }
+
+
+  const bio = prompt(
+    "Enter your bio:",
+    oldBio
+  );
+
+  if (bio === null) {
+    return;
+  }
+
+
+  localStorage.setItem(
+    "username",
+    username.trim()
+  );
+
+  localStorage.setItem(
+    "bio",
+    bio.trim()
+  );
+
+
+  loadProfile();
 
 }
 
