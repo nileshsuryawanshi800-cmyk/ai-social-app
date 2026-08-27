@@ -491,7 +491,42 @@ function commentPost() {
   
 function sharePost() {
 
-  alert("↗️ Share feature coming soon!");
+  const post =
+    localStorage.getItem("newPost");
+
+  if (!post) {
+    alert("⚠️ No post available to share.");
+    return;
+  }
+
+  if (navigator.share) {
+
+    navigator.share({
+      title: "AI Social",
+      text: post,
+      url: window.location.href
+    })
+    .catch(function(error) {
+      console.log("Share cancelled:", error);
+    });
+
+  } else {
+
+    navigator.clipboard.writeText(
+      post + "\n\nShared from AI Social"
+    )
+    .then(function() {
+
+      alert("✅ Post copied! You can paste it anywhere.");
+
+    })
+    .catch(function() {
+
+      alert("⚠️ Sharing is not supported on this browser.");
+
+    });
+
+  }
 
 }
 
