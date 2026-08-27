@@ -34,16 +34,26 @@
     }
 
     .avatar {
-      width: 90px;
-      height: 90px;
-      border-radius: 50%;
-      background: #ddd;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 45px;
-      margin: auto;
-    }
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: #ddd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 45px;
+  margin: auto;
+  overflow: hidden;
+  cursor: pointer;
+  position: relative;
+}
+
+.avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: none;
+}
 
     .username {
       margin-top: 12px;
