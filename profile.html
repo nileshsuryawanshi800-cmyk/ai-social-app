@@ -193,9 +193,18 @@
     🤖<br>AI
   </button>
 
-  <button onclick="goProfile()">
-    👤<br>Profile
-  </button>
+  <div class="avatar" onclick="choosePhoto()">
+  <img id="profileImage" src="" alt="Profile Picture">
+  <span id="avatarIcon">👤</span>
+</div>
+
+<input
+  type="file"
+  id="photoInput"
+  accept="image/*"
+  style="display:none"
+  onchange="savePhoto(event)"
+>
 
 </nav>
 
