@@ -303,7 +303,16 @@ function loadPosts() {
 
   postHeader.appendChild(avatar);
 
-  postHeader.appendChild(name);
+postHeader.appendChild(name);
+
+
+/* OPEN PROFILE */
+
+postHeader.style.cursor = "pointer";
+
+postHeader.onclick = function() {
+  window.location.href = "profile.html";
+};
 
 
   /* POST TEXT */
