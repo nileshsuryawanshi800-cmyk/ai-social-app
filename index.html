@@ -73,6 +73,7 @@
       display: flex;
       align-items: center;
       gap: 10px;
+      cursor: pointer;
     }
 
     .post-avatar {
@@ -99,6 +100,15 @@
       white-space: pre-wrap;
       word-wrap: break-word;
       font-size: 18px;
+      cursor: pointer;
+    }
+
+    .post-media {
+      width: 100%;
+      max-height: 500px;
+      object-fit: contain;
+      background: #000;
+      display: block;
     }
 
     .actions {
@@ -113,6 +123,24 @@
       background: none;
       font-size: 16px;
       cursor: pointer;
+    }
+
+    .comments {
+      padding: 0 15px 15px;
+    }
+
+    .comment {
+      margin-top: 10px;
+      cursor: pointer;
+    }
+
+    .comment img {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      object-fit: cover;
+      vertical-align: middle;
+      margin-right: 8px;
     }
 
     nav {
@@ -135,6 +163,15 @@
       font-size: 14px;
       cursor: pointer;
       padding: 5px;
+    }
+
+    .delete-button {
+      border: none;
+      background: none;
+      color: red;
+      padding: 12px 15px;
+      cursor: pointer;
+      font-size: 14px;
     }
 
     .empty {
@@ -160,10 +197,8 @@
   <p>Connect, share and chat with AI.</p>
 </section>
 
-<!-- POSTS -->
 <div id="posts"></div>
 
-<!-- BOTTOM NAVIGATION -->
 <nav>
 
   <button onclick="goHome()">
@@ -216,16 +251,65 @@ function goProfile() {
 
 
 /* =========================
-   LOAD POST
+   GET POSTS
+========================= */
+
+function getPosts() {
+
+  try {
+
+    return JSON.parse(
+      localStorage.getItem("posts") || "[]"
+    );
+
+  } catch (error) {
+
+    return [];
+
+  }
+
+}
+
+
+/* =========================
+   SAVE POSTS
+========================= */
+
+function savePosts(posts) {
+
+  localStorage.setItem(
+    "posts",
+    JSON.stringify(posts)
+  );
+
+}
+
+
+/* =========================
+   LOAD POSTS
 ========================= */
 
 function loadPosts() {
 
-  const posts =
+  const postsBox =
     document.getElementById("posts");
 
-  const savedPost =
-    localStorage.getItem("newPost");
+  postsBox.innerHTML = "";
+
+  const posts = getPosts();
+
+  if (posts.length === 0) {
+
+    postsBox.innerHTML =
+      '<div class="empty">' +
+      'No posts yet.<br>' +
+      'Tap ➕ Create to make your first post! 📸' +
+      '</div>';
+
+    return;
+
+  }
+
 
   const username =
     localStorage.getItem("username") ||
@@ -235,431 +319,498 @@ function loadPosts() {
     localStorage.getItem("profileImage");
 
 
-  posts.innerHTML = "";
+  posts.forEach(function(postData, index) {
 
+    const post =
+      document.createElement("div");
 
-  if (!savedPost) {
+    post.className = "post";
 
-    posts.innerHTML =
-      '<div class="empty">No posts yet.<br>Tap ➕ Create to make your first post! 📸</div>';
 
-    return;
-  }
+    /* =========================
+       POST HEADER
+    ========================= */
 
+    const postHeader =
+      document.createElement("div");
 
-  const post =
-    document.createElement("div");
+    postHeader.className =
+      "post-header";
 
-  post.className = "post";
+    postHeader.onclick = function() {
 
+      window.location.href =
+        "profile.html";
 
-  /* POST HEADER */
+    };
 
-  const postHeader =
-    document.createElement("div");
 
-  postHeader.className =
-    "post-header";
+    const avatar =
+      document.createElement("div");
 
+    avatar.className =
+      "post-avatar";
 
-  /* PROFILE PICTURE */
 
-  const avatar =
-    document.createElement("div");
+    if (profileImage) {
 
-  avatar.className =
-    "post-avatar";
+      const image =
+        document.createElement("img");
 
+      image.src =
+        profileImage;
 
-  if (profileImage) {
+      image.alt =
+        "Profile picture";
 
-    const image =
-      document.createElement("img");
+      avatar.appendChild(image);
 
-    image.src =
-      profileImage;
+    } else {
 
-    image.alt =
-      "Profile picture";
+      avatar.textContent =
+        "👤";
 
-    avatar.appendChild(image);
+    }
 
-  } else {
 
-    avatar.textContent =
-      "👤";
+    const name =
+      document.createElement("strong");
 
-  }
+    name.textContent =
+      username;
 
 
-  /* USERNAME */
+    postHeader.appendChild(avatar);
+    postHeader.appendChild(name);
 
-  const name =
-    document.createElement("strong");
 
-  name.textContent =
-    username;
+    /* =========================
+       POST TEXT
+    ========================= */
 
+    const content =
+      document.createElement("div");
 
-  postHeader.appendChild(avatar);
+    content.className =
+      "post-content";
 
-postHeader.appendChild(name);
+    content.textContent =
+      postData.text || "";
 
 
-/* OPEN PROFILE */
+    if (!postData.text) {
 
-postHeader.style.cursor = "pointer";
+      content.style.display =
+        "none";
 
-postHeader.onclick = function() {
-  window.location.href = "profile.html";
-};
+    }
 
 
-  /* POST TEXT */
+    content.onclick = function() {
 
-  const content =
-    document.createElement("div");
+      window.location.href =
+        "profile.html";
 
-  content.className =
-    "post-content";
+    };
 
-  content.textContent =
-    savedPost;
-/* POST PHOTO / VIDEO */
 
-const media =
-  localStorage.getItem("postMedia");
+    /* =========================
+       POST MEDIA
+    ========================= */
 
-const mediaType =
-  localStorage.getItem("postMediaType");
+    let mediaElement = null;
 
-if (media) {
 
-  if (mediaType &&
-      mediaType.startsWith("image/")) {
+    if (postData.media) {
 
-    const image =
-      document.createElement("img");
+      if (
+        postData.mediaType &&
+        postData.mediaType.startsWith("image/")
+      ) {
 
-    image.src = media;
+        mediaElement =
+          document.createElement("img");
 
-    image.style.width = "100%";
-    image.style.maxHeight = "500px";
-    image.style.objectFit = "contain";
-    image.style.background = "#000";
+        mediaElement.src =
+          postData.media;
 
-    post.appendChild(image);
+        mediaElement.className =
+          "post-media";
 
-  }
+      }
 
-  else if (mediaType &&
-           mediaType.startsWith("video/")) {
 
-    const video =
-      document.createElement("video");
+      if (
+        postData.mediaType &&
+        postData.mediaType.startsWith("video/")
+      ) {
 
-    video.src = media;
+        mediaElement =
+          document.createElement("video");
 
-    video.controls = true;
+        mediaElement.src =
+          postData.media;
 
-    video.style.width = "100%";
-    video.style.maxHeight = "500px";
-    video.style.background = "#000";
+        mediaElement.className =
+          "post-media";
 
-    post.appendChild(video);
+        mediaElement.controls = true;
 
-  }
+        mediaElement.playsInline = true;
 
-}
+      }
 
-  /* ACTIONS */
+    }
 
-  const actions =
-    document.createElement("div");
 
-  actions.className =
-    "actions";
+    /* =========================
+       ACTIONS
+    ========================= */
 
+    const actions =
+      document.createElement("div");
 
-  const likeCount =
-  localStorage.getItem("likeCount") || "0";
+    actions.className =
+      "actions";
 
-const liked =
-  localStorage.getItem("liked") === "true";
 
-actions.innerHTML = `
-  <button id="likeButton" onclick="likePost()">
-    ${liked ? "❤️" : "🤍"} Like
-    <span id="likeCount">${likeCount}</span>
-  </button>
+    const liked =
+      postData.liked === true;
 
-  <button onclick="commentPost()">
-    💬 Comment
-  </button>
+    const likeCount =
+      Number(postData.likeCount) || 0;
 
-  <button onclick="sharePost()">
-    ↗️ Share
-  </button>
-`;
 
+    const likeButton =
+      document.createElement("button");
 
-  post.appendChild(postHeader);
+    likeButton.innerHTML =
+      (liked ? "❤️ Unlike " : "🤍 Like ") +
+      "<span>" +
+      likeCount +
+      "</span>";
 
-post.appendChild(content);
 
-post.appendChild(actions);
+    likeButton.onclick =
+      function() {
 
+        postData.liked =
+          !postData.liked;
 
-/* OPEN PROFILE FROM POST HEADER AND CONTENT */
+        if (postData.liked) {
 
-postHeader.style.cursor = "pointer";
+          postData.likeCount =
+            (Number(postData.likeCount) || 0) + 1;
 
-postHeader.onclick = function() {
-  window.location.href = "profile.html";
-};
+        } else {
 
-content.style.cursor = "pointer";
+          postData.likeCount =
+            Math.max(
+              0,
+              (Number(postData.likeCount) || 0) - 1
+            );
 
-content.onclick = function() {
-  window.location.href = "profile.html";
-};
+        }
 
-/* DELETE POST */
+        savePosts(posts);
+        loadPosts();
 
-const deleteButton =
-  document.createElement("button");
+      };
 
-deleteButton.textContent = "🗑️ Delete Post";
 
-deleteButton.style.border = "none";
-deleteButton.style.background = "none";
-deleteButton.style.color = "red";
-deleteButton.style.padding = "12px 15px";
-deleteButton.style.cursor = "pointer";
-deleteButton.style.fontSize = "14px";
+    const commentButton =
+      document.createElement("button");
 
-deleteButton.onclick = function() {
+    commentButton.textContent =
+      "💬 Comment";
 
-  const confirmDelete =
-    confirm("🗑️ Are you sure you want to delete this post?");
 
-  if (!confirmDelete) {
-    return;
-  }
+    commentButton.onclick =
+      function() {
 
-  localStorage.removeItem("newPost");
-  localStorage.removeItem("comments");
-  localStorage.removeItem("likeCount");
-  localStorage.removeItem("liked");
+        const comment =
+          prompt("💬 Write your comment:");
 
-  loadPosts();
+        if (
+          !comment ||
+          comment.trim() === ""
+        ) {
 
-};
+          return;
 
-post.appendChild(deleteButton);
-  
-/* COMMENTS */
+        }
 
-const comments =
-  JSON.parse(
-    localStorage.getItem("comments") || "[]"
-  );
 
-if (comments.length > 0) {
+        if (!Array.isArray(postData.comments)) {
 
-  const commentsBox =
-    document.createElement("div");
+          postData.comments = [];
 
-  commentsBox.style.padding = "0 15px 15px";
+        }
 
-  commentsBox.innerHTML =
-    "<strong>💬 Comments</strong>";
 
-  comments.forEach(function(comment) {
+        postData.comments.push(
+          comment.trim()
+        );
 
-    const commentItem =
-      document.createElement("p");
 
-    commentItem.style.marginTop = "8px";
-    commentItem.style.cursor = "pointer";
+        savePosts(posts);
+        loadPosts();
 
-commentItem.onclick = function() {
-  window.location.href = "profile.html";
-};
+      };
 
-    const profileImage =
-  localStorage.getItem("profileImage");
 
-const username =
-  localStorage.getItem("username") ||
-  "You";
+    const shareButton =
+      document.createElement("button");
 
-if (profileImage) {
+    shareButton.textContent =
+      "↗️ Share";
 
-  commentItem.innerHTML =
-    '<img src="' + profileImage + '" ' +
-    'style="width:32px;height:32px;border-radius:50%;' +
-    'object-fit:cover;vertical-align:middle;margin-right:8px;">' +
-    '<strong>' + username + '</strong>' +
-    '<br>' +
-    '<span style="margin-left:40px;">' +
-    comment +
-    '</span>';
 
-} else {
+    shareButton.onclick =
+      function() {
 
-  commentItem.innerHTML =
-    "👤 <strong>" +
-    username +
-    "</strong><br>" +
-    "<span style='margin-left:40px;'>" +
-    comment +
-    "</span>";
+        sharePost(postData);
 
-}
+      };
 
-    commentsBox.appendChild(
-      commentItem
+
+    actions.appendChild(likeButton);
+    actions.appendChild(commentButton);
+    actions.appendChild(shareButton);
+
+
+    /* =========================
+       DELETE
+    ========================= */
+
+    const deleteButton =
+      document.createElement("button");
+
+    deleteButton.className =
+      "delete-button";
+
+    deleteButton.textContent =
+      "🗑️ Delete Post";
+
+
+    deleteButton.onclick =
+      function() {
+
+        const answer =
+          confirm(
+            "🗑️ Are you sure you want to delete this post?"
+          );
+
+        if (!answer) {
+
+          return;
+
+        }
+
+
+        posts.splice(index, 1);
+
+        savePosts(posts);
+
+        loadPosts();
+
+      };
+
+
+    /* =========================
+       COMMENTS
+    ========================= */
+
+    const commentsBox =
+      document.createElement("div");
+
+    commentsBox.className =
+      "comments";
+
+
+    if (
+      Array.isArray(postData.comments) &&
+      postData.comments.length > 0
+    ) {
+
+      const title =
+        document.createElement("strong");
+
+      title.textContent =
+        "💬 Comments";
+
+      commentsBox.appendChild(title);
+
+
+      postData.comments.forEach(
+        function(comment) {
+
+          const commentItem =
+            document.createElement("div");
+
+          commentItem.className =
+            "comment";
+
+
+          commentItem.onclick =
+            function() {
+
+              window.location.href =
+                "profile.html";
+
+            };
+
+
+          if (profileImage) {
+
+            const image =
+              document.createElement("img");
+
+            image.src =
+              profileImage;
+
+            commentItem.appendChild(image);
+
+          } else {
+
+            const icon =
+              document.createTextNode(
+                "👤 "
+              );
+
+            commentItem.appendChild(icon);
+
+          }
+
+
+          const commentName =
+            document.createElement("strong");
+
+          commentName.textContent =
+            username + " ";
+
+          commentItem.appendChild(
+            commentName
+          );
+
+
+          const commentText =
+            document.createTextNode(
+              comment
+            );
+
+          commentItem.appendChild(
+            commentText
+          );
+
+
+          commentsBox.appendChild(
+            commentItem
+          );
+
+        }
+      );
+
+    }
+
+
+    /* =========================
+       BUILD POST
+    ========================= */
+
+    post.appendChild(
+      postHeader
+    );
+
+    if (mediaElement) {
+
+      post.appendChild(
+        mediaElement
+      );
+
+    }
+
+    post.appendChild(
+      content
+    );
+
+    post.appendChild(
+      actions
+    );
+
+    post.appendChild(
+      commentsBox
+    );
+
+    post.appendChild(
+      deleteButton
+    );
+
+
+    postsBox.appendChild(
+      post
     );
 
   });
 
-  post.appendChild(
-    commentsBox
-  );
-
-}
-
-
-posts.appendChild(post);
-
 }
 
 
 /* =========================
-   BUTTONS
+   SHARE
 ========================= */
 
-function likePost() {
+function sharePost(postData) {
 
-  let count =
-    Number(localStorage.getItem("likeCount")) || 0;
+  const text =
+    postData.text ||
+    "Check out my post on AI Social!";
 
-  let liked =
-    localStorage.getItem("liked") === "true";
-
-
-  if (liked) {
-
-    count--;
-
-    liked = false;
-
-  } else {
-
-    count++;
-
-    liked = true;
-
-  }
-
-
-  localStorage.setItem(
-    "likeCount",
-    count
-  );
-
-  localStorage.setItem(
-    "liked",
-    liked
-  );
-
-
-  const button =
-    document.getElementById("likeButton");
-
-  const countText =
-    document.getElementById("likeCount");
-
-
-  if (liked) {
-
-    button.innerHTML =
-      `❤️ Unlike <span id="likeCount">${count}</span>`;
-
-  } else {
-
-    button.innerHTML =
-      `🤍 Like <span id="likeCount">${count}</span>`;
-
-  }
-
-}
-
-
-function commentPost() {
-
-  const comment = prompt(
-    "💬 Write your comment:"
-  );
-
-  if (!comment || comment.trim() === "") {
-    return;
-  }
-
-  const comments =
-    JSON.parse(
-      localStorage.getItem("comments") || "[]"
-    );
-
-  comments.push(comment.trim());
-
-  localStorage.setItem(
-    "comments",
-    JSON.stringify(comments)
-  );
-
-  loadPosts();
-
-}
-
-  
-function sharePost() {
-
-  const post =
-    localStorage.getItem("newPost");
-
-  if (!post) {
-    alert("⚠️ No post available to share.");
-    return;
-  }
 
   if (navigator.share) {
 
     navigator.share({
+
       title: "AI Social",
-      text: post,
+
+      text: text,
+
       url: window.location.href
-    })
-    .catch(function(error) {
-      console.log("Share cancelled:", error);
+
+    }).catch(function(error) {
+
+      console.log(
+        "Share cancelled:",
+        error
+      );
+
+    });
+
+  } else if (
+    navigator.clipboard
+  ) {
+
+    navigator.clipboard.writeText(
+      text + "\n\nShared from AI Social"
+    ).then(function() {
+
+      alert(
+        "✅ Post copied! You can paste it anywhere."
+      );
+
+    }).catch(function() {
+
+      alert(
+        "⚠️ Sharing is not supported."
+      );
+
     });
 
   } else {
 
-    navigator.clipboard.writeText(
-      post + "\n\nShared from AI Social"
-    )
-    .then(function() {
-
-      alert("✅ Post copied! You can paste it anywhere.");
-
-    })
-    .catch(function() {
-
-      alert("⚠️ Sharing is not supported on this browser.");
-
-    });
+    alert(
+      "⚠️ Sharing is not supported."
+    );
 
   }
 
@@ -667,7 +818,7 @@ function sharePost() {
 
 
 /* =========================
-   START APP
+   START
 ========================= */
 
 loadPosts();
@@ -680,14 +831,14 @@ loadPosts();
 if ("serviceWorker" in navigator) {
 
   navigator.serviceWorker.register("./sw.js")
-    .then(() => {
+    .then(function() {
 
       console.log(
         "Service Worker registered"
       );
 
     })
-    .catch(error => {
+    .catch(function(error) {
 
       console.log(
         "Service Worker error:",
