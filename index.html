@@ -709,26 +709,19 @@ function loadPosts() {
       "actions";
 
 
+
     /* LIKE */
 
-    const likeButton =
-      document.createElement("button");
+const likeButton =
+  document.createElement("button");
 
+function updateLikeButton() {
 
-    function updateLike() {
+  const isLiked =
+    postData.liked === true;
 
-      const liked =
-        postData.liked === true;
-
-      const count =
-        Number(
-          postData.likeCount
-        ) || 0;
-
-
-      function updateLikeButton() {
-  const isLiked = postData.liked === true;
-  const count = Number(postData.likeCount) || 0;
+  const count =
+    Number(postData.likeCount) || 0;
 
   likeButton.textContent =
     isLiked
@@ -738,53 +731,36 @@ function loadPosts() {
 
 updateLikeButton();
 
-    }
+likeButton.onclick = function(event) {
+
+  event.stopPropagation();
+
+  postData.liked =
+    postData.liked !== true;
+
+  if (postData.liked) {
+
+    postData.likeCount =
+      (Number(postData.likeCount) || 0) + 1;
+
+  } else {
+
+    postData.likeCount =
+      Math.max(
+        0,
+        (Number(postData.likeCount) || 0) - 1
+      );
+
+  }
+
+  savePosts(posts);
+
+  updateLikeButton();
+
+};
 
 
-    updateLike();
-
-
-    likeButton.onclick =
-      function(event) {
-
-        event.stopPropagation();
-
-
-        postData.liked =
-          !(
-            postData.liked === true
-          );
-
-
-        if (postData.liked) {
-
-          postData.likeCount =
-            (
-              Number(
-                postData.likeCount
-              ) || 0
-            ) + 1;
-
-        } else {
-
-          postData.likeCount =
-            Math.max(
-              0,
-              (
-                Number(
-                  postData.likeCount
-                ) || 0
-              ) - 1
-            );
-
-        }
-
-
-        savePosts(posts);
-
-        updateLike();
-
-      };
+  
 
 
     /* COMMENT */
