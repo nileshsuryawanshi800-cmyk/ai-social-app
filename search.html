@@ -1,12 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
   <title>Search - AI Social</title>
 
   <style>
+
     * {
       box-sizing: border-box;
       font-family: Arial, sans-serif;
@@ -50,6 +57,37 @@
       padding: 15px;
       margin-bottom: 10px;
       border-radius: 15px;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
+
+    .result:active {
+      transform: scale(0.98);
+    }
+
+    .profile-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .profile-photo {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      object-fit: cover;
+      background: #ddd;
+    }
+
+    .default-photo {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: #ddd;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 25px;
     }
 
     .result strong {
@@ -57,8 +95,14 @@
     }
 
     .result p {
-      margin-top: 6px;
-      color: #666;
+      margin: 8px 0 0;
+      color: #555;
+    }
+
+    .result-type {
+      font-size: 13px;
+      color: #888;
+      margin-top: 5px;
     }
 
     .empty {
@@ -88,7 +132,9 @@
       cursor: pointer;
       padding: 5px;
     }
+
   </style>
+
 </head>
 
 <body>
@@ -97,16 +143,18 @@
   🔍 Search
 </header>
 
+
 <div class="search-box">
 
   <input
     id="searchInput"
     type="text"
-    placeholder="Search users or posts..."
+    placeholder="Search users, posts or comments..."
     oninput="search()"
   >
 
 </div>
+
 
 <div id="results">
 
@@ -115,6 +163,7 @@
   </div>
 
 </div>
+
 
 <nav>
 
@@ -140,27 +189,44 @@
 
 </nav>
 
+
 <script>
 
+
 function goHome() {
+
   window.location.href = "index.html";
+
 }
+
 
 function goSearch() {
+
   window.location.href = "search.html";
+
 }
+
 
 function goCreate() {
+
   window.location.href = "create.html";
+
 }
+
 
 function goAI() {
+
   window.location.href = "chat.html";
+
 }
 
+
 function goProfile() {
+
   window.location.href = "profile.html";
+
 }
+
 
 
 function search() {
@@ -172,8 +238,10 @@ function search() {
       .toLowerCase()
       .trim();
 
+
   const results =
     document.getElementById("results");
+
 
   results.innerHTML = "";
 
@@ -181,9 +249,12 @@ function search() {
   if (!query) {
 
     results.innerHTML =
-      '<div class="empty">Type something to search 🔍</div>';
+      '<div class="empty">' +
+      'Type something to search 🔍' +
+      '</div>';
 
     return;
+
   }
 
 
@@ -191,128 +262,98 @@ function search() {
     localStorage.getItem("username") ||
     "You";
 
+
   const post =
     localStorage.getItem("newPost") ||
     "";
-  const comments =
-  JSON.parse(
-    localStorage.getItem("comments") || "[]"
-  );
 
-const profileImage =
-  localStorage.getItem("profileImage");
+
+  const profileImage =
+    localStorage.getItem("profileImage") ||
+    "";
+
+
+  let comments = [];
+
+
+  try {
+
+    comments =
+      JSON.parse(
+        localStorage.getItem("comments") ||
+        "[]"
+      );
+
+  } catch (error) {
+
+    comments = [];
+
+  }
 
 
   let found = false;
 
 
-  /* SEARCH USERNAME */
 
-  if (username.toLowerCase().includes(query)) {
+  /* =========================
+     SEARCH PROFILE
+  ========================= */
 
-  const result =
-    document.createElement("div");
-
-  result.className = "result";
-
-  result.style.cursor = "pointer";
-
-  const profileImage =
-  localStorage.getItem("profileImage");
-
-if (profileImage) {
-
-  result.innerHTML =
-    '<img src="' + profileImage + '" ' +
-    'style="width:45px;height:45px;border-radius:50%;' +
-    'object-fit:cover;vertical-align:middle;margin-right:10px;">' +
-    "<strong>" +
-    username +
-    "</strong>" +
-    "<p>Profile</p>";
-
-} else {
-
-  result.innerHTML =
-    "👤 <strong>" +
-    username +
-    "</strong>" +
-    "<p>Profile</p>";
-
-}
-
-  result.onclick = function() {
-    window.location.href = "profile.html";
-  };
-
-  results.appendChild(result);
-
-  found = true;
-  }
-
-
-  /* SEARCH POST */
-
-  if (post.toLowerCase().includes(query)) {
-
-  const result =
-    document.createElement("div");
-
-  result.className = "result";
-
-  result.style.cursor = "pointer";
-
-  result.innerHTML =
-    "📸 <strong>" +
-    username +
-    "</strong>" +
-    "<p>" +
-    post +
-    "</p>" +
-    "<small>Tap to open post</small>";
-
-  result.onclick = function() {
-    window.location.href = "index.html";
-  };
-
-  results.appendChild(result);
-
-  found = true;
-  }
-
-/* SEARCH COMMENTS */
-
-comments.forEach(function(comment) {
-
-  if (comment.toLowerCase().includes(query)) {
+  if (
+    username
+      .toLowerCase()
+      .includes(query)
+  ) {
 
     const result =
       document.createElement("div");
 
+
     result.className = "result";
 
-    result.style.cursor = "pointer";
 
-    let photoHTML = "👤";
+    let photoHTML;
+
 
     if (profileImage) {
 
       photoHTML =
-        '<img src="' + profileImage + '" ' +
-        'style="width:45px;height:45px;' +
-        'border-radius:50%;object-fit:cover;' +
-        'vertical-align:middle;margin-right:10px;">';
+        '<img class="profile-photo" ' +
+        'src="' +
+        profileImage +
+        '" ' +
+        'alt="Profile photo">';
+
+    } else {
+
+      photoHTML =
+        '<div class="default-photo">' +
+        '👤' +
+        '</div>';
 
     }
 
+
     result.innerHTML =
+
+      '<div class="profile-row">' +
+
       photoHTML +
-      "<strong>" +
+
+      '<div>' +
+
+      '<strong>' +
       username +
-      "</strong>" +
-      "<p>💬 " +
-      comment +
-      "</p>";
+      '</strong>' +
+
+      '<div class="result-type">' +
+      '👤 Profile' +
+      '</div>' +
+
+      '</div>' +
+
+      '</div>';
+
 
     result.onclick = function() {
 
@@ -321,24 +362,247 @@ comments.forEach(function(comment) {
 
     };
 
+
     results.appendChild(result);
 
     found = true;
 
   }
 
-});
-  
+
+
+  /* =========================
+     SEARCH POST
+  ========================= */
+
+  if (
+    post &&
+    post
+      .toLowerCase()
+      .includes(query)
+  ) {
+
+    const result =
+      document.createElement("div");
+
+
+    result.className = "result";
+
+
+    let photoHTML;
+
+
+    if (profileImage) {
+
+      photoHTML =
+        '<img class="profile-photo" ' +
+        'src="' +
+        profileImage +
+        '" ' +
+        'alt="Profile photo">';
+
+    } else {
+
+      photoHTML =
+        '<div class="default-photo">' +
+        '👤' +
+        '</div>';
+
+    }
+
+
+    result.innerHTML =
+
+      '<div class="profile-row">' +
+
+      photoHTML +
+
+      '<div>' +
+
+      '<strong>' +
+      username +
+      '</strong>' +
+
+      '<div class="result-type">' +
+      '📸 Post' +
+      '</div>' +
+
+      '</div>' +
+
+      '</div>' +
+
+      '<p>' +
+      escapeHTML(post) +
+      '</p>';
+
+
+    result.onclick = function() {
+
+      window.location.href =
+        "index.html";
+
+    };
+
+
+    results.appendChild(result);
+
+    found = true;
+
+  }
+
+
+
+  /* =========================
+     SEARCH COMMENTS
+  ========================= */
+
+  comments.forEach(function(comment) {
+
+
+    let commentText = "";
+
+
+    /*
+      Supports both:
+      "Hello"
+      and future comment objects
+    */
+
+    if (typeof comment === "string") {
+
+      commentText = comment;
+
+    } else if (
+      comment &&
+      typeof comment.text === "string"
+    ) {
+
+      commentText = comment.text;
+
+    }
+
+
+    if (!commentText) {
+
+      return;
+
+    }
+
+
+    if (
+      commentText
+        .toLowerCase()
+        .includes(query)
+    ) {
+
+
+      const result =
+        document.createElement("div");
+
+
+      result.className = "result";
+
+
+      let photoHTML;
+
+
+      if (profileImage) {
+
+        photoHTML =
+          '<img class="profile-photo" ' +
+          'src="' +
+          profileImage +
+          '" ' +
+          'alt="Profile photo">';
+
+      } else {
+
+        photoHTML =
+          '<div class="default-photo">' +
+          '👤' +
+          '</div>';
+
+      }
+
+
+      result.innerHTML =
+
+        '<div class="profile-row">' +
+
+        photoHTML +
+
+        '<div>' +
+
+        '<strong>' +
+        username +
+        '</strong>' +
+
+        '<div class="result-type">' +
+        '💬 Comment' +
+        '</div>' +
+
+        '</div>' +
+
+        '</div>' +
+
+        '<p>' +
+        escapeHTML(commentText) +
+        '</p>';
+
+
+      result.onclick = function() {
+
+        window.location.href =
+          "profile.html";
+
+      };
+
+
+      results.appendChild(result);
+
+      found = true;
+
+    }
+
+  });
+
+
+
+  /* =========================
+     NO RESULTS
+  ========================= */
+
   if (!found) {
 
     results.innerHTML =
-      '<div class="empty">No results found 🔍</div>';
+      '<div class="empty">' +
+      'No results found 🔍' +
+      '</div>';
 
   }
 
 }
 
+
+
+/* =========================
+   SAFE TEXT
+========================= */
+
+function escapeHTML(text) {
+
+  return text
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+
+}
+
+
 </script>
 
 </body>
+
 </html>
