@@ -326,55 +326,7 @@ function createPost() {
 
 }
 
-  const text =
-    document
-      .getElementById("postText")
-      .value
-      .trim();
 
-
-  if (
-    text === "" &&
-    !selectedMedia
-  ) {
-
-    document
-      .getElementById("message")
-      .textContent =
-      "⚠️ Write something or select a photo/video.";
-
-    return;
-
-  }
-
-
-  /* SAVE TEXT */
-
-  localStorage.setItem(
-    "newPost",
-    text
-  );
-
-
-  /* SAVE MEDIA */
-
-  if (selectedMedia) {
-
-    const reader =
-      new FileReader();
-
-
-    reader.onload = function(e) {
-
-      localStorage.setItem(
-        "postMedia",
-        e.target.result
-      );
-
-      localStorage.setItem(
-        "postMediaType",
-        selectedMedia.type
-      );
 
 
       finishPost();
