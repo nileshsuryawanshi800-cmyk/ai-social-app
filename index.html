@@ -726,10 +726,17 @@ function loadPosts() {
         ) || 0;
 
 
-      likeButton.textContent =
-        liked
-        ? "❤️ Unlike " + count
-        : "🤍 Like " + count;
+      function updateLikeButton() {
+  const isLiked = postData.liked === true;
+  const count = Number(postData.likeCount) || 0;
+
+  likeButton.textContent =
+    isLiked
+      ? "❤️ Unlike " + count
+      : "🤍 Like " + count;
+}
+
+updateLikeButton();
 
     }
 
