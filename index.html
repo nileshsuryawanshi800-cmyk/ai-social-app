@@ -709,9 +709,7 @@ function loadPosts() {
       "actions";
 
 
-    
-
-/* LIKE */
+    /* LIKE */
 
 const likeButton =
   document.createElement("button");
@@ -746,15 +744,13 @@ likeButton.onclick = function(event) {
         0,
         (Number(postData.likeCount) || 0) - 1
       );
-
   }
 
   savePosts(posts);
 
   updateLikeButton();
-
 };
-  
+
 
 
     /* COMMENT */
