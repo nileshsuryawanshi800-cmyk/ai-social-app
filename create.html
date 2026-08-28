@@ -7,174 +7,214 @@
 <title>Create - AI Social</title>
 
 <style>
-* {
-  box-sizing: border-box;
-  font-family: Arial, sans-serif;
+*{
+  box-sizing:border-box;
+  font-family:Arial,sans-serif;
 }
 
-body {
-  margin: 0;
-  background: #f5f5f5;
-  color: #111;
-  padding-bottom: 30px;
+body{
+  margin:0;
+  background:#f5f5f5;
+  color:#111;
+  padding-bottom:30px;
 }
 
-header {
-  background: white;
-  padding: 16px;
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  border-bottom: 1px solid #ddd;
+header{
+  background:white;
+  padding:16px;
+  display:flex;
+  align-items:center;
+  gap:15px;
+  border-bottom:1px solid #ddd;
 }
 
-header button {
-  border: none;
-  background: none;
-  font-size: 28px;
+header button{
+  border:none;
+  background:none;
+  font-size:28px;
 }
 
-header h1 {
-  font-size: 20px;
+header h1{
+  font-size:20px;
 }
 
-.container {
-  padding: 18px;
+.container{
+  padding:18px;
 }
 
-textarea {
-  width: 100%;
-  height: 110px;
-  padding: 15px;
-  border: 1px solid #ddd;
-  border-radius: 15px;
-  font-size: 16px;
-  resize: none;
-  background: white;
+textarea{
+  width:100%;
+  height:110px;
+  padding:15px;
+  border:1px solid #ddd;
+  border-radius:15px;
+  font-size:16px;
+  resize:none;
+  background:white;
 }
 
-/* FILE BUTTONS */
+/* FILE BUTTON */
 
-.file-label {
-  display: block;
-  margin-top: 15px;
-  padding: 16px;
-  background: white;
-  border: 1px solid #ddd;
-  border-radius: 15px;
-  text-align: center;
-  cursor: pointer;
-  font-weight: bold;
+.file-label{
+  display:block;
+  margin-top:15px;
+  padding:16px;
+  background:white;
+  border:1px solid #ddd;
+  border-radius:15px;
+  text-align:center;
+  cursor:pointer;
+  font-weight:bold;
 }
 
 #mediaInput,
-#soundInput {
-  display: none;
+#soundInput{
+  display:none;
 }
 
 /* PREVIEW */
 
-.preview-box {
-  margin-top: 15px;
-  background: #000;
-  border-radius: 15px;
-  overflow: hidden;
-  text-align: center;
-  min-height: 10px;
+.preview-title{
+  margin-top:18px;
+  font-weight:bold;
+  font-size:17px;
 }
 
-#preview {
-  width: 100%;
-  max-height: 550px;
-  object-fit: contain;
-  display: none;
+.preview-box{
+  margin-top:10px;
+  background:#000;
+  border-radius:15px;
+  overflow:hidden;
+  text-align:center;
+  min-height:10px;
 }
 
-#videoPreview {
-  width: 100%;
-  max-height: 550px;
-  display: none;
+#preview{
+  width:100%;
+  max-height:600px;
+  object-fit:contain;
+  display:none;
+}
+
+#videoPreview{
+  width:100%;
+  max-height:600px;
+  display:none;
 }
 
 /* SOUND */
 
-.sound-box {
-  margin-top: 15px;
-  background: white;
-  padding: 15px;
-  border-radius: 15px;
-  display: none;
+.sound-box{
+  margin-top:15px;
+  background:white;
+  padding:15px;
+  border-radius:15px;
+  display:none;
 }
 
-.sound-title {
-  font-weight: bold;
-  margin-bottom: 10px;
+.sound-title{
+  font-weight:bold;
+  margin-bottom:10px;
 }
 
-#soundPreview {
-  width: 100%;
+#soundName{
+  font-size:14px;
+  color:#666;
+  margin-bottom:10px;
+  word-break:break-word;
 }
 
-/* EDIT TOOLS */
+#soundPreview{
+  width:100%;
+}
+
+.remove-sound-button{
+  width:100%;
+  margin-top:10px;
+  padding:12px;
+  border:1px solid #ddd;
+  border-radius:20px;
+  background:white;
+  color:red;
+  font-weight:bold;
+}
+
+/* TOOLS */
 
 .edit-tools,
 .filters,
-.crop-tools {
-  display: none;
-  margin-top: 12px;
-  gap: 8px;
-  flex-wrap: wrap;
+.crop-tools{
+  display:none;
+  margin-top:12px;
+  gap:8px;
+  flex-wrap:wrap;
 }
 
 .edit-tools button,
 .filters button,
-.crop-tools button {
-  border: 1px solid #ddd;
-  background: white;
-  padding: 10px 13px;
-  border-radius: 20px;
-  cursor: pointer;
+.crop-tools button{
+  border:1px solid #ddd;
+  background:white;
+  padding:10px 13px;
+  border-radius:20px;
+  cursor:pointer;
 }
 
-/* PUBLISH */
-
-.post-button {
-  width: 100%;
-  margin-top: 18px;
-  padding: 16px;
-  border: none;
-  border-radius: 25px;
-  background: #111;
-  color: white;
-  font-size: 17px;
-  font-weight: bold;
-  cursor: pointer;
+.change-button{
+  display:none;
+  width:100%;
+  margin-top:10px;
+  padding:13px;
+  border:1px solid #ddd;
+  border-radius:25px;
+  background:white;
+  font-size:15px;
 }
 
-.change-button,
-.remove-sound-button {
-  display: none;
-  width: 100%;
-  margin-top: 10px;
-  padding: 13px;
-  border: 1px solid #ddd;
-  border-radius: 25px;
-  background: white;
-  font-size: 15px;
+.post-button{
+  width:100%;
+  margin-top:18px;
+  padding:16px;
+  border:none;
+  border-radius:25px;
+  background:#111;
+  color:white;
+  font-size:17px;
+  font-weight:bold;
 }
 
-.remove-sound-button {
-  color: red;
+.message{
+  text-align:center;
+  margin-top:15px;
+  font-weight:bold;
 }
 
-.message {
-  text-align: center;
-  margin-top: 15px;
-  font-weight: bold;
+/* FINAL PREVIEW */
+
+.final-preview{
+  display:none;
+  margin-top:15px;
+  background:white;
+  padding:12px;
+  border-radius:15px;
 }
 
-#editCanvas {
-  display: none;
+.final-preview-title{
+  font-weight:bold;
+  margin-bottom:10px;
+}
+
+#finalCanvas{
+  width:100%;
+  max-height:600px;
+  object-fit:contain;
+  background:#000;
+  border-radius:12px;
+  display:block;
+}
+
+#editCanvas{
+  display:none;
 }
 </style>
 </head>
@@ -182,11 +222,8 @@ textarea {
 <body>
 
 <header>
-
-<button onclick="goHome()">←</button>
-
-<h1>➕ Create Post</h1>
-
+  <button onclick="goHome()">←</button>
+  <h1>➕ Create Post</h1>
 </header>
 
 <div class="container">
@@ -199,10 +236,7 @@ textarea {
 
 <!-- PHOTO / VIDEO -->
 
-<label
-  class="file-label"
-  for="mediaInput"
->
+<label class="file-label" for="mediaInput">
 📸 Select Photo or 🎥 Reel
 </label>
 
@@ -216,10 +250,7 @@ textarea {
 
 <!-- SOUND -->
 
-<label
-  class="file-label"
-  for="soundInput"
->
+<label class="file-label" for="soundInput">
 🎵 Add Sound / Music
 </label>
 
@@ -233,131 +264,140 @@ textarea {
 
 <!-- SOUND PREVIEW -->
 
-<div
-  class="sound-box"
-  id="soundBox"
->
+<div class="sound-box" id="soundBox">
 
-<div class="sound-title">
-🎵 Sound Preview
-</div>
+  <div class="sound-title">
+    🎵 Sound Preview
+  </div>
 
-<audio
-  id="soundPreview"
-  controls
-></audio>
+  <div id="soundName"></div>
 
-<button
-  class="remove-sound-button"
-  id="removeSoundButton"
-  onclick="removeSound()"
->
-❌ Remove Sound
-</button>
+  <audio
+    id="soundPreview"
+    controls
+  ></audio>
+
+  <button
+    class="remove-sound-button"
+    onclick="removeSound()"
+  >
+    ❌ Remove Sound
+  </button>
 
 </div>
 
 
-<!-- MEDIA PREVIEW -->
+<!-- ORIGINAL / LIVE PREVIEW -->
+
+<div class="preview-title" id="previewTitle" style="display:none;">
+  👀 Preview
+</div>
 
 <div class="preview-box">
 
-<img
-  id="preview"
-  alt="Photo preview"
->
+  <img
+    id="preview"
+    alt="Photo preview"
+  >
 
-<video
-  id="videoPreview"
-  controls
-  playsinline
-></video>
+  <video
+    id="videoPreview"
+    controls
+    playsinline
+  ></video>
 
 </div>
 
 
-<!-- PHOTO EDITING -->
+<!-- EDIT TOOLS -->
 
-<div
-  class="edit-tools"
-  id="editTools"
->
+<div class="edit-tools" id="editTools">
 
-<button onclick="rotatePhoto()">
-🔄 Rotate
-</button>
+  <button onclick="rotatePhoto()">
+    🔄 Rotate
+  </button>
 
-<button onclick="zoomIn()">
-🔍 Zoom +
-</button>
+  <button onclick="zoomIn()">
+    🔍 Zoom +
+  </button>
 
-<button onclick="zoomOut()">
-🔎 Zoom -
-</button>
+  <button onclick="zoomOut()">
+    🔎 Zoom -
+  </button>
 
-<button onclick="startCrop()">
-✂️ Crop
-</button>
+  <button onclick="startCrop()">
+    ✂️ Crop
+  </button>
 
-<button onclick="resetPhoto()">
-↩️ Reset
-</button>
+  <button onclick="resetPhoto()">
+    ↩️ Reset
+  </button>
 
 </div>
 
 
 <!-- CROP -->
 
-<div
-  class="crop-tools"
-  id="cropTools"
->
+<div class="crop-tools" id="cropTools">
 
-<button onclick="cropPhoto(1)">
-🔲 Square
-</button>
+  <button onclick="cropPhoto(1)">
+    🔲 Square
+  </button>
 
-<button onclick="cropPhoto(0.8)">
-📱 Portrait
-</button>
+  <button onclick="cropPhoto(0.8)">
+    📱 Portrait
+  </button>
 
-<button onclick="cropPhoto(16/9)">
-🖼️ Landscape
-</button>
+  <button onclick="cropPhoto(16/9)">
+    🖼️ Landscape
+  </button>
 
-<button onclick="cancelCrop()">
-❌ Cancel
-</button>
+  <button onclick="cancelCrop()">
+    ❌ Cancel
+  </button>
 
 </div>
 
 
 <!-- FILTERS -->
 
+<div class="filters" id="filters">
+
+  <button onclick="setFilter('none')">
+    Normal
+  </button>
+
+  <button onclick="setFilter('grayscale(1)')">
+    ⚫ B&W
+  </button>
+
+  <button onclick="setFilter('sepia(1)')">
+    🟤 Sepia
+  </button>
+
+  <button onclick="setFilter('brightness(1.3)')">
+    ☀️ Bright
+  </button>
+
+  <button onclick="setFilter('contrast(1.4)')">
+    ✨ Contrast
+  </button>
+
+</div>
+
+
+<!-- FINAL EDITED PREVIEW -->
+
 <div
-  class="filters"
-  id="filters"
+  class="final-preview"
+  id="finalPreview"
 >
 
-<button onclick="setFilter('none')">
-Normal
-</button>
+  <div class="final-preview-title">
+    ✅ Final Photo — This is what will be published
+  </div>
 
-<button onclick="setFilter('grayscale(1)')">
-⚫ B&W
-</button>
-
-<button onclick="setFilter('sepia(1)')">
-🟤 Sepia
-</button>
-
-<button onclick="setFilter('brightness(1.3)')">
-☀️ Bright
-</button>
-
-<button onclick="setFilter('contrast(1.4)')">
-✨ Contrast
-</button>
+  <canvas id="finalCanvas"></canvas>
 
 </div>
 
@@ -379,11 +419,7 @@ Normal
 </button>
 
 
-<p
-  id="message"
-  class="message"
-></p>
-
+<p id="message" class="message"></p>
 
 <canvas id="editCanvas"></canvas>
 
@@ -397,29 +433,21 @@ VARIABLES
 ========================= */
 
 let selectedMedia = null;
-
 let selectedSound = null;
 
 let originalImage = null;
 
 let rotation = 0;
-
 let zoom = 1;
-
 let currentFilter = "none";
-
-let cropRatio = null;
 
 
 /* =========================
 HOME
 ========================= */
 
-function goHome() {
-
-  window.location.href =
-    "index.html";
-
+function goHome(){
+  window.location.href="index.html";
 }
 
 
@@ -427,1251 +455,67 @@ function goHome() {
 SELECT MEDIA
 ========================= */
 
-function selectMedia(event) {
+function selectMedia(event){
 
-  const file =
-    event.target.files[0];
+  const file=event.target.files[0];
 
-  if (!file) return;
+  if(!file)return;
 
+  selectedMedia=file;
 
-  selectedMedia = file;
+  rotation=0;
+  zoom=1;
+  currentFilter="none";
 
-  rotation = 0;
+  const image=document.getElementById("preview");
+  const video=document.getElementById("videoPreview");
 
-  zoom = 1;
+  const tools=document.getElementById("editTools");
+  const filters=document.getElementById("filters");
 
-  currentFilter = "none";
+  const change=document.getElementById("changeButton");
 
-  cropRatio = null;
+  const title=document.getElementById("previewTitle");
 
+  image.style.display="none";
+  video.style.display="none";
 
-  const image =
-    document.getElementById("preview");
+  tools.style.display="none";
+  filters.style.display="none";
 
-  const video =
-    document.getElementById("videoPreview");
+  document.getElementById("cropTools").style.display="none";
 
-  const tools =
-    document.getElementById("editTools");
+  document.getElementById("finalPreview").style.display="none";
 
-  const filters =
-    document.getElementById("filters");
+  change.style.display="block";
+  title.style.display="block";
 
-  const change =
-    document.getElementById("changeButton");
-
-  const message =
-    document.getElementById("message");
-
-
-  image.style.display =
-    "none";
-
-  video.style.display =
-    "none";
-
-  tools.style.display =
-    "none";
-
-  filters.style.display =
-    "none";
-
-  document.getElementById(
-    "cropTools"
-  ).style.display =
-    "none";
-
-
-  change.style.display =
-    "block";
-
-
-  message.textContent =
-    "";
+  document.getElementById("message").textContent="";
 
 
   /* PHOTO */
 
-  if (
-    file.type.startsWith("image/")
-  ) {
+  if(file.type.startsWith("image/")){
 
-    const url =
-      URL.createObjectURL(file);
+    const url=URL.createObjectURL(file);
 
+    image.src=url;
+    image.style.display="block";
 
-    image.src =
-      url;
+    tools.style.display="flex";
+    filters.style.display="flex";
 
+    originalImage=new Image();
 
-    image.style.display =
-      "block";
+    originalImage.onload=function(){
 
+      applyPreview();
 
-    tools.style.display =
-      "flex";
+      createFinalPreview();
 
+    };
 
-    filters.style.display =
-      "flex";
+    originalImage.src=url;
 
-
-    originalImage =
-      new Image();
-
-
-    originalImage.onload =
-      function() {
-
-        applyPreview();
-
-      };
-
-
-    originalImage.src =
-      url;
-
-
-    message.textContent =
-      "✅ Photo ready. Edit it before publishing.";
-
-    return;
-
-  }
-
-
-  /* VIDEO */
-
-  if (
-    file.type.startsWith("video/")
-  ) {
-
-    video.src =
-      URL.createObjectURL(file);
-
-
-    video.style.display =
-      "block";
-
-
-    video.onloadedmetadata =
-      function() {
-
-        if (
-          video.duration > 60
-        ) {
-
-          alert(
-            "⚠️ Reel must be 1 minute or less."
-          );
-
-
-          selectedMedia =
-            null;
-
-
-          video.src =
-            "";
-
-
-          video.style.display =
-            "none";
-
-
-          change.style.display =
-            "none";
-
-
-          document.getElementById(
-            "mediaInput"
-          ).value =
-            "";
-
-
-          return;
-
-        }
-
-
-        message.textContent =
-          "✅ Reel ready. Maximum length: 1 minute.";
-
-      };
-
-
-    return;
-
-  }
-
-}
-
-
-/* =========================
-SELECT SOUND
-========================= */
-
-function selectSound(event) {
-
-  const file =
-    event.target.files[0];
-
-  if (!file) return;
-
-
-  if (
-    !file.type.startsWith("audio/")
-  ) {
-
-    alert(
-      "⚠️ Please select an audio file."
-    );
-
-    return;
-
-  }
-
-
-  /* SOUND SIZE LIMIT */
-
-  if (
-    file.size >
-    10 * 1024 * 1024
-  ) {
-
-    alert(
-      "⚠️ Please choose an audio file under 10 MB."
-    );
-
-    return;
-
-  }
-
-
-  selectedSound =
-    file;
-
-
-  const soundBox =
-    document.getElementById(
-      "soundBox"
-    );
-
-
-  const soundPreview =
-    document.getElementById(
-      "soundPreview"
-    );
-
-
-  const removeButton =
-    document.getElementById(
-      "removeSoundButton"
-    );
-
-
-  soundPreview.src =
-    URL.createObjectURL(
-      file
-    );
-
-
-  soundBox.style.display =
-    "block";
-
-
-  removeButton.style.display =
-    "block";
-
-
-  document.getElementById(
-    "message"
-  ).textContent =
-    "🎵 Sound ready. Press ▶️ to preview it before publishing.";
-
-}
-
-
-/* =========================
-REMOVE SOUND
-========================= */
-
-function removeSound() {
-
-  selectedSound =
-    null;
-
-
-  const soundPreview =
-    document.getElementById(
-      "soundPreview"
-    );
-
-
-  soundPreview.pause();
-
-  soundPreview.src =
-    "";
-
-
-  document.getElementById(
-    "soundBox"
-  ).style.display =
-    "none";
-
-
-  document.getElementById(
-    "removeSoundButton"
-  ).style.display =
-    "none";
-
-
-  document.getElementById(
-    "soundInput"
-  ).value =
-    "";
-
-
-}
-
-
-/* =========================
-PHOTO PREVIEW
-========================= */
-
-function applyPreview() {
-
-  const image =
-    document.getElementById(
-      "preview"
-    );
-
-
-  image.style.transform =
-    "rotate(" +
-    rotation +
-    "deg) scale(" +
-    zoom +
-    ")";
-
-
-  image.style.filter =
-    currentFilter;
-
-}
-
-
-/* =========================
-ROTATE
-========================= */
-
-function rotatePhoto() {
-
-  rotation += 90;
-
-
-  if (
-    rotation >= 360
-  ) {
-
-    rotation = 0;
-
-  }
-
-
-  applyPreview();
-
-}
-
-
-/* =========================
-ZOOM
-========================= */
-
-function zoomIn() {
-
-  zoom += 0.1;
-
-
-  if (
-    zoom > 2
-  ) {
-
-    zoom = 2;
-
-  }
-
-
-  applyPreview();
-
-}
-
-
-function zoomOut() {
-
-  zoom -= 0.1;
-
-
-  if (
-    zoom < 0.5
-  ) {
-
-    zoom = 0.5;
-
-  }
-
-
-  applyPreview();
-
-}
-
-
-/* =========================
-FILTER
-========================= */
-
-function setFilter(filter) {
-
-  currentFilter =
-    filter;
-
-  applyPreview();
-
-}
-
-
-/* =========================
-CROP
-========================= */
-
-function startCrop() {
-
-  if (!selectedMedia) return;
-
-
-  if (
-    !selectedMedia.type.startsWith(
-      "image/"
-    )
-  ) {
-
-    alert(
-      "✂️ Crop is available for photos."
-    );
-
-    return;
-
-  }
-
-
-  document.getElementById(
-    "cropTools"
-  ).style.display =
-    "flex";
-
-}
-
-
-function cancelCrop() {
-
-  document.getElementById(
-    "cropTools"
-  ).style.display =
-    "none";
-
-}
-
-
-/* =========================
-REAL CROP
-========================= */
-
-function cropPhoto(ratio) {
-
-  if (!originalImage) return;
-
-
-  const canvas =
-    document.getElementById(
-      "editCanvas"
-    );
-
-
-  const ctx =
-    canvas.getContext("2d");
-
-
-  let width =
-    originalImage.width;
-
-
-  let height =
-    originalImage.height;
-
-
-  const originalRatio =
-    width / height;
-
-
-  let cropWidth;
-
-  let cropHeight;
-
-
-  if (
-    originalRatio > ratio
-  ) {
-
-    cropHeight =
-      height;
-
-    cropWidth =
-      height * ratio;
-
-  }
-
-  else {
-
-    cropWidth =
-      width;
-
-    cropHeight =
-      width / ratio;
-
-  }
-
-
-  const x =
-    (width - cropWidth) / 2;
-
-
-  const y =
-    (height - cropHeight) / 2;
-
-
-  canvas.width =
-    cropWidth;
-
-
-  canvas.height =
-    cropHeight;
-
-
-  ctx.drawImage(
-
-    originalImage,
-
-    x,
-    y,
-    cropWidth,
-    cropHeight,
-
-    0,
-    0,
-    cropWidth,
-    cropHeight
-
-  );
-
-
-  canvas.toBlob(
-
-    function(blob) {
-
-      if (!blob) return;
-
-
-      selectedMedia =
-        new File(
-
-          [blob],
-
-          "cropped-photo.jpg",
-
-          {
-            type:
-              "image/jpeg"
-          }
-
-        );
-
-
-      const url =
-        URL.createObjectURL(
-          selectedMedia
-        );
-
-
-      originalImage =
-        new Image();
-
-
-      originalImage.onload =
-        function() {
-
-          rotation = 0;
-
-          zoom = 1;
-
-          applyPreview();
-
-        };
-
-
-      originalImage.src =
-        url;
-
-
-      document.getElementById(
-        "preview"
-      ).src =
-        url;
-
-
-      document.getElementById(
-        "cropTools"
-      ).style.display =
-        "none";
-
-
-      document.getElementById(
-        "message"
-      ).textContent =
-        "✅ Crop applied.";
-
-    },
-
-    "image/jpeg",
-
-    0.92
-
-  );
-
-}
-
-
-/* =========================
-RESET
-========================= */
-
-function resetPhoto() {
-
-  if (!selectedMedia) return;
-
-  if (!originalImage) return;
-
-
-  rotation = 0;
-
-  zoom = 1;
-
-  currentFilter =
-    "none";
-
-
-  applyPreview();
-
-}
-
-
-/* =========================
-CHANGE MEDIA
-========================= */
-
-function changeMedia() {
-
-  document.getElementById(
-    "mediaInput"
-  ).click();
-
-}
-
-
-/* =========================
-GET POSTS
-========================= */
-
-function getPosts() {
-
-  try {
-
-    return JSON.parse(
-      localStorage.getItem(
-        "posts"
-      ) || "[]"
-    );
-
-  }
-
-  catch(error) {
-
-    return [];
-
-  }
-
-}
-
-
-/* =========================
-SAVE POSTS
-========================= */
-
-function savePosts(posts) {
-
-  localStorage.setItem(
-    "posts",
-    JSON.stringify(posts)
-  );
-
-}
-
-
-/* =========================
-FILE TO DATA URL
-========================= */
-
-function fileToDataURL(file) {
-
-  return new Promise(
-    function(resolve, reject) {
-
-      const reader =
-        new FileReader();
-
-
-      reader.onload =
-        function(event) {
-
-          resolve(
-            event.target.result
-          );
-
-        };
-
-
-      reader.onerror =
-        reject;
-
-
-      reader.readAsDataURL(file);
-
-    }
-  );
-
-}
-
-
-/* =========================
-CREATE EDITED IMAGE
-========================= */
-
-function createEditedImage() {
-
-  return new Promise(
-    function(resolve) {
-
-      if (!originalImage) {
-
-        resolve(null);
-
-        return;
-
-      }
-
-
-      const canvas =
-        document.getElementById(
-          "editCanvas"
-        );
-
-
-      const ctx =
-        canvas.getContext("2d");
-
-
-      let width =
-        originalImage.width;
-
-
-      let height =
-        originalImage.height;
-
-
-      const scale =
-        zoom;
-
-
-      const angle =
-        rotation *
-        Math.PI /
-        180;
-
-
-      const sin =
-        Math.abs(
-          Math.sin(angle)
-        );
-
-
-      const cos =
-        Math.abs(
-          Math.cos(angle)
-        );
-
-
-      const newWidth =
-        width * cos +
-        height * sin;
-
-
-      const newHeight =
-        width * sin +
-        height * cos;
-
-
-      canvas.width =
-        newWidth * scale;
-
-
-      canvas.height =
-        newHeight * scale;
-
-
-      ctx.save();
-
-
-      ctx.translate(
-
-        canvas.width / 2,
-
-        canvas.height / 2
-
-      );
-
-
-      ctx.rotate(angle);
-
-
-      ctx.scale(
-        scale,
-        scale
-      );
-
-
-      ctx.filter =
-        currentFilter;
-
-
-      ctx.drawImage(
-
-        originalImage,
-
-        -width / 2,
-
-        -height / 2,
-
-        width,
-
-        height
-
-      );
-
-
-      ctx.restore();
-
-
-      canvas.toBlob(
-
-        function(blob) {
-
-          resolve(blob);
-
-        },
-
-        "image/jpeg",
-
-        0.92
-
-      );
-
-    }
-  );
-
-}
-
-
-/* =========================
-PUBLISH
-========================= */
-
-async function publishPost() {
-
-  const text =
-    document
-      .getElementById(
-        "postText"
-      )
-      .value
-      .trim();
-
-
-  const message =
-    document.getElementById(
-      "message"
-    );
-
-
-  if (
-    text === "" &&
-    !selectedMedia
-  ) {
-
-    message.textContent =
-      "⚠️ Write a caption or select media.";
-
-    return;
-
-  }
-
-
-  message.textContent =
-    "⏳ Preparing your post...";
-
-
-  const posts =
-    getPosts();
-
-
-  const username =
-    localStorage.getItem(
-      "username"
-    ) ||
-    "You";
-
-
-  const profileImage =
-    localStorage.getItem(
-      "profileImage"
-    ) ||
-    null;
-
-
-  /* SOUND */
-
-  let soundData =
-    null;
-
-
-  if (selectedSound) {
-
-    try {
-
-      soundData =
-        await fileToDataURL(
-          selectedSound
-        );
-
-    }
-
-    catch(error) {
-
-      console.log(
-        "Sound error:",
-        error
-      );
-
-    }
-
-  }
-
-
-  /* =========================
-  TEXT ONLY
-  ========================= */
-
-  if (!selectedMedia) {
-
-    posts.unshift({
-
-      id:
-        Date.now(),
-
-      username:
-        username,
-
-      profileImage:
-        profileImage,
-
-      text:
-        text,
-
-      media:
-        null,
-
-      mediaType:
-        null,
-
-      sound:
-        soundData,
-
-      soundType:
-        selectedSound
-          ? selectedSound.type
-          : null,
-
-      liked:
-        false,
-
-      likeCount:
-        0,
-
-      comments:
-        [],
-
-      createdAt:
-        Date.now()
-
-    });
-
-
-    savePosts(posts);
-
-    finish();
-
-    return;
-
-  }
-
-
-  /* =========================
-  VIDEO
-  ========================= */
-
-  if (
-    selectedMedia.type.startsWith(
-      "video/"
-    )
-  ) {
-
-    const video =
-      document.getElementById(
-        "videoPreview"
-      );
-
-
-    if (
-      video.duration &&
-      video.duration > 60
-    ) {
-
-      message.textContent =
-        "⚠️ Reel must be 1 minute or less.";
-
-      return;
-
-    }
-
-
-    if (
-      selectedMedia.size >
-      20 * 1024 * 1024
-    ) {
-
-      message.textContent =
-        "⚠️ Please choose a Reel under 20 MB.";
-
-      return;
-
-    }
-
-
-    try {
-
-      const videoData =
-        await fileToDataURL(
-          selectedMedia
-        );
-
-
-      posts.unshift({
-
-        id:
-          Date.now(),
-
-        username:
-          username,
-
-        profileImage:
-          profileImage,
-
-        text:
-          text,
-
-        media:
-          videoData,
-
-        mediaType:
-          selectedMedia.type,
-
-        sound:
-          soundData,
-
-        soundType:
-          selectedSound
-            ? selectedSound.type
-            : null,
-
-        liked:
-          false,
-
-        likeCount:
-          0,
-
-        comments:
-          [],
-
-        createdAt:
-          Date.now()
-
-      });
-
-
-      savePosts(posts);
-
-      finish();
-
-    }
-
-    catch(error) {
-
-      message.textContent =
-        "⚠️ Could not save the Reel.";
-
-    }
-
-
-    return;
-
-  }
-
-
-  /* =========================
-  PHOTO
-  ========================= */
-
-  message.textContent =
-    "⏳ Applying your photo edits...";
-
-
-  const editedBlob =
-    await createEditedImage();
-
-
-  if (!editedBlob) {
-
-    message.textContent =
-      "⚠️ Could not edit the photo.";
-
-    return;
-
-  }
-
-
-  try {
-
-    const photoData =
-      await fileToDataURL(
-        editedBlob
-      );
-
-
-    posts.unshift({
-
-      id:
-        Date.now(),
-
-      username:
-        username,
-
-      profileImage:
-        profileImage,
-
-      text:
-        text,
-
-      media:
-        photoData,
-
-      mediaType:
-        "image/jpeg",
-
-      sound:
-        soundData,
-
-      soundType:
-        selectedSound
-          ? selectedSound.type
-          : null,
-
-      liked:
-        false,
-
-      likeCount:
-        0,
-
-      comments:
-        [],
-
-      createdAt:
-        Date.now()
-
-    });
-
-
-    savePosts(posts);
-
-    finish();
-
-  }
-
-  catch(error) {
-
-    message.textContent =
-      "⚠️ Photo or sound is too large for browser storage.";
-
-  }
-
-}
-
-
-/* =========================
-FINISH
-========================= */
-
-function finish() {
-
-  document.getElementById(
-    "message"
-  ).textContent =
-    "✅ Published successfully!";
-
-
-  setTimeout(
-
-    function() {
-
-      window.location.href =
-        "index.html";
-
-    },
-
-    700
-
-  );
-
-}
-
-</script>
-
-</body>
-</html>
+    document.getElementById("message").textContent=
+      "✅ Photo ready. Edit
