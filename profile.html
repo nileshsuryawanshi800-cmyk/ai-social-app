@@ -418,41 +418,123 @@ function loadProfile() {
     .textContent = bio;
 
 
-  const savedPost =
-    localStorage.getItem("newPost");
-
-  const posts =
+    const posts =
     document.getElementById("myPosts");
 
   const count =
     document.getElementById("postCount");
 
-
   posts.innerHTML = "";
 
+  let savedPosts = [];
 
-  if (savedPost) {
+  try {
+    savedPosts =
+      JSON.parse(
+        localStorage.getItem("posts") || "[]"
+      );
+  } catch (error) {
+    savedPosts = [];
+  }
 
-    count.textContent = "1";
+  /* Show number of posts */
 
+  count.textContent =
+    savedPosts.length;
+
+
+  /* No posts */
+
+  if (savedPosts.length === 0) {
+
+    posts.innerHTML =
+      "<p style='text-align:center;color:#777;'>No posts yet.</p>";
+
+  }
+
+
+  /* Show all posts */
+
+  savedPosts.forEach(function(savedPost) {
 
     const post =
       document.createElement("div");
 
     post.className = "post";
 
-    post.textContent = savedPost;
+
+    /* POST TEXT */
+
+    if (savedPost.text) {
+
+      const text =
+        document.createElement("p");
+
+      text.textContent =
+        savedPost.text;
+
+      text.style.marginBottom = "12px";
+
+      post.appendChild(text);
+
+    }
+
+
+    /* PHOTO */
+
+    if (
+      savedPost.media &&
+      savedPost.mediaType &&
+      savedPost.mediaType.startsWith("image/")
+    ) {
+
+      const image =
+        document.createElement("img");
+
+      image.src =
+        savedPost.media;
+
+      image.style.width = "100%";
+      image.style.maxHeight = "500px";
+      image.style.objectFit = "contain";
+      image.style.borderRadius = "12px";
+      image.style.background = "#000";
+
+      post.appendChild(image);
+
+    }
+
+
+    /* VIDEO */
+
+    if (
+      savedPost.media &&
+      savedPost.mediaType &&
+      savedPost.mediaType.startsWith("video/")
+    ) {
+
+      const video =
+        document.createElement("video");
+
+      video.src =
+        savedPost.media;
+
+      video.controls = true;
+      video.playsInline = true;
+
+      video.style.width = "100%";
+      video.style.maxHeight = "500px";
+      video.style.borderRadius = "12px";
+      video.style.background = "#000";
+
+      post.appendChild(video);
+
+    }
+
 
     posts.appendChild(post);
 
-  } else {
-
-    count.textContent = "0";
-
-    posts.innerHTML =
-      "<p style='text-align:center;color:#777;'>No posts yet.</p>";
-
-  }
+  });
 
 
   /* Load saved profile picture */
