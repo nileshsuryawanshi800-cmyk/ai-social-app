@@ -7,7 +7,6 @@
 <title>Create - AI Social</title>
 
 <style>
-
 * {
   box-sizing: border-box;
   font-family: Arial, sans-serif;
@@ -32,6 +31,7 @@ header button {
   border: none;
   background: none;
   font-size: 26px;
+  cursor: pointer;
 }
 
 header h1 {
@@ -53,8 +53,6 @@ textarea {
   background: white;
 }
 
-/* SELECT */
-
 .file-label {
   display: block;
   margin-top: 15px;
@@ -69,8 +67,6 @@ textarea {
 #mediaInput {
   display: none;
 }
-
-/* PREVIEW BOX */
 
 .preview-box {
   margin-top: 15px;
@@ -93,26 +89,7 @@ textarea {
   display: none;
 }
 
-/* EDIT BUTTONS */
-
-.edit-tools {
-  display: none;
-  margin-top: 12px;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-
-.edit-tools button {
-  border: none;
-  background: white;
-  padding: 10px 14px;
-  border-radius: 20px;
-  cursor: pointer;
-  border: 1px solid #ddd;
-}
-
-/* FILTERS */
-
+.edit-tools,
 .filters {
   display: none;
   margin-top: 12px;
@@ -120,14 +97,15 @@ textarea {
   flex-wrap: wrap;
 }
 
+.edit-tools button,
 .filters button {
   border: none;
-  padding: 9px 13px;
-  border-radius: 18px;
+  background: white;
+  padding: 10px 14px;
+  border-radius: 20px;
   cursor: pointer;
+  border: 1px solid #ddd;
 }
-
-/* PUBLISH */
 
 .post-button {
   width: 100%;
@@ -159,121 +137,67 @@ textarea {
   margin-top: 15px;
   font-weight: bold;
 }
-
 </style>
 </head>
 
 <body>
 
 <header>
-
-<button onclick="goHome()">←</button>
-
-<h1>➕ Create Post</h1>
-
+  <button onclick="goHome()">←</button>
+  <h1>➕ Create Post</h1>
 </header>
-
 
 <div class="container">
 
 <textarea
-id="postText"
-placeholder="Write a caption..."
+  id="postText"
+  placeholder="Write a caption..."
 ></textarea>
 
-
 <label
-class="file-label"
-for="mediaInput"
-id="selectLabel"
+  class="file-label"
+  for="mediaInput"
 >
 📸 Select Photo or 🎥 Reel
 </label>
 
-
 <input
-id="mediaInput"
-type="file"
-accept="image/*,video/*"
-onchange="selectMedia(event)"
+  id="mediaInput"
+  type="file"
+  accept="image/*,video/*"
+  onchange="selectMedia(event)"
 >
-
-
-<!-- PREVIEW -->
 
 <div class="preview-box">
 
-<img
-id="preview"
-alt="Photo preview"
->
+<img id="preview" alt="Photo preview">
 
 <video
-id="videoPreview"
-controls
-playsinline
+  id="videoPreview"
+  controls
+  playsinline
 ></video>
 
 </div>
 
-
-<!-- EDIT TOOLS -->
-
 <div
-class="edit-tools"
-id="editTools"
+  class="edit-tools"
+  id="editTools"
 >
 
-<button onclick="rotatePhoto()">
-🔄 Rotate
-</button>
-  
-  <button onclick="startCrop()">
-✂️ Crop
-</button>
+<button onclick="rotatePhoto()">🔄 Rotate</button>
 
-<button onclick="zoomIn()">
-🔍 Zoom +
-</button>
+<button onclick="zoomIn()">🔍 Zoom +</button>
 
-<button onclick="zoomOut()">
-🔎 Zoom -
-</button>
+<button onclick="zoomOut()">🔎 Zoom -</button>
 
-<button onclick="resetPhoto()">
-↩️ Reset
-</button>
+<button onclick="resetPhoto()">↩️ Reset</button>
 
 </div>
 
-
-<!-- FILTERS -->
 <div
-id="cropTools"
-style="display:none;margin-top:12px;gap:8px;flex-wrap:wrap;"
->
-
-<button onclick="cropSquare()">
-🔲 Square
-</button>
-
-<button onclick="cropPortrait()">
-📱 Portrait
-</button>
-
-<button onclick="cropLandscape()">
-🖼️ Landscape
-</button>
-
-<button onclick="cancelCrop()">
-❌ Cancel
-</button>
-
-</div>
-  
-<div
-class="filters"
-id="filters"
+  class="filters"
+  id="filters"
 >
 
 <button onclick="filterPhoto('none')">
@@ -298,43 +222,32 @@ Normal
 
 </div>
 
-
 <button
-class="change-button"
-id="changeButton"
-onclick="changeMedia()"
+  class="change-button"
+  id="changeButton"
+  onclick="changeMedia()"
 >
 🔄 Change Photo / Video
 </button>
 
-
 <button
-class="post-button"
-onclick="publishPost()"
+  class="post-button"
+  onclick="publishPost()"
 >
 📤 Publish
 </button>
 
-
 <p
-id="message"
-class="message"
+  id="message"
+  class="message"
 ></p>
 
 </div>
 
-
 <script>
 
-/* =========================
-   HOME
-========================= */
-
 function goHome() {
-
-  window.location.href =
-    "index.html";
-
+  window.location.href = "index.html";
 }
 
 
@@ -357,16 +270,11 @@ let currentFilter = "none";
 
 function selectMedia(event) {
 
-  const file =
-    event.target.files[0];
+  const file = event.target.files[0];
 
-  if (!file) {
-    return;
-  }
-
+  if (!file) return;
 
   selectedMedia = file;
-
 
   const image =
     document.getElementById("preview");
@@ -386,30 +294,24 @@ function selectMedia(event) {
   const message =
     document.getElementById("message");
 
-
   image.style.display = "none";
-
   video.style.display = "none";
 
   tools.style.display = "none";
-
   filters.style.display = "none";
+
+  change.style.display = "block";
+
+  rotation = 0;
+  zoom = 1;
+  currentFilter = "none";
 
   message.textContent = "";
 
 
-  rotation = 0;
-
-  zoom = 1;
-
-  currentFilter = "none";
-
-
   /* PHOTO */
 
-  if (
-    file.type.startsWith("image/")
-  ) {
+  if (file.type.startsWith("image/")) {
 
     image.src =
       URL.createObjectURL(file);
@@ -423,13 +325,10 @@ function selectMedia(event) {
     filters.style.display =
       "flex";
 
-    change.style.display =
-      "block";
-
     applyPhotoStyle();
 
     message.textContent =
-      "✅ Photo ready. Edit it before publishing.";
+      "✅ Photo ready. Edit before publishing.";
 
     return;
   }
@@ -437,19 +336,13 @@ function selectMedia(event) {
 
   /* VIDEO */
 
-  if (
-    file.type.startsWith("video/")
-  ) {
+  if (file.type.startsWith("video/")) {
 
     video.src =
       URL.createObjectURL(file);
 
     video.style.display =
       "block";
-
-    change.style.display =
-      "block";
-
 
     video.onloadedmetadata =
       function() {
@@ -477,23 +370,19 @@ function selectMedia(event) {
           return;
         }
 
-
         message.textContent =
-          "✅ Reel ready. Preview it before publishing.";
-
+          "✅ Reel ready. Maximum length: 1 minute.";
       };
 
     return;
   }
 
-
   selectedMedia = null;
-
 }
 
 
 /* =========================
-   PHOTO ROTATE
+   PHOTO EDITING
 ========================= */
 
 function rotatePhoto() {
@@ -505,13 +394,8 @@ function rotatePhoto() {
   }
 
   applyPhotoStyle();
-
 }
 
-
-/* =========================
-   ZOOM IN
-========================= */
 
 function zoomIn() {
 
@@ -522,13 +406,8 @@ function zoomIn() {
   }
 
   applyPhotoStyle();
-
 }
 
-
-/* =========================
-   ZOOM OUT
-========================= */
 
 function zoomOut() {
 
@@ -539,244 +418,16 @@ function zoomOut() {
   }
 
   applyPhotoStyle();
-
 }
 
-/* =========================
-   CROP
-========================= */
-
-function startCrop() {
-
-  if (!selectedMedia) {
-    return;
-  }
-
-  if (!selectedMedia.type.startsWith("image/")) {
-
-    alert("✂️ Crop is available for photos.");
-
-    return;
-  }
-
-  document.getElementById(
-    "cropTools"
-  ).style.display = "flex";
-
-}
-
-
-/* =========================
-   CROP SQUARE
-========================= */
-
-function cropSquare() {
-
-  cropImage(1);
-
-}
-
-
-/* =========================
-   CROP PORTRAIT
-========================= */
-
-function cropPortrait() {
-
-  cropImage(4 / 5);
-
-}
-
-
-/* =========================
-   CROP LANDSCAPE
-========================= */
-
-function cropLandscape() {
-
-  cropImage(16 / 9);
-
-}
-
-
-/* =========================
-   CROP IMAGE
-========================= */
-
-function cropImage(ratio) {
-
-  const image =
-    document.getElementById("preview");
-
-  if (!image.src) {
-    return;
-  }
-
-
-  const canvas =
-    document.createElement("canvas");
-
-  const ctx =
-    canvas.getContext("2d");
-
-
-  const img =
-    new Image();
-
-
-  img.onload = function() {
-
-    let sourceWidth =
-      img.width;
-
-    let sourceHeight =
-      img.height;
-
-
-    const sourceRatio =
-      sourceWidth / sourceHeight;
-
-
-    let cropWidth;
-    let cropHeight;
-
-
-    if (sourceRatio > ratio) {
-
-      cropHeight =
-        sourceHeight;
-
-      cropWidth =
-        sourceHeight * ratio;
-
-    } else {
-
-      cropWidth =
-        sourceWidth;
-
-      cropHeight =
-        sourceWidth / ratio;
-
-    }
-
-
-    const sourceX =
-      (sourceWidth - cropWidth) / 2;
-
-    const sourceY =
-      (sourceHeight - cropHeight) / 2;
-
-
-    canvas.width =
-      cropWidth;
-
-    canvas.height =
-      cropHeight;
-
-
-    ctx.drawImage(
-
-      img,
-
-      sourceX,
-      sourceY,
-
-      cropWidth,
-      cropHeight,
-
-      0,
-      0,
-      cropWidth,
-      cropHeight
-
-    );
-
-
-    image.src =
-      canvas.toDataURL(
-        "image/jpeg",
-        0.92
-      );
-
-
-    image.style.display =
-      "block";
-
-
-    /* Replace selected photo */
-
-    canvas.toBlob(
-      function(blob) {
-
-        if (!blob) {
-          return;
-        }
-
-
-        selectedMedia =
-          new File(
-            [blob],
-            "edited-photo.jpg",
-            {
-              type:
-                "image/jpeg"
-            }
-          );
-
-      },
-      "image/jpeg",
-      0.92
-    );
-
-
-    document.getElementById(
-      "cropTools"
-    ).style.display = "none";
-
-
-    document.getElementById(
-      "message"
-    ).textContent =
-      "✅ Photo cropped. You can continue editing.";
-
-  };
-
-
-  img.src =
-    image.src;
-
-}
-
-
-/* =========================
-   CANCEL CROP
-========================= */
-
-function cancelCrop() {
-
-  document.getElementById(
-    "cropTools"
-  ).style.display = "none";
-
-  }
-  
-/* =========================
-   FILTER
-========================= */
 
 function filterPhoto(filter) {
 
-  currentFilter =
-    filter;
+  currentFilter = filter;
 
   applyPhotoStyle();
-
 }
 
-
-/* =========================
-   APPLY PHOTO STYLE
-========================= */
 
 function applyPhotoStyle() {
 
@@ -792,13 +443,8 @@ function applyPhotoStyle() {
 
   image.style.filter =
     currentFilter;
-
 }
 
-
-/* =========================
-   RESET
-========================= */
 
 function resetPhoto() {
 
@@ -806,11 +452,9 @@ function resetPhoto() {
 
   zoom = 1;
 
-  currentFilter =
-    "none";
+  currentFilter = "none";
 
   applyPhotoStyle();
-
 }
 
 
@@ -820,9 +464,9 @@ function resetPhoto() {
 
 function changeMedia() {
 
-  document.getElementById(
-    "mediaInput"
-  ).click();
+  document
+    .getElementById("mediaInput")
+    .click();
 
 }
 
@@ -836,15 +480,28 @@ function getPosts() {
   try {
 
     return JSON.parse(
-      localStorage.getItem("posts") ||
-      "[]"
+      localStorage.getItem("posts") || "[]"
     );
 
-  } catch (error) {
+  } catch(error) {
 
     return [];
 
   }
+
+}
+
+
+/* =========================
+   SAVE POSTS
+========================= */
+
+function savePosts(posts) {
+
+  localStorage.setItem(
+    "posts",
+    JSON.stringify(posts)
+  );
 
 }
 
@@ -861,11 +518,8 @@ function publishPost() {
       .value
       .trim();
 
-
   const message =
-    document.getElementById(
-      "message"
-    );
+    document.getElementById("message");
 
 
   if (
@@ -881,20 +535,17 @@ function publishPost() {
   }
 
 
-  /* VIDEO LIMIT */
+  /* VIDEO CHECK */
 
   if (
     selectedMedia &&
-    selectedMedia.type.startsWith(
-      "video/"
-    )
+    selectedMedia.type.startsWith("video/")
   ) {
 
     const video =
       document.getElementById(
         "videoPreview"
       );
-
 
     if (
       video.duration &&
@@ -905,7 +556,6 @@ function publishPost() {
         "⚠️ Reel must be 1 minute or less.";
 
       return;
-
     }
 
   }
@@ -920,15 +570,13 @@ function publishPost() {
 
 
   const username =
-    localStorage.getItem(
-      "username"
-    ) || "You";
+    localStorage.getItem("username") ||
+    "You";
 
 
   const profileImage =
-    localStorage.getItem(
-      "profileImage"
-    ) || null;
+    localStorage.getItem("profileImage") ||
+    null;
 
 
   /* TEXT ONLY */
@@ -961,17 +609,15 @@ function publishPost() {
 
     });
 
-
     savePosts(posts);
 
     finish();
 
     return;
-
   }
 
 
-  /* READ MEDIA */
+  /* MEDIA */
 
   const reader =
     new FileReader();
@@ -980,11 +626,10 @@ function publishPost() {
   reader.onload =
     function(event) {
 
-      const mediaData =
-        event.target.result;
+      const postsNow =
+        getPosts();
 
-
-      posts.unshift({
+      postsNow.unshift({
 
         id: Date.now(),
 
@@ -996,7 +641,7 @@ function publishPost() {
         text: text,
 
         media:
-          mediaData,
+          event.target.result,
 
         mediaType:
           selectedMedia.type,
@@ -1015,14 +660,14 @@ function publishPost() {
 
       try {
 
-        savePosts(posts);
+        savePosts(postsNow);
 
         finish();
 
-      } catch (error) {
+      } catch(error) {
 
         message.textContent =
-          "⚠️ File is too large for browser storage. We will move large Reels to IndexedDB next.";
+          "⚠️ This file is too large for browser storage.";
 
       }
 
@@ -1033,27 +678,13 @@ function publishPost() {
     function() {
 
       message.textContent =
-        "⚠️ Could not read the file.";
+        "⚠️ Could not read this file.";
 
     };
 
 
   reader.readAsDataURL(
     selectedMedia
-  );
-
-}
-
-
-/* =========================
-   SAVE
-========================= */
-
-function savePosts(posts) {
-
-  localStorage.setItem(
-    "posts",
-    JSON.stringify(posts)
   );
 
 }
@@ -1086,4 +717,4 @@ function finish() {
 </script>
 
 </body>
-  </html>
+</html>
