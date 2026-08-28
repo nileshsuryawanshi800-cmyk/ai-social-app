@@ -542,7 +542,224 @@ function zoomOut() {
 
 }
 
+/* =========================
+   CROP
+========================= */
 
+function startCrop() {
+
+  if (!selectedMedia) {
+    return;
+  }
+
+  if (!selectedMedia.type.startsWith("image/")) {
+
+    alert("✂️ Crop is available for photos.");
+
+    return;
+  }
+
+  document.getElementById(
+    "cropTools"
+  ).style.display = "flex";
+
+}
+
+
+/* =========================
+   CROP SQUARE
+========================= */
+
+function cropSquare() {
+
+  cropImage(1);
+
+}
+
+
+/* =========================
+   CROP PORTRAIT
+========================= */
+
+function cropPortrait() {
+
+  cropImage(4 / 5);
+
+}
+
+
+/* =========================
+   CROP LANDSCAPE
+========================= */
+
+function cropLandscape() {
+
+  cropImage(16 / 9);
+
+}
+
+
+/* =========================
+   CROP IMAGE
+========================= */
+
+function cropImage(ratio) {
+
+  const image =
+    document.getElementById("preview");
+
+  if (!image.src) {
+    return;
+  }
+
+
+  const canvas =
+    document.createElement("canvas");
+
+  const ctx =
+    canvas.getContext("2d");
+
+
+  const img =
+    new Image();
+
+
+  img.onload = function() {
+
+    let sourceWidth =
+      img.width;
+
+    let sourceHeight =
+      img.height;
+
+
+    const sourceRatio =
+      sourceWidth / sourceHeight;
+
+
+    let cropWidth;
+    let cropHeight;
+
+
+    if (sourceRatio > ratio) {
+
+      cropHeight =
+        sourceHeight;
+
+      cropWidth =
+        sourceHeight * ratio;
+
+    } else {
+
+      cropWidth =
+        sourceWidth;
+
+      cropHeight =
+        sourceWidth / ratio;
+
+    }
+
+
+    const sourceX =
+      (sourceWidth - cropWidth) / 2;
+
+    const sourceY =
+      (sourceHeight - cropHeight) / 2;
+
+
+    canvas.width =
+      cropWidth;
+
+    canvas.height =
+      cropHeight;
+
+
+    ctx.drawImage(
+
+      img,
+
+      sourceX,
+      sourceY,
+
+      cropWidth,
+      cropHeight,
+
+      0,
+      0,
+      cropWidth,
+      cropHeight
+
+    );
+
+
+    image.src =
+      canvas.toDataURL(
+        "image/jpeg",
+        0.92
+      );
+
+
+    image.style.display =
+      "block";
+
+
+    /* Replace selected photo */
+
+    canvas.toBlob(
+      function(blob) {
+
+        if (!blob) {
+          return;
+        }
+
+
+        selectedMedia =
+          new File(
+            [blob],
+            "edited-photo.jpg",
+            {
+              type:
+                "image/jpeg"
+            }
+          );
+
+      },
+      "image/jpeg",
+      0.92
+    );
+
+
+    document.getElementById(
+      "cropTools"
+    ).style.display = "none";
+
+
+    document.getElementById(
+      "message"
+    ).textContent =
+      "✅ Photo cropped. You can continue editing.";
+
+  };
+
+
+  img.src =
+    image.src;
+
+}
+
+
+/* =========================
+   CANCEL CROP
+========================= */
+
+function cancelCrop() {
+
+  document.getElementById(
+    "cropTools"
+  ).style.display = "none";
+
+  }
+  
 /* =========================
    FILTER
 ========================= */
