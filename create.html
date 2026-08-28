@@ -353,6 +353,75 @@ function selectMedia(event) {
     return;
   }
 
+  /* =========================
+   SELECT SOUND
+========================= */
+
+function selectSound(event) {
+
+  const file =
+    event.target.files[0];
+
+  if (!file) return;
+
+  if (!file.type.startsWith("audio/")) {
+
+    alert("⚠️ Please select an audio file.");
+
+    return;
+
+  }
+
+  selectedSound = file;
+
+  const audio =
+    document.getElementById("soundPreview");
+
+  const removeButton =
+    document.getElementById("removeSoundButton");
+
+  audio.src =
+    URL.createObjectURL(file);
+
+  audio.style.display =
+    "block";
+
+  removeButton.style.display =
+    "block";
+
+}
+
+
+/* =========================
+   REMOVE SOUND
+========================= */
+
+function removeSound() {
+
+  selectedSound = null;
+
+  const audio =
+    document.getElementById("soundPreview");
+
+  const removeButton =
+    document.getElementById("removeSoundButton");
+
+  const input =
+    document.getElementById("soundInput");
+
+  audio.pause();
+
+  audio.src = "";
+
+  audio.style.display =
+    "none";
+
+  removeButton.style.display =
+    "none";
+
+  input.value = "";
+
+}
 
   /* VIDEO */
 
