@@ -355,7 +355,40 @@ actions.innerHTML = `
 
   post.appendChild(actions);
 
+/* DELETE POST */
 
+const deleteButton =
+  document.createElement("button");
+
+deleteButton.textContent = "🗑️ Delete Post";
+
+deleteButton.style.border = "none";
+deleteButton.style.background = "none";
+deleteButton.style.color = "red";
+deleteButton.style.padding = "12px 15px";
+deleteButton.style.cursor = "pointer";
+deleteButton.style.fontSize = "14px";
+
+deleteButton.onclick = function() {
+
+  const confirmDelete =
+    confirm("🗑️ Are you sure you want to delete this post?");
+
+  if (!confirmDelete) {
+    return;
+  }
+
+  localStorage.removeItem("newPost");
+  localStorage.removeItem("comments");
+  localStorage.removeItem("likeCount");
+  localStorage.removeItem("liked");
+
+  loadPosts();
+
+};
+
+post.appendChild(deleteButton);
+  
 /* COMMENTS */
 
 const comments =
