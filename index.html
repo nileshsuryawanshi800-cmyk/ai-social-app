@@ -325,7 +325,52 @@ postHeader.onclick = function() {
 
   content.textContent =
     savedPost;
+/* POST PHOTO / VIDEO */
 
+const media =
+  localStorage.getItem("postMedia");
+
+const mediaType =
+  localStorage.getItem("postMediaType");
+
+if (media) {
+
+  if (mediaType &&
+      mediaType.startsWith("image/")) {
+
+    const image =
+      document.createElement("img");
+
+    image.src = media;
+
+    image.style.width = "100%";
+    image.style.maxHeight = "500px";
+    image.style.objectFit = "contain";
+    image.style.background = "#000";
+
+    post.appendChild(image);
+
+  }
+
+  else if (mediaType &&
+           mediaType.startsWith("video/")) {
+
+    const video =
+      document.createElement("video");
+
+    video.src = media;
+
+    video.controls = true;
+
+    video.style.width = "100%";
+    video.style.maxHeight = "500px";
+    video.style.background = "#000";
+
+    post.appendChild(video);
+
+  }
+
+}
 
   /* ACTIONS */
 
