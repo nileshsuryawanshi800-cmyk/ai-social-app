@@ -69,20 +69,12 @@
       display: none;
     }
 
-    #preview {
-      display: none;
-      width: 100%;
-      max-height: 400px;
-      object-fit: contain;
-      margin-top: 15px;
-      border-radius: 15px;
-      background: #000;
-    }
-
+    #preview,
     #videoPreview {
       display: none;
       width: 100%;
       max-height: 400px;
+      object-fit: contain;
       margin-top: 15px;
       border-radius: 15px;
       background: #000;
@@ -133,11 +125,12 @@
     onchange="previewMedia(event)"
   >
 
-  <img id="preview">
+  <img id="preview" alt="Photo preview">
 
   <video
     id="videoPreview"
     controls
+    playsinline
   ></video>
 
   <button
@@ -159,10 +152,15 @@ function goHome() {
 
 
 /* =========================
-   PREVIEW PHOTO / VIDEO
+   SELECTED MEDIA
 ========================= */
 
 let selectedMedia = null;
+
+
+/* =========================
+   PREVIEW PHOTO / VIDEO
+========================= */
 
 function previewMedia(event) {
 
@@ -184,7 +182,6 @@ function previewMedia(event) {
   const url =
     URL.createObjectURL(file);
 
-
   image.style.display = "none";
   video.style.display = "none";
 
@@ -201,6 +198,27 @@ function previewMedia(event) {
 
     video.src = url;
     video.style.display = "block";
+
+  }
+
+}
+
+
+/* =========================
+   GET EXISTING POSTS
+========================= */
+
+function getPosts() {
+
+  try {
+
+    return JSON.parse(
+      localStorage.getItem("posts") || "[]"
+    );
+
+  } catch (error) {
+
+    return [];
 
   }
 
@@ -235,20 +253,54 @@ function createPost() {
   }
 
 
-  /* SAVE TEXT */
-
-  localStorage.setItem(
-    "newPost",
-    text
-  );
+  const posts =
+    getPosts();
 
 
-  /* NO MEDIA */
+  const username =
+    localStorage.getItem("username") ||
+    "You";
+
+  const profileImage =
+    localStorage.getItem("profileImage");
+
+
+  /* =========================
+     TEXT-ONLY POST
+  ========================= */
 
   if (!selectedMedia) {
 
-    localStorage.removeItem("postMedia");
-    localStorage.removeItem("postMediaType");
+    posts.unshift({
+
+      id: Date.now(),
+
+      text: text,
+
+      media: null,
+
+      mediaType: null,
+
+      username: username,
+
+      profileImage: profileImage || null,
+
+      liked: false,
+
+      likeCount: 0,
+
+      comments: [],
+
+      createdAt: Date.now()
+
+    });
+
+
+    localStorage.setItem(
+      "posts",
+      JSON.stringify(posts)
+    );
+
 
     finishPost();
 
@@ -257,53 +309,86 @@ function createPost() {
   }
 
 
-  /* VIDEO SIZE CHECK */
+  /* =========================
+     VIDEO LIMIT
+  ========================= */
 
   if (
-    selectedMedia.type.startsWith("video/") &&
-    selectedMedia.size > 3 * 1024 * 1024
+    selectedMedia.type.startsWith("video/")
   ) {
 
-    document
-      .getElementById("message")
-      .textContent =
-      "⚠️ Video is too large. Please choose a video under 3 MB.";
+    if (
+      selectedMedia.size >
+      3 * 1024 * 1024
+    ) {
 
-    return;
+      document
+        .getElementById("message")
+        .textContent =
+        "⚠️ This video is too large for the current local storage system.";
+
+      return;
+
+    }
 
   }
 
 
-  /* SAVE PHOTO OR SMALL VIDEO */
+  /* =========================
+     READ PHOTO / VIDEO
+  ========================= */
 
   const reader =
     new FileReader();
 
 
-  reader.onload = function(e) {
+  reader.onload = function(event) {
+
+    const mediaData =
+      event.target.result;
+
+
+    posts.unshift({
+
+      id: Date.now(),
+
+      text: text,
+
+      media: mediaData,
+
+      mediaType: selectedMedia.type,
+
+      username: username,
+
+      profileImage: profileImage || null,
+
+      liked: false,
+
+      likeCount: 0,
+
+      comments: [],
+
+      createdAt: Date.now()
+
+    });
+
 
     try {
 
       localStorage.setItem(
-        "postMedia",
-        e.target.result
+        "posts",
+        JSON.stringify(posts)
       );
 
-      localStorage.setItem(
-        "postMediaType",
-        selectedMedia.type
-      );
 
       finishPost();
 
-    }
-
-    catch (error) {
+    } catch (error) {
 
       document
         .getElementById("message")
         .textContent =
-        "⚠️ File is too large for local storage.";
+        "⚠️ This file is too large for phone storage. We'll fix large Reels in the next step.";
 
     }
 
@@ -315,7 +400,7 @@ function createPost() {
     document
       .getElementById("message")
       .textContent =
-      "⚠️ Could not read this video.";
+      "⚠️ Could not read this file.";
 
   };
 
@@ -327,33 +412,9 @@ function createPost() {
 }
 
 
-
-
-      finishPost();
-
-    };
-
-
-    reader.readAsDataURL(
-      selectedMedia
-    );
-
-  } else {
-
-    localStorage.removeItem(
-      "postMedia"
-    );
-
-    localStorage.removeItem(
-      "postMediaType"
-    );
-
-    finishPost();
-
-  }
-
-}
-
+/* =========================
+   FINISH
+========================= */
 
 function finishPost() {
 
@@ -368,7 +429,7 @@ function finishPost() {
     window.location.href =
       "index.html";
 
-  }, 500);
+  }, 700);
 
 }
 
