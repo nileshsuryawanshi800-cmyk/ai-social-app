@@ -1,7 +1,12 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Create - AI Social</title><style>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Create - AI Social</title>
+
+<style>
 * {
   box-sizing: border-box;
   font-family: Arial, sans-serif;
@@ -21,9 +26,6 @@ header {
   align-items: center;
   gap: 15px;
   border-bottom: 1px solid #ddd;
-  position: sticky;
-  top: 0;
-  z-index: 10;
 }
 
 header button {
@@ -51,6 +53,8 @@ textarea {
   background: white;
 }
 
+/* FILE BUTTONS */
+
 .file-label {
   display: block;
   margin-top: 15px;
@@ -60,11 +64,15 @@ textarea {
   border-radius: 15px;
   text-align: center;
   cursor: pointer;
+  font-weight: bold;
 }
 
-#mediaInput {
+#mediaInput,
+#soundInput {
   display: none;
 }
+
+/* PREVIEW */
 
 .preview-box {
   margin-top: 15px;
@@ -72,6 +80,7 @@ textarea {
   border-radius: 15px;
   overflow: hidden;
   text-align: center;
+  min-height: 10px;
 }
 
 #preview {
@@ -86,6 +95,27 @@ textarea {
   max-height: 550px;
   display: none;
 }
+
+/* SOUND */
+
+.sound-box {
+  margin-top: 15px;
+  background: white;
+  padding: 15px;
+  border-radius: 15px;
+  display: none;
+}
+
+.sound-title {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+#soundPreview {
+  width: 100%;
+}
+
+/* EDIT TOOLS */
 
 .edit-tools,
 .filters,
@@ -106,11 +136,7 @@ textarea {
   cursor: pointer;
 }
 
-.edit-tools button:active,
-.filters button:active,
-.crop-tools button:active {
-  transform: scale(0.96);
-}
+/* PUBLISH */
 
 .post-button {
   width: 100%;
@@ -125,7 +151,8 @@ textarea {
   cursor: pointer;
 }
 
-.change-button {
+.change-button,
+.remove-sound-button {
   display: none;
   width: 100%;
   margin-top: 10px;
@@ -136,34 +163,63 @@ textarea {
   font-size: 15px;
 }
 
+.remove-sound-button {
+  color: red;
+}
+
 .message {
   text-align: center;
   margin-top: 15px;
   font-weight: bold;
-  min-height: 20px;
 }
 
 #editCanvas {
   display: none;
 }
-</style></head><body><header>
-  <button onclick="goHome()">←</button>
-  <h1>➕ Create Post</h1>
-</header><div class="container"><textarea
+</style>
+</head>
+
+<body>
+
+<header>
+
+<button onclick="goHome()">←</button>
+
+<h1>➕ Create Post</h1>
+
+</header>
+
+<div class="container">
+
+<textarea
   id="postText"
   placeholder="Write a caption..."
-></textarea><label class="file-label" for="mediaInput">
-  📸 Select Photo or 🎥 Reel
-</label><input
-id="mediaInput"
-type="file"
-accept="image/,video/"
+></textarea>
 
-«»
 
-<div class="preview-box"> <!-- SOUND -->
+<!-- PHOTO / VIDEO -->
 
-<label class="file-label" for="soundInput">
+<label
+  class="file-label"
+  for="mediaInput"
+>
+📸 Select Photo or 🎥 Reel
+</label>
+
+<input
+  id="mediaInput"
+  type="file"
+  accept="image/*,video/*"
+  onchange="selectMedia(event)"
+>
+
+
+<!-- SOUND -->
+
+<label
+  class="file-label"
+  for="soundInput"
+>
 🎵 Add Sound / Music
 </label>
 
@@ -174,122 +230,221 @@ accept="image/,video/"
   onchange="selectSound(event)"
 >
 
+
+<!-- SOUND PREVIEW -->
+
+<div
+  class="sound-box"
+  id="soundBox"
+>
+
+<div class="sound-title">
+🎵 Sound Preview
+</div>
+
 <audio
   id="soundPreview"
   controls
-  style="display:none;width:100%;margin-top:12px;"
 ></audio>
 
 <button
+  class="remove-sound-button"
   id="removeSoundButton"
   onclick="removeSound()"
-  style="display:none;width:100%;margin-top:10px;padding:12px;border:1px solid #ddd;border-radius:20px;background:white;"
 >
 ❌ Remove Sound
-</button>  <img id="preview" alt="Photo preview"><video
-id="videoPreview"
-controls
-playsinline
+</button>
 
-«</video>»
+</div>
 
-</div><div class="edit-tools" id="editTools"><button onclick="rotatePhoto()">🔄 Rotate</button>
 
-<button onclick="zoomIn()">🔍 Zoom +</button>
+<!-- MEDIA PREVIEW -->
 
-<button onclick="zoomOut()">🔎 Zoom -</button>
+<div class="preview-box">
 
-<button onclick="startCrop()">✂️ Crop</button>
+<img
+  id="preview"
+  alt="Photo preview"
+>
 
-<button onclick="resetPhoto()">↩️ Reset</button>
+<video
+  id="videoPreview"
+  controls
+  playsinline
+></video>
 
-</div><div class="crop-tools" id="cropTools"><button onclick="cropPhoto(1)">🔲 Square</button>
+</div>
 
-<button onclick="cropPhoto(0.8)">📱 Portrait</button>
 
-<button onclick="cropPhoto(16/9)">🖼️ Landscape</button>
+<!-- PHOTO EDITING -->
 
-<button onclick="cancelCrop()">❌ Cancel</button>
+<div
+  class="edit-tools"
+  id="editTools"
+>
 
-</div><div class="filters" id="filters"><button onclick="setFilter('none')">Normal</button>
+<button onclick="rotatePhoto()">
+🔄 Rotate
+</button>
 
-<button onclick="setFilter('grayscale(1)')">⚫ B&W</button>
+<button onclick="zoomIn()">
+🔍 Zoom +
+</button>
 
-<button onclick="setFilter('sepia(1)')">🟤 Sepia</button>
+<button onclick="zoomOut()">
+🔎 Zoom -
+</button>
 
-<button onclick="setFilter('brightness(1.3)')">☀️ Bright</button>
+<button onclick="startCrop()">
+✂️ Crop
+</button>
 
-<button onclick="setFilter('contrast(1.4)')">✨ Contrast</button>
+<button onclick="resetPhoto()">
+↩️ Reset
+</button>
 
-</div><button
-class="change-button"
-id="changeButton"
-onclick="changeMedia()"
+</div>
 
-«»
 
+<!-- CROP -->
+
+<div
+  class="crop-tools"
+  id="cropTools"
+>
+
+<button onclick="cropPhoto(1)">
+🔲 Square
+</button>
+
+<button onclick="cropPhoto(0.8)">
+📱 Portrait
+</button>
+
+<button onclick="cropPhoto(16/9)">
+🖼️ Landscape
+</button>
+
+<button onclick="cancelCrop()">
+❌ Cancel
+</button>
+
+</div>
+
+
+<!-- FILTERS -->
+
+<div
+  class="filters"
+  id="filters"
+>
+
+<button onclick="setFilter('none')">
+Normal
+</button>
+
+<button onclick="setFilter('grayscale(1)')">
+⚫ B&W
+</button>
+
+<button onclick="setFilter('sepia(1)')">
+🟤 Sepia
+</button>
+
+<button onclick="setFilter('brightness(1.3)')">
+☀️ Bright
+</button>
+
+<button onclick="setFilter('contrast(1.4)')">
+✨ Contrast
+</button>
+
+</div>
+
+
+<button
+  class="change-button"
+  id="changeButton"
+  onclick="changeMedia()"
+>
 🔄 Change Photo / Video
 </button>
 
+
 <button
-class="post-button"
-onclick="publishPost()"
-
-«»
-
+  class="post-button"
+  onclick="publishPost()"
+>
 📤 Publish
 </button>
 
-<p id="message" class="message"></p><canvas id="editCanvas"></canvas>
 
-</div><script>
+<p
+  id="message"
+  class="message"
+></p>
+
+
+<canvas id="editCanvas"></canvas>
+
+</div>
+
+
+<script>
+
+/* =========================
+VARIABLES
+========================= */
 
 let selectedMedia = null;
+
 let selectedSound = null;
+
 let originalImage = null;
 
 let rotation = 0;
+
 let zoom = 1;
+
 let currentFilter = "none";
 
-let cropApplied = false;
+let cropRatio = null;
 
 
 /* =========================
-   HOME
+HOME
 ========================= */
 
 function goHome() {
-  window.location.href = "index.html";
+
+  window.location.href =
+    "index.html";
+
 }
 
 
 /* =========================
-   MEDIA INPUT
-========================= */
-
-document
-  .getElementById("mediaInput")
-  .addEventListener("change", selectMedia);
-
-
-/* =========================
-   SELECT MEDIA
+SELECT MEDIA
 ========================= */
 
 function selectMedia(event) {
 
-  const file = event.target.files[0];
+  const file =
+    event.target.files[0];
 
   if (!file) return;
+
 
   selectedMedia = file;
 
   rotation = 0;
+
   zoom = 1;
+
   currentFilter = "none";
-  cropApplied = false;
-  originalImage = null;
+
+  cropRatio = null;
+
 
   const image =
     document.getElementById("preview");
@@ -303,58 +458,157 @@ function selectMedia(event) {
   const filters =
     document.getElementById("filters");
 
-  const cropTools =
-    document.getElementById("cropTools");
-
   const change =
     document.getElementById("changeButton");
 
   const message =
     document.getElementById("message");
 
-  image.style.display = "none";
-  video.style.display = "none";
 
-  tools.style.display = "none";
-  filters.style.display = "none";
-  cropTools.style.display = "none";
+  image.style.display =
+    "none";
 
-  change.style.display = "block";
+  video.style.display =
+    "none";
 
-  message.textContent = "";
+  tools.style.display =
+    "none";
+
+  filters.style.display =
+    "none";
+
+  document.getElementById(
+    "cropTools"
+  ).style.display =
+    "none";
+
+
+  change.style.display =
+    "block";
+
+
+  message.textContent =
+    "";
+
 
   /* PHOTO */
 
-  if (file.type.startsWith("image/")) {
+  if (
+    file.type.startsWith("image/")
+  ) {
 
     const url =
       URL.createObjectURL(file);
 
-    image.src = url;
 
-    image.style.display = "block";
+    image.src =
+      url;
 
-    tools.style.display = "flex";
-    filters.style.display = "flex";
 
-    originalImage = new Image();
+    image.style.display =
+      "block";
 
-    originalImage.onload = function() {
 
-      applyPreview();
+    tools.style.display =
+      "flex";
 
-    };
 
-    originalImage.src = url;
+    filters.style.display =
+      "flex";
+
+
+    originalImage =
+      new Image();
+
+
+    originalImage.onload =
+      function() {
+
+        applyPreview();
+
+      };
+
+
+    originalImage.src =
+      url;
+
 
     message.textContent =
       "✅ Photo ready. Edit it before publishing.";
 
     return;
+
   }
 
-  /* =========================
-   SELECT SOUND
+
+  /* VIDEO */
+
+  if (
+    file.type.startsWith("video/")
+  ) {
+
+    video.src =
+      URL.createObjectURL(file);
+
+
+    video.style.display =
+      "block";
+
+
+    video.onloadedmetadata =
+      function() {
+
+        if (
+          video.duration > 60
+        ) {
+
+          alert(
+            "⚠️ Reel must be 1 minute or less."
+          );
+
+
+          selectedMedia =
+            null;
+
+
+          video.src =
+            "";
+
+
+          video.style.display =
+            "none";
+
+
+          change.style.display =
+            "none";
+
+
+          document.getElementById(
+            "mediaInput"
+          ).value =
+            "";
+
+
+          return;
+
+        }
+
+
+        message.textContent =
+          "✅ Reel ready. Maximum length: 1 minute.";
+
+      };
+
+
+    return;
+
+  }
+
+}
+
+
+/* =========================
+SELECT SOUND
 ========================= */
 
 function selectSound(event) {
@@ -364,149 +618,134 @@ function selectSound(event) {
 
   if (!file) return;
 
-  if (!file.type.startsWith("audio/")) {
 
-    alert("⚠️ Please select an audio file.");
+  if (
+    !file.type.startsWith("audio/")
+  ) {
+
+    alert(
+      "⚠️ Please select an audio file."
+    );
 
     return;
 
   }
 
-  selectedSound = file;
 
-  const audio =
-    document.getElementById("soundPreview");
+  /* SOUND SIZE LIMIT */
+
+  if (
+    file.size >
+    10 * 1024 * 1024
+  ) {
+
+    alert(
+      "⚠️ Please choose an audio file under 10 MB."
+    );
+
+    return;
+
+  }
+
+
+  selectedSound =
+    file;
+
+
+  const soundBox =
+    document.getElementById(
+      "soundBox"
+    );
+
+
+  const soundPreview =
+    document.getElementById(
+      "soundPreview"
+    );
+
 
   const removeButton =
-    document.getElementById("removeSoundButton");
+    document.getElementById(
+      "removeSoundButton"
+    );
 
-  audio.src =
-    URL.createObjectURL(file);
 
-  audio.style.display =
+  soundPreview.src =
+    URL.createObjectURL(
+      file
+    );
+
+
+  soundBox.style.display =
     "block";
+
 
   removeButton.style.display =
     "block";
+
+
+  document.getElementById(
+    "message"
+  ).textContent =
+    "🎵 Sound ready. Press ▶️ to preview it before publishing.";
 
 }
 
 
 /* =========================
-   REMOVE SOUND
+REMOVE SOUND
 ========================= */
 
 function removeSound() {
 
-  selectedSound = null;
+  selectedSound =
+    null;
 
-  const audio =
-    document.getElementById("soundPreview");
 
-  const removeButton =
-    document.getElementById("removeSoundButton");
+  const soundPreview =
+    document.getElementById(
+      "soundPreview"
+    );
 
-  const input =
-    document.getElementById("soundInput");
 
-  audio.pause();
+  soundPreview.pause();
 
-  audio.src = "";
+  soundPreview.src =
+    "";
 
-  audio.style.display =
+
+  document.getElementById(
+    "soundBox"
+  ).style.display =
     "none";
 
-  removeButton.style.display =
+
+  document.getElementById(
+    "removeSoundButton"
+  ).style.display =
     "none";
 
-  input.value = "";
 
-}
+  document.getElementById(
+    "soundInput"
+  ).value =
+    "";
 
-  /* VIDEO */
-
-  if (file.type.startsWith("video/")) {
-
-    const url =
-      URL.createObjectURL(file);
-
-    video.src = url;
-
-    video.style.display = "block";
-
-    video.onloadedmetadata = function() {
-
-      if (video.duration > 60) {
-
-        alert(
-          "⚠️ Reel must be 1 minute or less."
-        );
-
-        clearMedia();
-
-        return;
-      }
-
-      message.textContent =
-        "✅ Reel ready. Maximum length: 1 minute.";
-
-    };
-
-    return;
-  }
 
 }
 
 
 /* =========================
-   CLEAR MEDIA
-========================= */
-
-function clearMedia() {
-
-  selectedMedia = null;
-  originalImage = null;
-
-  const input =
-    document.getElementById("mediaInput");
-
-  const image =
-    document.getElementById("preview");
-
-  const video =
-    document.getElementById("videoPreview");
-
-  image.src = "";
-  video.src = "";
-
-  image.style.display = "none";
-  video.style.display = "none";
-
-  document.getElementById("editTools")
-    .style.display = "none";
-
-  document.getElementById("filters")
-    .style.display = "none";
-
-  document.getElementById("cropTools")
-    .style.display = "none";
-
-  document.getElementById("changeButton")
-    .style.display = "none";
-
-  input.value = "";
-
-}
-
-
-/* =========================
-   PREVIEW
+PHOTO PREVIEW
 ========================= */
 
 function applyPreview() {
 
   const image =
-    document.getElementById("preview");
+    document.getElementById(
+      "preview"
+    );
+
 
   image.style.transform =
     "rotate(" +
@@ -515,6 +754,7 @@ function applyPreview() {
     zoom +
     ")";
 
+
   image.style.filter =
     currentFilter;
 
@@ -522,18 +762,22 @@ function applyPreview() {
 
 
 /* =========================
-   ROTATE
+ROTATE
 ========================= */
 
 function rotatePhoto() {
 
-  if (!originalImage) return;
-
   rotation += 90;
 
-  if (rotation >= 360) {
+
+  if (
+    rotation >= 360
+  ) {
+
     rotation = 0;
+
   }
+
 
   applyPreview();
 
@@ -541,18 +785,22 @@ function rotatePhoto() {
 
 
 /* =========================
-   ZOOM
+ZOOM
 ========================= */
 
 function zoomIn() {
 
-  if (!originalImage) return;
-
   zoom += 0.1;
 
-  if (zoom > 2) {
+
+  if (
+    zoom > 2
+  ) {
+
     zoom = 2;
+
   }
+
 
   applyPreview();
 
@@ -561,13 +809,17 @@ function zoomIn() {
 
 function zoomOut() {
 
-  if (!originalImage) return;
-
   zoom -= 0.1;
 
-  if (zoom < 0.5) {
+
+  if (
+    zoom < 0.5
+  ) {
+
     zoom = 0.5;
+
   }
+
 
   applyPreview();
 
@@ -575,14 +827,13 @@ function zoomOut() {
 
 
 /* =========================
-   FILTER
+FILTER
 ========================= */
 
 function setFilter(filter) {
 
-  if (!originalImage) return;
-
-  currentFilter = filter;
+  currentFilter =
+    filter;
 
   applyPreview();
 
@@ -590,177 +841,217 @@ function setFilter(filter) {
 
 
 /* =========================
-   START CROP
+CROP
 ========================= */
 
 function startCrop() {
 
   if (!selectedMedia) return;
 
-  if (!selectedMedia.type.startsWith("image/")) {
 
-    alert("✂️ Crop is available for photos only.");
+  if (
+    !selectedMedia.type.startsWith(
+      "image/"
+    )
+  ) {
+
+    alert(
+      "✂️ Crop is available for photos."
+    );
 
     return;
+
   }
 
-  document.getElementById("cropTools")
-    .style.display = "flex";
+
+  document.getElementById(
+    "cropTools"
+  ).style.display =
+    "flex";
 
 }
 
-
-/* =========================
-   CANCEL CROP
-========================= */
 
 function cancelCrop() {
 
-  document.getElementById("cropTools")
-    .style.display = "none";
+  document.getElementById(
+    "cropTools"
+  ).style.display =
+    "none";
 
 }
 
 
 /* =========================
-   CROP
+REAL CROP
 ========================= */
 
 function cropPhoto(ratio) {
 
   if (!originalImage) return;
 
-  const sourceWidth =
-    originalImage.naturalWidth ||
-    originalImage.width;
-
-  const sourceHeight =
-    originalImage.naturalHeight ||
-    originalImage.height;
-
-  const sourceRatio =
-    sourceWidth / sourceHeight;
-
-  let cropWidth;
-  let cropHeight;
-
-  if (sourceRatio > ratio) {
-
-    cropHeight = sourceHeight;
-    cropWidth = sourceHeight * ratio;
-
-  } else {
-
-    cropWidth = sourceWidth;
-    cropHeight = sourceWidth / ratio;
-
-  }
-
-  const x =
-    (sourceWidth - cropWidth) / 2;
-
-  const y =
-    (sourceHeight - cropHeight) / 2;
 
   const canvas =
-    document.getElementById("editCanvas");
+    document.getElementById(
+      "editCanvas"
+    );
 
-  canvas.width =
-    Math.round(cropWidth);
-
-  canvas.height =
-    Math.round(cropHeight);
 
   const ctx =
     canvas.getContext("2d");
 
-  ctx.clearRect(
-    0,
-    0,
-    canvas.width,
-    canvas.height
-  );
 
-  /*
-    Crop the original image first.
-    This creates a new source image.
-  */
+  let width =
+    originalImage.width;
 
-  ctx.filter = "none";
+
+  let height =
+    originalImage.height;
+
+
+  const originalRatio =
+    width / height;
+
+
+  let cropWidth;
+
+  let cropHeight;
+
+
+  if (
+    originalRatio > ratio
+  ) {
+
+    cropHeight =
+      height;
+
+    cropWidth =
+      height * ratio;
+
+  }
+
+  else {
+
+    cropWidth =
+      width;
+
+    cropHeight =
+      width / ratio;
+
+  }
+
+
+  const x =
+    (width - cropWidth) / 2;
+
+
+  const y =
+    (height - cropHeight) / 2;
+
+
+  canvas.width =
+    cropWidth;
+
+
+  canvas.height =
+    cropHeight;
+
 
   ctx.drawImage(
+
     originalImage,
+
     x,
     y,
     cropWidth,
     cropHeight,
+
     0,
     0,
-    canvas.width,
-    canvas.height
+    cropWidth,
+    cropHeight
+
   );
 
+
   canvas.toBlob(
+
     function(blob) {
 
-      if (!blob) {
+      if (!blob) return;
 
-        document.getElementById("message")
-          .textContent =
-          "⚠️ Crop failed.";
-
-        return;
-      }
 
       selectedMedia =
         new File(
+
           [blob],
-          "edited-photo.jpg",
+
+          "cropped-photo.jpg",
+
           {
-            type: "image/jpeg"
+            type:
+              "image/jpeg"
           }
+
         );
 
+
       const url =
-        URL.createObjectURL(selectedMedia);
+        URL.createObjectURL(
+          selectedMedia
+        );
+
 
       originalImage =
         new Image();
+
 
       originalImage.onload =
         function() {
 
           rotation = 0;
+
           zoom = 1;
 
           applyPreview();
 
         };
 
-      originalImage.src = url;
 
-      document.getElementById("preview")
-        .src = url;
+      originalImage.src =
+        url;
 
-      cropApplied = true;
 
-      document.getElementById("cropTools")
-        .style.display = "none";
+      document.getElementById(
+        "preview"
+      ).src =
+        url;
 
-      document.getElementById("message")
-        .textContent =
+
+      document.getElementById(
+        "cropTools"
+      ).style.display =
+        "none";
+
+
+      document.getElementById(
+        "message"
+      ).textContent =
         "✅ Crop applied.";
 
     },
+
     "image/jpeg",
+
     0.92
+
   );
 
 }
 
 
 /* =========================
-   RESET
+RESET
 ========================= */
 
 function resetPhoto() {
@@ -769,9 +1060,14 @@ function resetPhoto() {
 
   if (!originalImage) return;
 
+
   rotation = 0;
+
   zoom = 1;
-  currentFilter = "none";
+
+  currentFilter =
+    "none";
+
 
   applyPreview();
 
@@ -779,37 +1075,35 @@ function resetPhoto() {
 
 
 /* =========================
-   CHANGE MEDIA
+CHANGE MEDIA
 ========================= */
 
 function changeMedia() {
 
-  document.getElementById("mediaInput").click();
+  document.getElementById(
+    "mediaInput"
+  ).click();
 
 }
 
 
 /* =========================
-   POSTS
+GET POSTS
 ========================= */
 
 function getPosts() {
 
   try {
 
-    const saved =
-      localStorage.getItem("posts");
+    return JSON.parse(
+      localStorage.getItem(
+        "posts"
+      ) || "[]"
+    );
 
-    if (!saved) return [];
+  }
 
-    const posts =
-      JSON.parse(saved);
-
-    return Array.isArray(posts)
-      ? posts
-      : [];
-
-  } catch(error) {
+  catch(error) {
 
     return [];
 
@@ -817,6 +1111,10 @@ function getPosts() {
 
 }
 
+
+/* =========================
+SAVE POSTS
+========================= */
 
 function savePosts(posts) {
 
@@ -829,137 +1127,199 @@ function savePosts(posts) {
 
 
 /* =========================
-   CREATE FINAL IMAGE
+FILE TO DATA URL
 ========================= */
 
-function createEditedImage() {
+function fileToDataURL(file) {
 
-  return new Promise(function(resolve) {
+  return new Promise(
+    function(resolve, reject) {
 
-    if (!originalImage) {
+      const reader =
+        new FileReader();
 
-      resolve(null);
-      return;
+
+      reader.onload =
+        function(event) {
+
+          resolve(
+            event.target.result
+          );
+
+        };
+
+
+      reader.onerror =
+        reject;
+
+
+      reader.readAsDataURL(file);
 
     }
-
-    const canvas =
-      document.getElementById("editCanvas");
-
-    const ctx =
-      canvas.getContext("2d");
-
-    const width =
-      originalImage.naturalWidth ||
-      originalImage.width;
-
-    const height =
-      originalImage.naturalHeight ||
-      originalImage.height;
-
-    const angle =
-      rotation *
-      Math.PI /
-      180;
-
-    const scale =
-      zoom;
-
-    const sin =
-      Math.abs(Math.sin(angle));
-
-    const cos =
-      Math.abs(Math.cos(angle));
-
-    const outputWidth =
-      Math.ceil(
-        (width * cos + height * sin) *
-        scale
-      );
-
-    const outputHeight =
-      Math.ceil(
-        (width * sin + height * cos) *
-        scale
-      );
-
-    canvas.width =
-      outputWidth;
-
-    canvas.height =
-      outputHeight;
-
-    ctx.clearRect(
-      0,
-      0,
-      canvas.width,
-      canvas.height
-    );
-
-    ctx.save();
-
-    ctx.translate(
-      canvas.width / 2,
-      canvas.height / 2
-    );
-
-    ctx.rotate(angle);
-
-    ctx.scale(
-      scale,
-      scale
-    );
-
-    /*
-      THIS IS THE IMPORTANT PART.
-
-      The filter is rendered into the canvas,
-      so B&W/sepia/brightness/contrast are
-      saved into the actual image.
-    */
-
-    ctx.filter =
-      currentFilter;
-
-    ctx.drawImage(
-      originalImage,
-      -width / 2,
-      -height / 2,
-      width,
-      height
-    );
-
-    ctx.restore();
-
-    canvas.toBlob(
-      function(blob) {
-
-        resolve(blob);
-
-      },
-      "image/jpeg",
-      0.88
-    );
-
-  });
+  );
 
 }
 
 
 /* =========================
-   PUBLISH
+CREATE EDITED IMAGE
+========================= */
+
+function createEditedImage() {
+
+  return new Promise(
+    function(resolve) {
+
+      if (!originalImage) {
+
+        resolve(null);
+
+        return;
+
+      }
+
+
+      const canvas =
+        document.getElementById(
+          "editCanvas"
+        );
+
+
+      const ctx =
+        canvas.getContext("2d");
+
+
+      let width =
+        originalImage.width;
+
+
+      let height =
+        originalImage.height;
+
+
+      const scale =
+        zoom;
+
+
+      const angle =
+        rotation *
+        Math.PI /
+        180;
+
+
+      const sin =
+        Math.abs(
+          Math.sin(angle)
+        );
+
+
+      const cos =
+        Math.abs(
+          Math.cos(angle)
+        );
+
+
+      const newWidth =
+        width * cos +
+        height * sin;
+
+
+      const newHeight =
+        width * sin +
+        height * cos;
+
+
+      canvas.width =
+        newWidth * scale;
+
+
+      canvas.height =
+        newHeight * scale;
+
+
+      ctx.save();
+
+
+      ctx.translate(
+
+        canvas.width / 2,
+
+        canvas.height / 2
+
+      );
+
+
+      ctx.rotate(angle);
+
+
+      ctx.scale(
+        scale,
+        scale
+      );
+
+
+      ctx.filter =
+        currentFilter;
+
+
+      ctx.drawImage(
+
+        originalImage,
+
+        -width / 2,
+
+        -height / 2,
+
+        width,
+
+        height
+
+      );
+
+
+      ctx.restore();
+
+
+      canvas.toBlob(
+
+        function(blob) {
+
+          resolve(blob);
+
+        },
+
+        "image/jpeg",
+
+        0.92
+
+      );
+
+    }
+  );
+
+}
+
+
+/* =========================
+PUBLISH
 ========================= */
 
 async function publishPost() {
 
   const text =
     document
-      .getElementById("postText")
+      .getElementById(
+        "postText"
+      )
       .value
       .trim();
 
+
   const message =
-    document.getElementById("message");
+    document.getElementById(
+      "message"
+    );
+
 
   if (
     text === "" &&
@@ -973,78 +1333,131 @@ async function publishPost() {
 
   }
 
+
   message.textContent =
     "⏳ Preparing your post...";
+
 
   const posts =
     getPosts();
 
+
   const username =
-    localStorage.getItem("username") ||
+    localStorage.getItem(
+      "username"
+    ) ||
     "You";
 
+
   const profileImage =
-    localStorage.getItem("profileImage") ||
+    localStorage.getItem(
+      "profileImage"
+    ) ||
     null;
 
 
+  /* SOUND */
+
+  let soundData =
+    null;
+
+
+  if (selectedSound) {
+
+    try {
+
+      soundData =
+        await fileToDataURL(
+          selectedSound
+        );
+
+    }
+
+    catch(error) {
+
+      console.log(
+        "Sound error:",
+        error
+      );
+
+    }
+
+  }
+
+
   /* =========================
-     TEXT ONLY
+  TEXT ONLY
   ========================= */
 
   if (!selectedMedia) {
 
     posts.unshift({
 
-      id: Date.now(),
+      id:
+        Date.now(),
 
-      username: username,
+      username:
+        username,
 
-      profileImage: profileImage,
+      profileImage:
+        profileImage,
 
-      text: text,
+      text:
+        text,
 
-      media: null,
+      media:
+        null,
 
-      mediaType: null,
+      mediaType:
+        null,
 
-      liked: false,
+      sound:
+        soundData,
 
-      likeCount: 0,
+      soundType:
+        selectedSound
+          ? selectedSound.type
+          : null,
 
-      comments: [],
+      liked:
+        false,
 
-      createdAt: Date.now()
+      likeCount:
+        0,
+
+      comments:
+        [],
+
+      createdAt:
+        Date.now()
 
     });
 
-    try {
 
-      savePosts(posts);
+    savePosts(posts);
 
-      finish();
-
-    } catch(error) {
-
-      message.textContent =
-        "⚠️ Could not save the post.";
-
-    }
+    finish();
 
     return;
+
   }
 
 
   /* =========================
-     VIDEO
+  VIDEO
   ========================= */
 
   if (
-    selectedMedia.type.startsWith("video/")
+    selectedMedia.type.startsWith(
+      "video/"
+    )
   ) {
 
     const video =
-      document.getElementById("videoPreview");
+      document.getElementById(
+        "videoPreview"
+      );
+
 
     if (
       video.duration &&
@@ -1058,10 +1471,6 @@ async function publishPost() {
 
     }
 
-    /*
-      Keep the 20 MB limit for the current
-      browser-storage version.
-    */
 
     if (
       selectedMedia.size >
@@ -1075,144 +1484,194 @@ async function publishPost() {
 
     }
 
-    const reader =
-      new FileReader();
 
-    reader.onload =
-      function(event) {
+    try {
 
-        posts.unshift({
+      const videoData =
+        await fileToDataURL(
+          selectedMedia
+        );
 
-          id: Date.now(),
 
-          username: username,
+      posts.unshift({
 
-          profileImage: profileImage,
+        id:
+          Date.now(),
 
-          text: text,
+        username:
+          username,
 
-          media: event.target.result,
+        profileImage:
+          profileImage,
 
-          mediaType: selectedMedia.type,
+        text:
+          text,
 
-          liked: false,
+        media:
+          videoData,
 
-          likeCount: 0,
+        mediaType:
+          selectedMedia.type,
 
-          comments: [],
+        sound:
+          soundData,
 
-          createdAt: Date.now()
+        soundType:
+          selectedSound
+            ? selectedSound.type
+            : null,
 
-        });
+        liked:
+          false,
 
-        try {
+        likeCount:
+          0,
 
-          savePosts(posts);
+        comments:
+          [],
 
-          finish();
+        createdAt:
+          Date.now()
 
-        } catch(error) {
+      });
 
-          message.textContent =
-            "⚠️ Reel is too large for browser storage. Try a smaller video.";
 
-        }
+      savePosts(posts);
 
-      };
+      finish();
 
-    reader.readAsDataURL(selectedMedia);
+    }
+
+    catch(error) {
+
+      message.textContent =
+        "⚠️ Could not save the Reel.";
+
+    }
+
 
     return;
+
   }
 
 
   /* =========================
-     PHOTO
+  PHOTO
   ========================= */
 
   message.textContent =
-    "⏳ Saving your edited photo...";
+    "⏳ Applying your photo edits...";
+
 
   const editedBlob =
     await createEditedImage();
 
+
   if (!editedBlob) {
 
     message.textContent =
-      "⚠️ Could not create the edited photo.";
+      "⚠️ Could not edit the photo.";
 
     return;
 
   }
 
-  const reader =
-    new FileReader();
 
-  reader.onload =
-    function(event) {
+  try {
 
-      posts.unshift({
+    const photoData =
+      await fileToDataURL(
+        editedBlob
+      );
 
-        id: Date.now(),
 
-        username: username,
+    posts.unshift({
 
-        profileImage: profileImage,
+      id:
+        Date.now(),
 
-        text: text,
+      username:
+        username,
 
-        media: event.target.result,
+      profileImage:
+        profileImage,
 
-        mediaType: "image/jpeg",
+      text:
+        text,
 
-        liked: false,
+      media:
+        photoData,
 
-        likeCount: 0,
+      mediaType:
+        "image/jpeg",
 
-        comments: [],
+      sound:
+        soundData,
 
-        createdAt: Date.now()
+      soundType:
+        selectedSound
+          ? selectedSound.type
+          : null,
 
-      });
+      liked:
+        false,
 
-      try {
+      likeCount:
+        0,
 
-        savePosts(posts);
+      comments:
+        [],
 
-        finish();
+      createdAt:
+        Date.now()
 
-      } catch(error) {
+    });
 
-        message.textContent =
-          "⚠️ Photo is too large for browser storage.";
 
-      }
+    savePosts(posts);
 
-    };
+    finish();
 
-  reader.readAsDataURL(editedBlob);
+  }
+
+  catch(error) {
+
+    message.textContent =
+      "⚠️ Photo or sound is too large for browser storage.";
+
+  }
 
 }
 
 
 /* =========================
-   FINISH
+FINISH
 ========================= */
 
 function finish() {
 
-  document.getElementById("message")
-    .textContent =
+  document.getElementById(
+    "message"
+  ).textContent =
     "✅ Published successfully!";
 
-  setTimeout(function() {
 
-    window.location.href =
-      "index.html";
+  setTimeout(
 
-  }, 700);
+    function() {
+
+      window.location.href =
+        "index.html";
+
+    },
+
+    700
+
+  );
 
 }
 
-</script></body>
+</script>
+
+</body>
 </html>
