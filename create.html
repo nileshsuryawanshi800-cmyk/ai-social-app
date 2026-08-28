@@ -243,6 +243,119 @@ function createPost() {
   );
 
 
+  /* NO MEDIA */
+
+  if (!selectedMedia) {
+
+    localStorage.removeItem("postMedia");
+    localStorage.removeItem("postMediaType");
+
+    finishPost();
+
+    return;
+
+  }
+
+
+  /* VIDEO SIZE CHECK */
+
+  if (
+    selectedMedia.type.startsWith("video/") &&
+    selectedMedia.size > 3 * 1024 * 1024
+  ) {
+
+    document
+      .getElementById("message")
+      .textContent =
+      "⚠️ Video is too large. Please choose a video under 3 MB.";
+
+    return;
+
+  }
+
+
+  /* SAVE PHOTO OR SMALL VIDEO */
+
+  const reader =
+    new FileReader();
+
+
+  reader.onload = function(e) {
+
+    try {
+
+      localStorage.setItem(
+        "postMedia",
+        e.target.result
+      );
+
+      localStorage.setItem(
+        "postMediaType",
+        selectedMedia.type
+      );
+
+      finishPost();
+
+    }
+
+    catch (error) {
+
+      document
+        .getElementById("message")
+        .textContent =
+        "⚠️ File is too large for local storage.";
+
+    }
+
+  };
+
+
+  reader.onerror = function() {
+
+    document
+      .getElementById("message")
+      .textContent =
+      "⚠️ Could not read this video.";
+
+  };
+
+
+  reader.readAsDataURL(
+    selectedMedia
+  );
+
+}
+
+  const text =
+    document
+      .getElementById("postText")
+      .value
+      .trim();
+
+
+  if (
+    text === "" &&
+    !selectedMedia
+  ) {
+
+    document
+      .getElementById("message")
+      .textContent =
+      "⚠️ Write something or select a photo/video.";
+
+    return;
+
+  }
+
+
+  /* SAVE TEXT */
+
+  localStorage.setItem(
+    "newPost",
+    text
+  );
+
+
   /* SAVE MEDIA */
 
   if (selectedMedia) {
