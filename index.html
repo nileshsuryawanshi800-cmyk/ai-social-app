@@ -360,9 +360,24 @@ actions.innerHTML = `
 
   post.appendChild(postHeader);
 
-  post.appendChild(content);
+post.appendChild(content);
 
-  post.appendChild(actions);
+post.appendChild(actions);
+
+
+/* OPEN PROFILE FROM POST HEADER AND CONTENT */
+
+postHeader.style.cursor = "pointer";
+
+postHeader.onclick = function() {
+  window.location.href = "profile.html";
+};
+
+content.style.cursor = "pointer";
+
+content.onclick = function() {
+  window.location.href = "profile.html";
+};
 
 /* DELETE POST */
 
