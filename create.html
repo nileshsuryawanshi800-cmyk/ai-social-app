@@ -237,24 +237,20 @@ textarea{
 <!-- PHOTO / VIDEO -->
 
 <button
-type="button"
-class="file-label"
-onclick="document.getElementById('mediaInput').click()"
-
-«»
-
+  type="button"
+  class="file-label"
+  onclick="document.getElementById('mediaInput').click()"
+>
 📸 Select Photo or 🎥 Reel
 </button>
 
 <input
   id="mediaInput"
   type="file"
-  accept="image/*"
-  onchange="selectMedia(event)"
+  accept="image/*,video/*"
   style="display:none"
+  onchange="selectMedia(event)"
 >
-
-«»
 
 <!-- SOUND -->
 
