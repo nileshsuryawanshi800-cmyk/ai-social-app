@@ -1,237 +1,298 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta
+name="viewport"
+content="width=device-width, initial-scale=1.0"
 
-  <title>Profile - AI Social</title>
+«»
 
-  <style>
-    * {
-      box-sizing: border-box;
-      font-family: Arial, sans-serif;
-    }
+<title>Profile - AI Social</title><style>
 
-    body {
-      margin: 0;
-      background: #f5f5f5;
-      color: #111;
-      padding-bottom: 80px;
-    }
+* {
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
 
-    header {
-      background: white;
-      padding: 18px;
-      border-bottom: 1px solid #ddd;
-      font-size: 21px;
-      font-weight: bold;
-    }
+body {
+  margin: 0;
+  background: #f5f5f5;
+  color: #111;
+  padding-bottom: 80px;
+}
 
-    .profile {
-      background: white;
-      padding: 25px 20px;
-      text-align: center;
-    }
+header {
+  background: white;
+  padding: 18px;
+  border-bottom: 1px solid #ddd;
+  font-size: 21px;
+  font-weight: bold;
+}
 
-    /* PROFILE PICTURE */
-    .profile-avatar {
-      width: 90px;
-      height: 90px;
-      border-radius: 50%;
-      background: #ddd;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 45px;
-      margin: auto;
-      overflow: hidden;
-      cursor: pointer;
-    }
+.profile {
+  background: white;
+  padding: 25px 20px;
+  text-align: center;
+}
 
-    .profile-avatar img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: none;
-    }
+/* PROFILE PHOTO */
 
-    .username {
-      margin-top: 12px;
-      font-size: 22px;
-      font-weight: bold;
-    }
+.profile-avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: #ddd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+  overflow: hidden;
+  cursor: pointer;
+  border: 2px solid #eee;
+}
 
-    .bio {
-      margin-top: 8px;
-      color: #666;
-    }
+.profile-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: none;
+}
 
-    .stats {
-      display: flex;
-      justify-content: space-around;
-      margin-top: 25px;
-    }
+#avatarIcon {
+  font-size: 50px;
+}
 
-    .stat {
-      text-align: center;
-    }
+/* USERNAME */
 
-    .stat strong {
-      display: block;
-      font-size: 20px;
-    }
+.username {
+  margin-top: 12px;
+  font-size: 22px;
+  font-weight: bold;
+}
 
-    .stat span {
-      color: #777;
-      font-size: 14px;
-    }
+.bio {
+  margin-top: 8px;
+  color: #666;
+  white-space: pre-wrap;
+}
 
-    .edit-button {
-      margin-top: 20px;
-      padding: 10px 25px;
-      border: none;
-      border-radius: 20px;
-      background: #111;
-      color: white;
-      font-size: 15px;
-      cursor: pointer;
-    }
+/* STATS */
 
-    .posts-title {
-      padding: 20px;
-      font-size: 18px;
-      font-weight: bold;
-    }
+.stats {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 25px;
+}
 
-    .post {
-      background: white;
-      margin: 12px;
-      padding: 18px;
-      border-radius: 15px;
-      word-wrap: break-word;
-    }
+.stat {
+  text-align: center;
+}
 
-    /* BOTTOM NAVIGATION */
-    nav {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 65px;
-      background: white;
-      border-top: 1px solid #ddd;
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      z-index: 100;
-    }
+.stat strong {
+  display: block;
+  font-size: 20px;
+}
 
-    nav button {
-      border: none;
-      background: none;
-      font-size: 14px;
-      cursor: pointer;
-      padding: 5px;
-    }
+.stat span {
+  color: #777;
+  font-size: 14px;
+}
 
-    nav button:active {
-      transform: scale(0.95);
-    }
-  </style>
-</head>
+/* EDIT */
 
-<body>
+.edit-button {
+  margin-top: 20px;
+  padding: 10px 25px;
+  border: none;
+  border-radius: 20px;
+  background: #111;
+  color: white;
+  font-size: 15px;
+  cursor: pointer;
+}
 
-<header>
+/* POSTS */
+
+.posts-title {
+  padding: 20px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.post {
+  background: white;
+  margin: 12px;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+
+.post-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px;
+}
+
+.post-avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: #ddd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.post-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.post-username {
+  font-weight: bold;
+}
+
+.post-text {
+  padding: 0 14px 14px;
+  font-size: 16px;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.post-media {
+  width: 100%;
+  max-height: 600px;
+  object-fit: contain;
+  background: #000;
+  display: block;
+}
+
+.post-actions {
+  padding: 12px 14px;
+  border-top: 1px solid #eee;
+  color: #555;
+}
+
+.empty {
+  text-align: center;
+  padding: 35px 20px;
+  color: #777;
+}
+
+/* NAVIGATION */
+
+nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 65px;
+  background: white;
+  border-top: 1px solid #ddd;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  z-index: 100;
+}
+
+nav button {
+  border: none;
+  background: none;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 5px;
+}
+
+</style></head><body><header>
   👤 Profile
-</header>
+</header><section class="profile">  <div
+    class="profile-avatar"
+    onclick="choosePhoto()"
+  ><img
+  id="profileImage"
+  alt="Profile Picture"
+>
 
-<section class="profile">
+<span id="avatarIcon">👤</span>
 
-  <!-- PROFILE PICTURE -->
-  <div class="profile-avatar" onclick="choosePhoto()">
+  </div><input
+type="file"
+id="photoInput"
+accept="image/*"
+style="display:none"
 
-    <img id="profileImage" alt="Profile Picture">
+«»
 
-    <span id="avatarIcon">👤</span>
-
-  </div>
-
-  <!-- Hidden photo selector -->
-  <input
-    type="file"
-    id="photoInput"
-    accept="image/*"
-    style="display:none"
-    onchange="savePhoto(event)"
+  <div
+    class="username"
+    id="username"
   >
-
-  <div class="username" id="username">
     AI Social User
-  </div>
-
-  <div class="bio" id="bio">
+  </div>  <div
+    class="bio"
+    id="bio"
+  >
     Welcome to my AI Social profile 🚀
-  </div>
+  </div>  <div class="stats"><div class="stat">
 
-  <div class="stats">
+  <strong id="postCount">
+    0
+  </strong>
 
-    <div class="stat">
-      <strong id="postCount">0</strong>
-      <span>Posts</span>
-    </div>
+  <span>
+    Posts
+  </span>
 
-    <div class="stat">
-      <strong>0</strong>
-      <span>Followers</span>
-    </div>
-
-    <div class="stat">
-      <strong>0</strong>
-      <span>Following</span>
-    </div>
-
-  </div>
-
-  <button class="edit-button" onclick="editProfile()">
-    ✏️ Edit Profile
-  </button>
-
-</section>
-
-<div class="posts-title">
-  📸 My Posts
 </div>
 
-<div id="myPosts"></div>
 
-<!-- BOTTOM NAVIGATION -->
+<div class="stat">
 
-<nav>
+  <strong>
+    0
+  </strong>
 
-  <button onclick="goHome()">
+  <span>
+    Followers
+  </span>
+
+</div>
+
+
+<div class="stat">
+
+  <strong>
+    0
+  </strong>
+
+  <span>
+    Following
+  </span>
+
+</div>
+
+  </div><button
+class="edit-button"
+onclick="editProfile()"
+
+«»
+
+✏️ Edit Profile
+
+  </button></section><div class="posts-title">
+  📸 My Posts
+</div><div id="myPosts"></div><nav>  <button onclick="goHome()">
     🏠<br>Home
-  </button>
-
-  <button onclick="goSearch()">
+  </button>  <button onclick="goSearch()">
     🔍<br>Search
-  </button>
-
-  <button onclick="goCreate()">
+  </button>  <button onclick="goCreate()">
     ➕<br>Create
-  </button>
-
-  <button onclick="goAI()">
+  </button>  <button onclick="goAI()">
     🤖<br>AI
-  </button>
-
-  <button onclick="goProfile()">
+  </button>  <button onclick="goProfile()">
     👤<br>Profile
-  </button>
-
-</nav>
-
-<script>
+  </button></nav><script>
 
 /* =========================
    NAVIGATION
@@ -242,7 +303,7 @@ function goHome() {
 }
 
 function goSearch() {
-  alert("🔍 Search feature coming soon!");
+  window.location.href = "search.html";
 }
 
 function goCreate() {
@@ -259,65 +320,7 @@ function goProfile() {
 
 
 /* =========================
-   EDIT PROFILE
-========================= */
-
-function editProfile() {
-
-  const currentUsername =
-    localStorage.getItem("username") ||
-    "AI Social User";
-
-  const currentBio =
-    localStorage.getItem("bio") ||
-    "Welcome to my AI Social profile 🚀";
-
-
-  const username = prompt(
-    "Enter your username:",
-    currentUsername
-  );
-
-  if (username === null) {
-    return;
-  }
-
-  if (username.trim() === "") {
-    alert("⚠️ Username cannot be empty.");
-    return;
-  }
-
-
-  const bio = prompt(
-    "Enter your bio:",
-    currentBio
-  );
-
-  if (bio === null) {
-    return;
-  }
-
-
-  localStorage.setItem(
-    "username",
-    username.trim()
-  );
-
-  localStorage.setItem(
-    "bio",
-    bio.trim()
-  );
-
-
-  loadProfile();
-
-  alert("✅ Profile updated!");
-
-}
-
-
-/* =========================
-   CHOOSE PROFILE PHOTO
+   CHOOSE PHOTO
 ========================= */
 
 function choosePhoto() {
@@ -330,7 +333,19 @@ function choosePhoto() {
 
 
 /* =========================
-   SAVE PROFILE PHOTO
+   PHOTO INPUT
+========================= */
+
+document
+  .getElementById("photoInput")
+  .addEventListener(
+    "change",
+    savePhoto
+  );
+
+
+/* =========================
+   SAVE PHOTO
 ========================= */
 
 function savePhoto(event) {
@@ -338,38 +353,118 @@ function savePhoto(event) {
   const file =
     event.target.files[0];
 
-  if (!file) {
-    return;
-  }
+  if (!file) return;
+
 
   if (!file.type.startsWith("image/")) {
 
-    alert("⚠️ Please select an image.");
+    alert(
+      "⚠️ Please select an image."
+    );
 
     return;
+
   }
 
 
-  const reader =
-    new FileReader();
+  /*
+    Resize profile photos before saving.
+    This prevents localStorage from filling
+    too quickly.
+  */
+
+  const image =
+    new Image();
+
+  const url =
+    URL.createObjectURL(file);
 
 
-  reader.onload = function(e) {
+  image.onload =
+    function() {
 
-    const imageData =
-      e.target.result;
+      const maxSize = 500;
 
-    localStorage.setItem(
-      "profileImage",
-      imageData
-    );
+      let width =
+        image.naturalWidth;
 
-    showProfilePhoto(imageData);
-
-  };
+      let height =
+        image.naturalHeight;
 
 
-  reader.readAsDataURL(file);
+      if (width > maxSize || height > maxSize) {
+
+        const scale =
+          Math.min(
+            maxSize / width,
+            maxSize / height
+          );
+
+        width =
+          Math.round(width * scale);
+
+        height =
+          Math.round(height * scale);
+
+      }
+
+
+      const canvas =
+        document.createElement("canvas");
+
+      canvas.width =
+        width;
+
+      canvas.height =
+        height;
+
+
+      const ctx =
+        canvas.getContext("2d");
+
+
+      ctx.drawImage(
+        image,
+        0,
+        0,
+        width,
+        height
+      );
+
+
+      const imageData =
+        canvas.toDataURL(
+          "image/jpeg",
+          0.85
+        );
+
+
+      try {
+
+        localStorage.setItem(
+          "profileImage",
+          imageData
+        );
+
+        showProfilePhoto(
+          imageData
+        );
+
+      } catch(error) {
+
+        alert(
+          "⚠️ Profile photo is too large. Please choose a smaller image."
+        );
+
+      }
+
+
+      URL.revokeObjectURL(url);
+
+    };
+
+
+  image.src = url;
 
 }
 
@@ -381,17 +476,138 @@ function savePhoto(event) {
 function showProfilePhoto(imageData) {
 
   const image =
-    document.getElementById("profileImage");
+    document.getElementById(
+      "profileImage"
+    );
 
   const icon =
-    document.getElementById("avatarIcon");
+    document.getElementById(
+      "avatarIcon"
+    );
 
 
-  image.src = imageData;
+  image.src =
+    imageData;
 
-  image.style.display = "block";
+  image.style.display =
+    "block";
 
-  icon.style.display = "none";
+  icon.style.display =
+    "none";
+
+}
+
+
+/* =========================
+   EDIT PROFILE
+========================= */
+
+function editProfile() {
+
+  const currentUsername =
+    localStorage.getItem(
+      "username"
+    ) ||
+    "AI Social User";
+
+
+  const currentBio =
+    localStorage.getItem(
+      "bio"
+    ) ||
+    "Welcome to my AI Social profile 🚀";
+
+
+  const username =
+    prompt(
+      "Enter your username:",
+      currentUsername
+    );
+
+
+  if (username === null) {
+    return;
+  }
+
+
+  if (
+    username.trim() === ""
+  ) {
+
+    alert(
+      "⚠️ Username cannot be empty."
+    );
+
+    return;
+
+  }
+
+
+  const bio =
+    prompt(
+      "Enter your bio:",
+      currentBio
+    );
+
+
+  if (bio === null) {
+    return;
+  }
+
+
+  localStorage.setItem(
+    "username",
+    username.trim()
+  );
+
+
+  localStorage.setItem(
+    "bio",
+    bio.trim()
+  );
+
+
+  loadProfile();
+
+
+  alert(
+    "✅ Profile updated!"
+  );
+
+}
+
+
+/* =========================
+   GET POSTS
+========================= */
+
+function getPosts() {
+
+  try {
+
+    const data =
+      localStorage.getItem(
+        "posts"
+      );
+
+    if (!data) {
+      return [];
+    }
+
+
+    const posts =
+      JSON.parse(data);
+
+
+    return Array.isArray(posts)
+      ? posts
+      : [];
+
+  } catch(error) {
+
+    return [];
+
+  }
 
 }
 
@@ -403,159 +619,293 @@ function showProfilePhoto(imageData) {
 function loadProfile() {
 
   const username =
-    localStorage.getItem("username") ||
+    localStorage.getItem(
+      "username"
+    ) ||
     "AI Social User";
 
+
   const bio =
-    localStorage.getItem("bio") ||
+    localStorage.getItem(
+      "bio"
+    ) ||
     "Welcome to my AI Social profile 🚀";
 
 
-  document.getElementById("username")
-    .textContent = username;
+  document
+    .getElementById("username")
+    .textContent =
+    username;
 
-  document.getElementById("bio")
-    .textContent = bio;
+
+  document
+    .getElementById("bio")
+    .textContent =
+    bio;
 
 
-    const posts =
-    document.getElementById("myPosts");
+  const savedPosts =
+    getPosts();
 
-  const count =
-    document.getElementById("postCount");
 
-  posts.innerHTML = "";
+  /*
+    Only show posts belonging
+    to the current username.
+  */
 
-  let savedPosts = [];
+  const myPosts =
+    savedPosts.filter(
+      function(post) {
 
-  try {
-    savedPosts =
-      JSON.parse(
-        localStorage.getItem("posts") || "[]"
+        return (
+          (post.username || "You") ===
+          username
+        );
+
+      }
+    );
+
+
+  document
+    .getElementById("postCount")
+    .textContent =
+    myPosts.length;
+
+
+  const postsBox =
+    document.getElementById(
+      "myPosts"
+    );
+
+
+  postsBox.innerHTML = "";
+
+
+  if (myPosts.length === 0) {
+
+    postsBox.innerHTML =
+      '<div class="empty">' +
+      'No posts yet.<br>' +
+      'Tap ➕ Create to make your first post! 📸' +
+      '</div>';
+
+  }
+
+
+  myPosts.forEach(
+    function(savedPost) {
+
+      const post =
+        document.createElement("div");
+
+      post.className =
+        "post";
+
+
+      /* HEADER */
+
+      const postHeader =
+        document.createElement("div");
+
+      postHeader.className =
+        "post-header";
+
+
+      const avatar =
+        document.createElement("div");
+
+      avatar.className =
+        "post-avatar";
+
+
+      const savedProfileImage =
+        localStorage.getItem(
+          "profileImage"
+        );
+
+
+      if (savedProfileImage) {
+
+        const img =
+          document.createElement("img");
+
+        img.src =
+          savedProfileImage;
+
+        avatar.appendChild(
+          img
+        );
+
+      } else {
+
+        avatar.textContent =
+          "👤";
+
+      }
+
+
+      const name =
+        document.createElement("div");
+
+      name.className =
+        "post-username";
+
+      name.textContent =
+        username;
+
+
+      postHeader.appendChild(
+        avatar
       );
-  } catch (error) {
-    savedPosts = [];
-  }
 
-  /* Show number of posts */
-
-  count.textContent =
-    savedPosts.length;
+      postHeader.appendChild(
+        name
+      );
 
 
-  /* No posts */
-
-  if (savedPosts.length === 0) {
-
-    posts.innerHTML =
-      "<p style='text-align:center;color:#777;'>No posts yet.</p>";
-
-  }
+      post.appendChild(
+        postHeader
+      );
 
 
-  /* Show all posts */
+      /* TEXT */
 
-  savedPosts.forEach(function(savedPost) {
+      if (savedPost.text) {
 
-    const post =
-      document.createElement("div");
+        const text =
+          document.createElement("div");
 
-    post.className = "post";
+        text.className =
+          "post-text";
+
+        text.textContent =
+          savedPost.text;
+
+        post.appendChild(
+          text
+        );
+
+      }
 
 
-    /* POST TEXT */
+      /* IMAGE */
 
-    if (savedPost.text) {
+      if (
+        savedPost.media &&
+        savedPost.mediaType &&
+        savedPost.mediaType.startsWith(
+          "image/"
+        )
+      ) {
 
-      const text =
-        document.createElement("p");
+        const image =
+          document.createElement("img");
 
-      text.textContent =
-        savedPost.text;
+        image.className =
+          "post-media";
 
-      text.style.marginBottom = "12px";
+        image.src =
+          savedPost.media;
 
-      post.appendChild(text);
+        image.alt =
+          "Post image";
+
+        post.appendChild(
+          image
+        );
+
+      }
+
+
+      /* VIDEO */
+
+      if (
+        savedPost.media &&
+        savedPost.mediaType &&
+        savedPost.mediaType.startsWith(
+          "video/"
+        )
+      ) {
+
+        const video =
+          document.createElement("video");
+
+        video.className =
+          "post-media";
+
+        video.src =
+          savedPost.media;
+
+        video.controls =
+          true;
+
+        video.playsInline =
+          true;
+
+        post.appendChild(
+          video
+        );
+
+      }
+
+
+      /* ACTION INFO */
+
+      const actions =
+        document.createElement("div");
+
+      actions.className =
+        "post-actions";
+
+      actions.textContent =
+        "❤️ " +
+        (Number(savedPost.likeCount) || 0) +
+        "    💬 " +
+        (
+          Array.isArray(
+            savedPost.comments
+          )
+          ? savedPost.comments.length
+          : 0
+        );
+
+
+      post.appendChild(
+        actions
+      );
+
+
+      postsBox.appendChild(
+        post
+      );
 
     }
+  );
 
 
-    /* PHOTO */
-
-    if (
-      savedPost.media &&
-      savedPost.mediaType &&
-      savedPost.mediaType.startsWith("image/")
-    ) {
-
-      const image =
-        document.createElement("img");
-
-      image.src =
-        savedPost.media;
-
-      image.style.width = "100%";
-      image.style.maxHeight = "500px";
-      image.style.objectFit = "contain";
-      image.style.borderRadius = "12px";
-      image.style.background = "#000";
-
-      post.appendChild(image);
-
-    }
-
-
-    /* VIDEO */
-
-    if (
-      savedPost.media &&
-      savedPost.mediaType &&
-      savedPost.mediaType.startsWith("video/")
-    ) {
-
-      const video =
-        document.createElement("video");
-
-      video.src =
-        savedPost.media;
-
-      video.controls = true;
-      video.playsInline = true;
-
-      video.style.width = "100%";
-      video.style.maxHeight = "500px";
-      video.style.borderRadius = "12px";
-      video.style.background = "#000";
-
-      post.appendChild(video);
-
-    }
-
-
-    posts.appendChild(post);
-
-  });
-
-
-  /* Load saved profile picture */
+  /* PROFILE PHOTO */
 
   const savedImage =
-    localStorage.getItem("profileImage");
+    localStorage.getItem(
+      "profileImage"
+    );
+
 
   if (savedImage) {
 
-    showProfilePhoto(savedImage);
+    showProfilePhoto(
+      savedImage
+    );
 
   }
 
 }
 
 
-/* Start */
+/* =========================
+   START
+========================= */
 
 loadProfile();
 
-</script>
-
-</body>
-  </html>
+</script></body></html>
