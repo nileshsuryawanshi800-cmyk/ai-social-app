@@ -709,24 +709,20 @@ function loadPosts() {
       "actions";
 
 
+    
 
-    /* LIKE */
+/* LIKE */
 
 const likeButton =
   document.createElement("button");
 
 function updateLikeButton() {
 
-  const isLiked =
-    postData.liked === true;
-
   const count =
     Number(postData.likeCount) || 0;
 
   likeButton.textContent =
-    isLiked
-      ? "❤️ Unlike " + count
-      : "🤍 Like " + count;
+    "❤️ Like " + count;
 }
 
 updateLikeButton();
@@ -758,8 +754,6 @@ likeButton.onclick = function(event) {
   updateLikeButton();
 
 };
-
-
   
 
 
