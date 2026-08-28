@@ -1,15 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
 <title>AI Social</title>
 
 <link rel="manifest" href="manifest.json">
+
 <meta name="theme-color" content="#111111">
 
 <style>
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -22,6 +28,8 @@ body {
   color: #111;
   padding-bottom: 80px;
 }
+
+/* HEADER */
 
 header {
   background: white;
@@ -48,6 +56,8 @@ header h1 {
   cursor: pointer;
 }
 
+/* WELCOME */
+
 .welcome {
   padding: 25px 18px;
 }
@@ -55,6 +65,8 @@ header h1 {
 .welcome h2 {
   margin-bottom: 8px;
 }
+
+/* POSTS */
 
 #posts {
   width: 100%;
@@ -68,8 +80,16 @@ header h1 {
   box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
 
+/* POST HEADER */
+
 .post-header {
   padding: 15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.post-header-profile {
   display: flex;
   align-items: center;
   gap: 10px;
@@ -100,13 +120,7 @@ header h1 {
   font-size: 16px;
 }
 
-.post-content {
-  padding: 0 15px 15px;
-  white-space: pre-wrap;
-  word-wrap: break-word;
-  font-size: 17px;
-  cursor: pointer;
-}
+/* MEDIA */
 
 .post-media {
   width: 100%;
@@ -117,9 +131,21 @@ header h1 {
   cursor: pointer;
 }
 
+/* TEXT */
+
+.post-content {
+  padding: 0 15px 15px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  font-size: 17px;
+  cursor: pointer;
+}
+
+/* ACTIONS */
+
 .actions {
   display: flex;
-  gap: 15px;
+  gap: 8px;
   padding: 12px 15px;
   border-top: 1px solid #eee;
   flex-wrap: wrap;
@@ -127,10 +153,18 @@ header h1 {
 
 .actions button {
   border: none;
-  background: none;
-  font-size: 15px;
+  background: #f5f5f5;
+  padding: 9px 12px;
+  border-radius: 20px;
+  font-size: 14px;
   cursor: pointer;
 }
+
+.actions button:active {
+  transform: scale(0.95);
+}
+
+/* COMMENTS */
 
 .comments {
   padding: 0 15px 10px;
@@ -138,11 +172,16 @@ header h1 {
 
 .comment {
   margin-top: 8px;
+  padding: 8px;
+  background: #f5f5f5;
+  border-radius: 10px;
 }
 
 .comment-name {
   font-weight: bold;
 }
+
+/* DELETE */
 
 .delete-button {
   border: none;
@@ -151,6 +190,8 @@ header h1 {
   padding: 10px 15px 15px;
   cursor: pointer;
 }
+
+/* EMPTY */
 
 .empty {
   text-align: center;
@@ -182,7 +223,7 @@ nav button {
   padding: 5px;
 }
 
-/* FULL POST VIEW */
+/* POST VIEWER */
 
 #postViewer {
   display: none;
@@ -228,7 +269,9 @@ nav button {
   font-size: 17px;
   white-space: pre-wrap;
 }
+
 </style>
+
 </head>
 
 <body>
@@ -239,39 +282,43 @@ nav button {
 
 <button
 class="ai-button"
-onclick="goAI()"
->
+onclick="goAI()">
 🤖 AI Chat
 </button>
 
 </header>
 
+
 <section class="welcome">
 
-<h2>Welcome 👋</h2>
+<h2>
+Welcome 👋
+</h2>
 
-<p>Connect, share and chat with AI.</p>
+<p>
+Connect, share and chat with AI.
+</p>
 
 </section>
+
 
 <div id="posts"></div>
 
 
-<!-- FULL POST VIEW -->
+<!-- POST VIEWER -->
 
 <div id="postViewer">
 
 <button
 class="viewer-close"
-onclick="closePost()"
->
+onclick="closePost()">
 ✕
 </button>
 
 <div
 class="viewer-box"
-id="viewerBox"
-></div>
+id="viewerBox">
+</div>
 
 </div>
 
@@ -310,23 +357,38 @@ NAVIGATION
 ========================= */
 
 function goHome() {
-  window.location.href = "index.html";
+
+  window.location.href =
+    "index.html";
+
 }
 
 function goSearch() {
-  window.location.href = "search.html";
+
+  window.location.href =
+    "search.html";
+
 }
 
 function goCreate() {
-  window.location.href = "create.html";
+
+  window.location.href =
+    "create.html";
+
 }
 
 function goAI() {
-  window.location.href = "chat.html";
+
+  window.location.href =
+    "chat.html";
+
 }
 
 function goProfile() {
-  window.location.href = "profile.html";
+
+  window.location.href =
+    "profile.html";
+
 }
 
 
@@ -383,13 +445,22 @@ function loadPosts() {
   if (posts.length === 0) {
 
     postsBox.innerHTML =
-      '<div class="empty">No posts yet.<br>Tap ➕ Create to make your first post! 📸</div>';
+      '<div class="empty">' +
+      'No posts yet.<br>' +
+      'Tap ➕ Create to make your first post! 📸' +
+      '</div>';
 
     return;
+
   }
 
 
   posts.forEach(function(postData, index) {
+
+
+    /* =========================
+    POST CONTAINER
+    ========================= */
 
     const post =
       document.createElement("div");
@@ -399,7 +470,7 @@ function loadPosts() {
 
 
     /* =========================
-    HEADER
+    POST HEADER
     ========================= */
 
     const header =
@@ -409,13 +480,27 @@ function loadPosts() {
       "post-header";
 
 
-    header.onclick =
-      function() {
+    const profileLink =
+      document.createElement("div");
 
-        openPost(postData);
+    profileLink.className =
+      "post-header-profile";
+
+
+    /* PROFILE CLICK */
+
+    profileLink.onclick =
+      function(event) {
+
+        event.stopPropagation();
+
+        window.location.href =
+          "profile.html";
 
       };
 
+
+    /* AVATAR */
 
     const avatar =
       document.createElement("div");
@@ -432,6 +517,9 @@ function loadPosts() {
       img.src =
         postData.profileImage;
 
+      img.alt =
+        "Profile";
+
       avatar.appendChild(img);
 
     } else {
@@ -442,6 +530,8 @@ function loadPosts() {
     }
 
 
+    /* USERNAME */
+
     const username =
       document.createElement("div");
 
@@ -449,11 +539,26 @@ function loadPosts() {
       "post-username";
 
     username.textContent =
-      postData.username || "You";
+      postData.username ||
+      localStorage.getItem("username") ||
+      "AI Social User";
 
 
-    header.appendChild(avatar);
-    header.appendChild(username);
+    profileLink.appendChild(
+      avatar
+    );
+
+    profileLink.appendChild(
+      username
+    );
+
+    header.appendChild(
+      profileLink
+    );
+
+    post.appendChild(
+      header
+    );
 
 
     /* =========================
@@ -462,12 +567,14 @@ function loadPosts() {
 
     if (postData.media) {
 
-      let media;
+      let media = null;
 
 
       if (
         postData.mediaType &&
-        postData.mediaType.startsWith("image/")
+        postData.mediaType
+          .toLowerCase()
+          .startsWith("image/")
       ) {
 
         media =
@@ -478,9 +585,12 @@ function loadPosts() {
 
       }
 
+
       else if (
         postData.mediaType &&
-        postData.mediaType.startsWith("video/")
+        postData.mediaType
+          .toLowerCase()
+          .startsWith("video/")
       ) {
 
         media =
@@ -489,8 +599,11 @@ function loadPosts() {
         media.src =
           postData.media;
 
-        media.controls = true;
-        media.playsInline = true;
+        media.controls =
+          true;
+
+        media.playsInline =
+          true;
 
       }
 
@@ -500,14 +613,20 @@ function loadPosts() {
         media.className =
           "post-media";
 
+
         media.onclick =
-          function() {
+          function(event) {
+
+            event.stopPropagation();
 
             openPost(postData);
 
           };
 
-        post.appendChild(media);
+
+        post.appendChild(
+          media
+        );
 
       }
 
@@ -529,14 +648,20 @@ function loadPosts() {
       content.textContent =
         postData.text;
 
+
       content.onclick =
-        function() {
+        function(event) {
+
+          event.stopPropagation();
 
           openPost(postData);
 
         };
 
-      post.appendChild(content);
+
+      post.appendChild(
+        content
+      );
 
     }
 
@@ -557,36 +682,54 @@ function loadPosts() {
     const likeButton =
       document.createElement("button");
 
-    const liked =
-      postData.liked === true;
 
-    const likeCount =
-      Number(postData.likeCount) || 0;
+    function updateLikeButton() {
+
+      const liked =
+        postData.liked === true;
+
+      const count =
+        Number(postData.likeCount) || 0;
+
+      likeButton.textContent =
+        (liked
+          ? "❤️ Unlike "
+          : "🤍 Like ") +
+        count;
+
+    }
 
 
-    likeButton.textContent =
-      (liked ? "❤️ Unlike " : "🤍 Like ") +
-      likeCount;
+    updateLikeButton();
 
 
     likeButton.onclick =
-      function() {
+      function(event) {
+
+        event.stopPropagation();
+
 
         postData.liked =
-          !postData.liked;
+          !(
+            postData.liked === true
+          );
 
 
         if (postData.liked) {
 
           postData.likeCount =
-            (Number(postData.likeCount) || 0) + 1;
+            (Number(
+              postData.likeCount
+            ) || 0) + 1;
 
         } else {
 
           postData.likeCount =
             Math.max(
               0,
-              (Number(postData.likeCount) || 0) - 1
+              (Number(
+                postData.likeCount
+              ) || 0) - 1
             );
 
         }
@@ -594,7 +737,7 @@ function loadPosts() {
 
         savePosts(posts);
 
-        loadPosts();
+        updateLikeButton();
 
       };
 
@@ -609,14 +752,19 @@ function loadPosts() {
 
 
     commentButton.onclick =
-      function() {
+      function(event) {
+
+        event.stopPropagation();
+
 
         const comment =
-          prompt("💬 Write your comment:");
+          prompt(
+            "💬 Write your comment:"
+          );
 
 
         if (
-          !comment ||
+          comment === null ||
           comment.trim() === ""
         ) {
 
@@ -631,7 +779,8 @@ function loadPosts() {
           )
         ) {
 
-          postData.comments = [];
+          postData.comments =
+            [];
 
         }
 
@@ -658,7 +807,9 @@ function loadPosts() {
 
 
     shareButton.onclick =
-      function() {
+      function(event) {
+
+        event.stopPropagation();
 
         sharePost(postData);
 
@@ -678,6 +829,11 @@ function loadPosts() {
     );
 
 
+    post.appendChild(
+      actions
+    );
+
+
     /* =========================
     COMMENTS
     ========================= */
@@ -690,7 +846,9 @@ function loadPosts() {
 
 
     if (
-      Array.isArray(postData.comments) &&
+      Array.isArray(
+        postData.comments
+      ) &&
       postData.comments.length > 0
     ) {
 
@@ -700,7 +858,9 @@ function loadPosts() {
       title.textContent =
         "💬 Comments";
 
-      commentsBox.appendChild(title);
+      commentsBox.appendChild(
+        title
+      );
 
 
       postData.comments.forEach(
@@ -712,6 +872,7 @@ function loadPosts() {
           item.className =
             "comment";
 
+
           const name =
             document.createElement("span");
 
@@ -719,11 +880,15 @@ function loadPosts() {
             "comment-name";
 
           name.textContent =
-            (postData.username || "You") +
-            ": ";
+            (
+              postData.username ||
+              "You"
+            ) + ": ";
 
 
-          item.appendChild(name);
+          item.appendChild(
+            name
+          );
 
           item.appendChild(
             document.createTextNode(
@@ -732,12 +897,19 @@ function loadPosts() {
           );
 
 
-          commentsBox.appendChild(item);
+          commentsBox.appendChild(
+            item
+          );
 
         }
       );
 
     }
+
+
+    post.appendChild(
+      commentsBox
+    );
 
 
     /* =========================
@@ -755,7 +927,10 @@ function loadPosts() {
 
 
     deleteButton.onclick =
-      function() {
+      function(event) {
+
+        event.stopPropagation();
+
 
         const answer =
           confirm(
@@ -764,7 +939,9 @@ function loadPosts() {
 
 
         if (!answer) {
+
           return;
+
         }
 
 
@@ -781,19 +958,14 @@ function loadPosts() {
       };
 
 
-    /* =========================
-    BUILD
-    ========================= */
+    post.appendChild(
+      deleteButton
+    );
 
-    post.appendChild(header);
 
-    post.appendChild(actions);
-
-    post.appendChild(commentsBox);
-
-    post.appendChild(deleteButton);
-
-    postsBox.appendChild(post);
+    postsBox.appendChild(
+      post
+    );
 
   });
 
@@ -807,10 +979,15 @@ OPEN POST
 function openPost(postData) {
 
   const viewer =
-    document.getElementById("postViewer");
+    document.getElementById(
+      "postViewer"
+    );
 
   const box =
-    document.getElementById("viewerBox");
+    document.getElementById(
+      "viewerBox"
+    );
+
 
   box.innerHTML = "";
 
@@ -828,22 +1005,29 @@ function openPost(postData) {
 
   user.textContent =
     "👤 " +
-    (postData.username || "You");
+    (
+      postData.username ||
+      "AI Social User"
+    );
 
 
-  box.appendChild(user);
+  box.appendChild(
+    user
+  );
 
 
   /* MEDIA */
 
   if (postData.media) {
 
-    let media;
+    let media = null;
 
 
     if (
       postData.mediaType &&
-      postData.mediaType.startsWith("image/")
+      postData.mediaType
+        .toLowerCase()
+        .startsWith("image/")
     ) {
 
       media =
@@ -854,9 +1038,12 @@ function openPost(postData) {
 
     }
 
+
     else if (
       postData.mediaType &&
-      postData.mediaType.startsWith("video/")
+      postData.mediaType
+        .toLowerCase()
+        .startsWith("video/")
     ) {
 
       media =
@@ -865,9 +1052,14 @@ function openPost(postData) {
       media.src =
         postData.media;
 
-      media.controls = true;
-      media.autoplay = true;
-      media.playsInline = true;
+      media.controls =
+        true;
+
+      media.autoplay =
+        true;
+
+      media.playsInline =
+        true;
 
     }
 
@@ -877,7 +1069,9 @@ function openPost(postData) {
       media.className =
         "viewer-media";
 
-      box.appendChild(media);
+      box.appendChild(
+        media
+      );
 
     }
 
@@ -897,33 +1091,38 @@ function openPost(postData) {
     text.textContent =
       postData.text;
 
-    box.appendChild(text);
+    box.appendChild(
+      text
+    );
 
   }
 
 
-  /* ACTIONS IN VIEWER */
+  /* VIEWER INFO */
 
-  const viewerActions =
+  const info =
     document.createElement("div");
 
-  viewerActions.style.padding =
+  info.style.padding =
     "15px";
 
-  viewerActions.innerHTML =
+  info.textContent =
     "❤️ " +
-    (Number(postData.likeCount) || 0) +
-    " &nbsp;&nbsp; 💬 " +
+    (Number(
+      postData.likeCount
+    ) || 0) +
+    "    💬 " +
     (
-      Array.isArray(postData.comments)
+      Array.isArray(
+        postData.comments
+      )
       ? postData.comments.length
       : 0
-    ) +
-    " comments";
+    );
 
 
   box.appendChild(
-    viewerActions
+    info
   );
 
 
@@ -949,42 +1148,76 @@ SHARE
 
 function sharePost(postData) {
 
-  const text =
-    postData.text ||
-    "Check out my post on AI Social!";
+  const shareText =
+    (
+      postData.username ||
+      "AI Social User"
+    ) +
+    "\n\n" +
+    (
+      postData.text ||
+      "Check out my post on AI Social!"
+    );
 
 
-  if (navigator.share) {
+  if (
+    navigator.share
+  ) {
 
     navigator.share({
 
-      title: "AI Social",
+      title:
+        "AI Social",
 
-      text: text,
+      text:
+        shareText,
 
-      url: window.location.href
+      url:
+        window.location.href
 
-    }).catch(function(error) {
+    })
+    .catch(function(error) {
 
       console.log(error);
 
     });
 
-  }
-
-  else if (navigator.clipboard) {
-
-    navigator.clipboard.writeText(
-      text +
-      "\n\nShared from AI Social"
-    )
-    .then(function() {
-
-      alert("✅ Post copied!");
-
-    });
+    return;
 
   }
+
+
+  if (
+    navigator.clipboard
+  ) {
+
+    navigator.clipboard
+      .writeText(
+        shareText
+      )
+      .then(function() {
+
+        alert(
+          "✅ Post copied to clipboard!"
+        );
+
+      })
+      .catch(function() {
+
+        alert(
+          "⚠️ Could not copy the post."
+        );
+
+      });
+
+    return;
+
+  }
+
+
+  alert(
+    "⚠️ Sharing is not supported on this device."
+  );
 
 }
 
@@ -1000,9 +1233,12 @@ loadPosts();
 SERVICE WORKER
 ========================= */
 
-if ("serviceWorker" in navigator) {
+if (
+  "serviceWorker" in navigator
+) {
 
-  navigator.serviceWorker.register("./sw.js")
+  navigator.serviceWorker
+    .register("./sw.js")
     .then(function() {
 
       console.log(
@@ -1024,4 +1260,5 @@ if ("serviceWorker" in navigator) {
 </script>
 
 </body>
+
 </html>
