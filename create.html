@@ -455,43 +455,189 @@ function goHome(){
 SELECT MEDIA
 ========================= */
 
-function selectMedia(event){
+function selectMedia(event) {
 
-  const file=event.target.files[0];
+const file = event.target.files[0];
 
-  if(!file)return;
+if (!file) {
+return;
+}
 
-  selectedMedia=file;
+selectedMedia = file;
 
-  rotation=0;
-  zoom=1;
-  currentFilter="none";
+rotation = 0;
+zoom = 1;
+currentFilter = "none";
+cropRatio = null;
 
-  const image=document.getElementById("preview");
-  const video=document.getElementById("videoPreview");
+const image =
+document.getElementById("preview");
 
-  const tools=document.getElementById("editTools");
-  const filters=document.getElementById("filters");
+const video =
+document.getElementById("videoPreview");
 
-  const change=document.getElementById("changeButton");
+const tools =
+document.getElementById("editTools");
 
-  const title=document.getElementById("previewTitle");
+const filters =
+document.getElementById("filters");
 
-  image.style.display="none";
-  video.style.display="none";
+const cropTools =
+document.getElementById("cropTools");
 
-  tools.style.display="none";
-  filters.style.display="none";
+const change =
+document.getElementById("changeButton");
 
-  document.getElementById("cropTools").style.display="none";
+const message =
+document.getElementById("message");
 
-  document.getElementById("finalPreview").style.display="none";
+/* RESET PREVIEW */
 
-  change.style.display="block";
-  title.style.display="block";
+image.style.display = "none";
+image.src = "";
 
-  document.getElementById("message").textContent="";
+video.style.display = "none";
+video.src = "";
 
+tools.style.display = "none";
+filters.style.display = "none";
+cropTools.style.display = "none";
+
+change.style.display = "block";
+
+message.textContent = "";
+
+/* =========================
+PHOTO
+========================= */
+
+if (file.type.startsWith("image/")) {
+
+const reader = new FileReader();
+
+reader.onload = function(e) {
+
+  const imageData = e.target.result;
+
+  /* Show selected photo */
+
+  image.src = imageData;
+
+  image.style.display = "block";
+
+  /* Save original image for editing */
+
+  originalImage = new Image();
+
+  originalImage.onload = function() {
+
+    rotation = 0;
+    zoom = 1;
+    currentFilter = "none";
+
+    applyPreview();
+
+  };
+
+  originalImage.onerror = function() {
+
+    message.textContent =
+      "⚠️ Could not load this photo.";
+
+  };
+
+  originalImage.src = imageData;
+
+
+  /* Show editing buttons */
+
+  tools.style.display = "flex";
+  filters.style.display = "flex";
+
+  message.textContent =
+    "✅ Photo selected. Edit it before publishing.";
+
+};
+
+reader.onerror = function() {
+
+  message.textContent =
+    "⚠️ Could not read this photo.";
+
+};
+
+reader.readAsDataURL(file);
+
+return;
+
+}
+
+/* =========================
+VIDEO / REEL
+========================= */
+
+if (file.type.startsWith("video/")) {
+
+const videoURL =
+  URL.createObjectURL(file);
+
+video.src = videoURL;
+
+video.style.display = "block";
+
+video.controls = true;
+video.playsInline = true;
+
+video.onloadedmetadata = function() {
+
+  if (video.duration > 60) {
+
+    alert(
+      "⚠️ Reel must be 1 minute or less."
+    );
+
+    selectedMedia = null;
+
+    video.pause();
+    video.src = "";
+
+    video.style.display = "none";
+
+    change.style.display = "none";
+
+    document.getElementById(
+      "mediaInput"
+    ).value = "";
+
+    return;
+  }
+
+  message.textContent =
+    "✅ Reel selected. Maximum length: 1 minute.";
+
+};
+
+video.onerror = function() {
+
+  message.textContent =
+    "⚠️ Could not open this video.";
+
+};
+
+return;
+
+}
+
+/* =========================
+INVALID FILE
+========================= */
+
+selectedMedia = null;
+
+message.textContent =
+"⚠️ Please select a photo or video.";
+
+  }
 
   /* PHOTO */
 
