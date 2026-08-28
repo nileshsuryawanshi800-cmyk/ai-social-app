@@ -1,150 +1,155 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Create Post - AI Social</title>
+<title>Create - AI Social</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-      font-family: Arial, sans-serif;
-    }
+<style>
+* {
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
 
-    body {
-      margin: 0;
-      background: #f5f5f5;
-      color: #111;
-    }
+body {
+  margin: 0;
+  background: #f5f5f5;
+  color: #111;
+}
 
-    header {
-      background: white;
-      padding: 18px;
-      display: flex;
-      align-items: center;
-      gap: 15px;
-      border-bottom: 1px solid #ddd;
-    }
+header {
+  background: white;
+  padding: 18px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  border-bottom: 1px solid #ddd;
+}
 
-    header button {
-      border: none;
-      background: none;
-      font-size: 26px;
-      cursor: pointer;
-    }
+header button {
+  border: none;
+  background: none;
+  font-size: 26px;
+  cursor: pointer;
+}
 
-    header h1 {
-      font-size: 20px;
-    }
+header h1 {
+  font-size: 20px;
+}
 
-    .container {
-      padding: 20px;
-    }
+.container {
+  padding: 20px;
+}
 
-    textarea {
-      width: 100%;
-      height: 150px;
-      padding: 15px;
-      border: 1px solid #ddd;
-      border-radius: 15px;
-      font-size: 16px;
-      resize: none;
-      background: white;
-    }
+textarea {
+  width: 100%;
+  height: 120px;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 15px;
+  font-size: 16px;
+  resize: none;
+  background: white;
+}
 
-    .file-label {
-      display: block;
-      margin-top: 15px;
-      padding: 15px;
-      background: white;
-      border: 1px solid #ddd;
-      border-radius: 15px;
-      text-align: center;
-      cursor: pointer;
-      font-size: 16px;
-    }
+.file-label {
+  display: block;
+  margin-top: 15px;
+  padding: 16px;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 15px;
+  text-align: center;
+  cursor: pointer;
+  font-size: 16px;
+}
 
-    #mediaInput {
-      display: none;
-    }
+#mediaInput {
+  display: none;
+}
 
-    #preview,
-    #videoPreview {
-      display: none;
-      width: 100%;
-      max-height: 400px;
-      object-fit: contain;
-      margin-top: 15px;
-      border-radius: 15px;
-      background: #000;
-    }
+#preview,
+#videoPreview {
+  display: none;
+  width: 100%;
+  max-height: 500px;
+  object-fit: contain;
+  margin-top: 15px;
+  border-radius: 15px;
+  background: #000;
+}
 
-    .post-button {
-      width: 100%;
-      margin-top: 15px;
-      padding: 15px;
-      border: none;
-      border-radius: 25px;
-      background: #111;
-      color: white;
-      font-size: 17px;
-      font-weight: bold;
-      cursor: pointer;
-    }
+.post-button {
+  width: 100%;
+  margin-top: 15px;
+  padding: 15px;
+  border: none;
+  border-radius: 25px;
+  background: #111;
+  color: white;
+  font-size: 17px;
+  font-weight: bold;
+  cursor: pointer;
+}
 
-    .message {
-      text-align: center;
-      margin-top: 15px;
-    }
-  </style>
+.message {
+  text-align: center;
+  margin-top: 15px;
+  font-weight: bold;
+}
+</style>
 </head>
 
 <body>
 
 <header>
   <button onclick="goHome()">←</button>
-  <h1>📸 Create Post</h1>
+  <h1>➕ Create Post</h1>
 </header>
 
 <div class="container">
 
-  <textarea
-    id="postText"
-    placeholder="What's on your mind?"
-  ></textarea>
+<textarea
+  id="postText"
+  placeholder="What's on your mind?"
+></textarea>
 
-  <label class="file-label" for="mediaInput">
-    📸 Select Photo or Video
-  </label>
+<label class="file-label" for="mediaInput">
+  📸 Select Photo or 🎥 Video
+</label>
 
-  <input
-    id="mediaInput"
-    type="file"
-    accept="image/*,video/*"
-    onchange="previewMedia(event)"
-  >
+<input
+  id="mediaInput"
+  type="file"
+  accept="image/*,video/*"
+  onchange="previewMedia(event)"
+>
 
-  <img id="preview" alt="Photo preview">
+<img id="preview" alt="Photo preview">
 
-  <video
-    id="videoPreview"
-    controls
-    playsinline
-  ></video>
+<video
+  id="videoPreview"
+  controls
+  playsinline
+></video>
 
-  <button
-    class="post-button"
-    onclick="createPost()"
-  >
-    📤 Publish Post
-  </button>
+<button
+  class="post-button"
+  onclick="publishPost()"
+>
+  📤 Publish
+</button>
 
-  <p id="message" class="message"></p>
+<p id="message" class="message"></p>
 
 </div>
 
 <script>
+
+/* =========================
+   HOME
+========================= */
 
 function goHome() {
   window.location.href = "index.html";
@@ -152,20 +157,19 @@ function goHome() {
 
 
 /* =========================
-   SELECTED MEDIA
+   SELECTED FILE
 ========================= */
 
 let selectedMedia = null;
 
 
 /* =========================
-   PREVIEW PHOTO / VIDEO
+   PREVIEW
 ========================= */
 
 function previewMedia(event) {
 
-  const file =
-    event.target.files[0];
+  const file = event.target.files[0];
 
   if (!file) {
     return;
@@ -179,33 +183,79 @@ function previewMedia(event) {
   const video =
     document.getElementById("videoPreview");
 
-  const url =
-    URL.createObjectURL(file);
+  const message =
+    document.getElementById("message");
 
   image.style.display = "none";
   video.style.display = "none";
 
+  message.textContent = "";
+
+
+  /* PHOTO */
 
   if (file.type.startsWith("image/")) {
 
-    image.src = url;
+    image.src =
+      URL.createObjectURL(file);
+
     image.style.display = "block";
 
+    return;
   }
 
+
+  /* VIDEO */
 
   if (file.type.startsWith("video/")) {
 
-    video.src = url;
+    const videoURL =
+      URL.createObjectURL(file);
+
+    video.src = videoURL;
+
     video.style.display = "block";
 
+
+    /* Check video duration */
+
+    video.onloadedmetadata = function() {
+
+      if (video.duration > 60) {
+
+        message.textContent =
+          "⚠️ Reel/video must be 1 minute or less.";
+
+        selectedMedia = null;
+
+        video.style.display = "none";
+
+        document.getElementById(
+          "mediaInput"
+        ).value = "";
+
+      } else {
+
+        message.textContent =
+          "✅ Video ready to publish.";
+
+      }
+
+    };
+
+    return;
   }
 
+
+  message.textContent =
+    "⚠️ Please select a photo or video.";
+
+  selectedMedia = null;
 }
 
 
 /* =========================
-   GET EXISTING POSTS
+   GET POSTS
 ========================= */
 
 function getPosts() {
@@ -221,15 +271,14 @@ function getPosts() {
     return [];
 
   }
-
 }
 
 
 /* =========================
-   CREATE POST
+   PUBLISH
 ========================= */
 
-function createPost() {
+function publishPost() {
 
   const text =
     document
@@ -237,37 +286,61 @@ function createPost() {
       .value
       .trim();
 
+  const message =
+    document.getElementById("message");
+
 
   if (
     text === "" &&
     !selectedMedia
   ) {
 
-    document
-      .getElementById("message")
-      .textContent =
-      "⚠️ Write something or select a photo/video.";
+    message.textContent =
+      "⚠️ Write a caption or select a photo/video.";
 
     return;
-
   }
 
 
-  const posts =
-    getPosts();
+  /* VIDEO CHECK */
 
+  if (
+    selectedMedia &&
+    selectedMedia.type.startsWith("video/")
+  ) {
+
+    const video =
+      document.getElementById("videoPreview");
+
+    if (
+      video.duration &&
+      video.duration > 60
+    ) {
+
+      message.textContent =
+        "⚠️ Video must be 1 minute or less.";
+
+      return;
+    }
+  }
+
+
+  message.textContent =
+    "⏳ Preparing your post...";
+
+
+  const posts = getPosts();
 
   const username =
     localStorage.getItem("username") ||
     "You";
 
   const profileImage =
-    localStorage.getItem("profileImage");
+    localStorage.getItem("profileImage") ||
+    null;
 
 
-  /* =========================
-     TEXT-ONLY POST
-  ========================= */
+  /* TEXT ONLY */
 
   if (!selectedMedia) {
 
@@ -275,15 +348,15 @@ function createPost() {
 
       id: Date.now(),
 
+      username: username,
+
+      profileImage: profileImage,
+
       text: text,
 
       media: null,
 
       mediaType: null,
-
-      username: username,
-
-      profileImage: profileImage || null,
 
       liked: false,
 
@@ -302,41 +375,13 @@ function createPost() {
     );
 
 
-    finishPost();
+    finish();
 
     return;
-
   }
 
 
-  /* =========================
-     VIDEO LIMIT
-  ========================= */
-
-  if (
-    selectedMedia.type.startsWith("video/")
-  ) {
-
-    if (
-      selectedMedia.size >
-      3 * 1024 * 1024
-    ) {
-
-      document
-        .getElementById("message")
-        .textContent =
-        "⚠️ This video is too large for the current local storage system.";
-
-      return;
-
-    }
-
-  }
-
-
-  /* =========================
-     READ PHOTO / VIDEO
-  ========================= */
+  /* READ MEDIA */
 
   const reader =
     new FileReader();
@@ -348,19 +393,19 @@ function createPost() {
       event.target.result;
 
 
-    posts.unshift({
+    const newPost = {
 
       id: Date.now(),
+
+      username: username,
+
+      profileImage: profileImage,
 
       text: text,
 
       media: mediaData,
 
       mediaType: selectedMedia.type,
-
-      username: username,
-
-      profileImage: profileImage || null,
 
       liked: false,
 
@@ -370,7 +415,10 @@ function createPost() {
 
       createdAt: Date.now()
 
-    });
+    };
+
+
+    posts.unshift(newPost);
 
 
     try {
@@ -381,14 +429,12 @@ function createPost() {
       );
 
 
-      finishPost();
+      finish();
 
     } catch (error) {
 
-      document
-        .getElementById("message")
-        .textContent =
-        "⚠️ This file is too large for phone storage. We'll fix large Reels in the next step.";
+      message.textContent =
+        "⚠️ This video/photo is too large for browser storage. The next step will move media to IndexedDB.";
 
     }
 
@@ -397,10 +443,8 @@ function createPost() {
 
   reader.onerror = function() {
 
-    document
-      .getElementById("message")
-      .textContent =
-      "⚠️ Could not read this file.";
+    message.textContent =
+      "⚠️ Could not read the file.";
 
   };
 
@@ -416,12 +460,12 @@ function createPost() {
    FINISH
 ========================= */
 
-function finishPost() {
+function finish() {
 
-  document
-    .getElementById("message")
-    .textContent =
-    "✅ Post created successfully!";
+  document.getElementById(
+    "message"
+  ).textContent =
+    "✅ Published successfully!";
 
 
   setTimeout(function() {
