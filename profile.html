@@ -2,8 +2,13 @@
 <html lang="en">
 
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0"
+>
 
 <title>Profile - AI Social</title>
 
@@ -40,16 +45,16 @@ header {
 }
 
 .profile-avatar {
-  width: 90px;
-  height: 90px;
+  width: 95px;
+  height: 95px;
   border-radius: 50%;
   background: #ddd;
+  margin: auto;
+  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 45px;
-  margin: auto;
-  overflow: hidden;
   cursor: pointer;
 }
 
@@ -57,11 +62,12 @@ header {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  display: none;
 }
 
 .username {
   margin-top: 12px;
-  font-size: 22px;
+  font-size: 23px;
   font-weight: bold;
 }
 
@@ -82,7 +88,7 @@ header {
 
 .stat strong {
   display: block;
-  font-size: 20px;
+  font-size: 21px;
 }
 
 .stat span {
@@ -90,14 +96,18 @@ header {
   font-size: 14px;
 }
 
+/* EDIT */
+
 .edit-button {
   margin-top: 20px;
-  padding: 11px 25px;
+  padding: 12px 30px;
   border: none;
-  border-radius: 20px;
+  border-radius: 25px;
   background: #111;
   color: white;
-  font-size: 15px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
 }
 
 /* POSTS */
@@ -119,7 +129,7 @@ header {
 /* POST HEADER */
 
 .post-header {
-  padding: 15px;
+  padding: 14px;
   display: flex;
   align-items: center;
   gap: 10px;
@@ -130,11 +140,13 @@ header {
   height: 45px;
   border-radius: 50%;
   background: #ddd;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
   flex-shrink: 0;
+  cursor: pointer;
 }
 
 .post-avatar img {
@@ -143,12 +155,13 @@ header {
   object-fit: cover;
 }
 
-.post-name {
+.post-username {
   font-weight: bold;
   font-size: 16px;
+  cursor: pointer;
 }
 
-/* TEXT */
+/* CAPTION */
 
 .post-text {
   padding: 0 15px 15px;
@@ -163,8 +176,8 @@ header {
   width: 100%;
   max-height: 600px;
   object-fit: contain;
-  display: block;
   background: #000;
+  display: block;
   cursor: pointer;
 }
 
@@ -180,15 +193,15 @@ header {
 
 .actions button {
   border: none;
-  background: #f5f5f5;
-  padding: 11px 15px;
+  background: #f3f3f3;
+  padding: 10px 15px;
   border-radius: 20px;
   font-size: 15px;
   cursor: pointer;
 }
 
 .actions button:active {
-  transform: scale(0.96);
+  transform: scale(0.95);
 }
 
 /* COMMENTS */
@@ -198,21 +211,24 @@ header {
 }
 
 .comment {
-  padding: 6px 0;
-  font-size: 14px;
+  padding: 5px 0;
+}
+
+.comment-name {
+  font-weight: bold;
 }
 
 /* DELETE */
 
 .delete-button {
-  width: calc(100% - 30px);
-  margin: 0 15px 15px;
-  padding: 11px;
+  margin: 5px 15px 15px;
+  padding: 10px 15px;
   border: none;
   border-radius: 20px;
-  background: #fff0f0;
+  background: #ffe5e5;
   color: red;
   font-size: 14px;
+  cursor: pointer;
 }
 
 /* EMPTY */
@@ -220,47 +236,37 @@ header {
 .empty {
   text-align: center;
   color: #777;
-  padding: 30px;
-}
-
-/* NAVIGATION */
-
-nav {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 65px;
-  background: white;
-  border-top: 1px solid #ddd;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  z-index: 100;
-}
-
-nav button {
-  border: none;
-  background: none;
-  font-size: 14px;
-  padding: 5px;
+  padding: 35px;
 }
 
 /* BIG POST VIEW */
 
-#viewer {
+#postViewer {
   display: none;
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.92);
+  background: rgba(0,0,0,0.94);
   z-index: 1000;
   overflow-y: auto;
   padding: 20px;
 }
 
+.viewer-close {
+  position: fixed;
+  top: 15px;
+  right: 15px;
+  width: 45px;
+  height: 45px;
+  border: none;
+  border-radius: 50%;
+  background: white;
+  font-size: 25px;
+  z-index: 1001;
+}
+
 .viewer-box {
   max-width: 700px;
-  margin: 40px auto;
+  margin: 50px auto 20px;
   background: white;
   border-radius: 15px;
   overflow: hidden;
@@ -273,20 +279,38 @@ nav button {
   background: black;
 }
 
-.viewer-close {
+.viewer-text {
+  padding: 15px;
+  font-size: 18px;
+  white-space: pre-wrap;
+}
+
+/* NAV */
+
+nav {
   position: fixed;
-  right: 15px;
-  top: 15px;
-  width: 45px;
-  height: 45px;
-  border: none;
-  border-radius: 50%;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 65px;
   background: white;
-  font-size: 24px;
-  z-index: 1001;
+  border-top: 1px solid #ddd;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  z-index: 900;
+}
+
+nav button {
+  border: none;
+  background: none;
+  font-size: 14px;
+  padding: 5px;
+  cursor: pointer;
 }
 
 </style>
+
 </head>
 
 <body>
@@ -295,6 +319,8 @@ nav button {
   👤 Profile
 </header>
 
+
+<!-- PROFILE -->
 
 <section class="profile">
 
@@ -305,8 +331,7 @@ nav button {
 
     <img
       id="profileImage"
-      alt="Profile"
-      style="display:none"
+      alt="Profile photo"
     >
 
     <span id="avatarIcon">👤</span>
@@ -379,18 +404,18 @@ nav button {
 
 <!-- BIG POST VIEW -->
 
-<div id="viewer">
+<div id="postViewer">
 
   <button
     class="viewer-close"
-    onclick="closeViewer()"
+    onclick="closePost()"
   >
     ✕
   </button>
 
   <div
-    id="viewerBox"
     class="viewer-box"
+    id="viewerBox"
   ></div>
 
 </div>
@@ -465,39 +490,47 @@ function editProfile() {
     "Welcome to my AI Social profile 🚀";
 
 
-  const username =
+  const newName =
     prompt(
       "Enter your username:",
       oldName
     );
 
-  if (username === null) return;
 
-  if (username.trim() === "") {
-
-    alert("⚠️ Username cannot be empty.");
-
+  if (newName === null) {
     return;
   }
 
 
-  const bio =
+  if (newName.trim() === "") {
+
+    alert("⚠️ Username cannot be empty.");
+
+    return;
+
+  }
+
+
+  const newBio =
     prompt(
       "Enter your bio:",
       oldBio
     );
 
-  if (bio === null) return;
+
+  if (newBio === null) {
+    return;
+  }
 
 
   localStorage.setItem(
     "username",
-    username.trim()
+    newName.trim()
   );
 
   localStorage.setItem(
     "bio",
-    bio.trim()
+    newBio.trim()
   );
 
 
@@ -526,7 +559,9 @@ function savePhoto(event) {
   const file =
     event.target.files[0];
 
-  if (!file) return;
+  if (!file) {
+    return;
+  }
 
 
   if (!file.type.startsWith("image/")) {
@@ -534,6 +569,7 @@ function savePhoto(event) {
     alert("⚠️ Please select an image.");
 
     return;
+
   }
 
 
@@ -544,14 +580,15 @@ function savePhoto(event) {
   reader.onload =
     function(e) {
 
+      const imageData =
+        e.target.result;
+
       localStorage.setItem(
         "profileImage",
-        e.target.result
+        imageData
       );
 
-      showProfilePhoto(
-        e.target.result
-      );
+      showProfilePhoto(imageData);
 
     };
 
@@ -577,17 +614,15 @@ function showProfilePhoto(imageData) {
     icon.style.display = "block";
 
     return;
+
   }
 
 
-  image.src =
-    imageData;
+  image.src = imageData;
 
-  image.style.display =
-    "block";
+  image.style.display = "block";
 
-  icon.style.display =
-    "none";
+  icon.style.display = "none";
 
 }
 
@@ -600,11 +635,20 @@ function getPosts() {
 
   try {
 
-    return JSON.parse(
-      localStorage.getItem("posts") || "[]"
-    );
+    const data =
+      JSON.parse(
+        localStorage.getItem("posts") || "[]"
+      );
+
+    if (!Array.isArray(data)) {
+      return [];
+    }
+
+    return data;
 
   } catch(error) {
+
+    console.log(error);
 
     return [];
 
@@ -632,6 +676,8 @@ LOAD PROFILE
 ========================= */
 
 function loadProfile() {
+
+  /* USER */
 
   const username =
     localStorage.getItem("username") ||
@@ -663,560 +709,9 @@ function loadProfile() {
 
   if (savedImage) {
 
-    showProfilePhoto(
-      savedImage
-    );
+    showProfilePhoto(savedImage);
 
   }
 
 
-  /* POSTS */
-
-  const posts =
-    getPosts();
-
-
-  const postsBox =
-    document.getElementById("myPosts");
-
-
-  postsBox.innerHTML = "";
-
-
-  document.getElementById(
-    "postCount"
-  ).textContent =
-    posts.length;
-
-
-  if (posts.length === 0) {
-
-    postsBox.innerHTML =
-      '<div class="empty">' +
-      'No posts yet.<br>' +
-      'Create your first post 📸' +
-      '</div>';
-
-    return;
-  }
-
-
-  posts.forEach(
-    function(postData, index) {
-
-      createPost(
-        postData,
-        index,
-        posts
-      );
-
-    }
-  );
-
-}
-
-
-/* =========================
-CREATE PROFILE POST
-========================= */
-
-function createPost(
-  postData,
-  index,
-  posts
-) {
-
-  const post =
-    document.createElement("div");
-
-  post.className =
-    "post";
-
-
-  /* POST HEADER */
-
-  const header =
-    document.createElement("div");
-
-  header.className =
-    "post-header";
-
-
-  const avatar =
-    document.createElement("div");
-
-  avatar.className =
-    "post-avatar";
-
-
-  const profileImage =
-    localStorage.getItem(
-      "profileImage"
-    );
-
-
-  if (profileImage) {
-
-    const img =
-      document.createElement("img");
-
-    img.src =
-      profileImage;
-
-    avatar.appendChild(img);
-
-  } else {
-
-    avatar.textContent =
-      "👤";
-
-  }
-
-
-  const name =
-    document.createElement("div");
-
-  name.className =
-    "post-name";
-
-  name.textContent =
-    postData.username ||
-    localStorage.getItem("username") ||
-    "You";
-
-
-  header.appendChild(
-    avatar
-  );
-
-  header.appendChild(
-    name
-  );
-
-
-  post.appendChild(
-    header
-  );
-
-
-  /* TEXT */
-
-  if (postData.text) {
-
-    const text =
-      document.createElement("div");
-
-    text.className =
-      "post-text";
-
-    text.textContent =
-      postData.text;
-
-
-    post.appendChild(
-      text
-    );
-
-  }
-
-
-  /* MEDIA */
-
-  if (
-    postData.media &&
-    postData.mediaType
-  ) {
-
-    let media = null;
-
-
-    if (
-      postData.mediaType
-        .toLowerCase()
-        .startsWith("image/")
-    ) {
-
-      media =
-        document.createElement("img");
-
-      media.src =
-        postData.media;
-
-    }
-
-
-    if (
-      postData.mediaType
-        .toLowerCase()
-        .startsWith("video/")
-    ) {
-
-      media =
-        document.createElement("video");
-
-      media.src =
-        postData.media;
-
-      media.controls =
-        true;
-
-      media.playsInline =
-        true;
-
-    }
-
-
-    if (media) {
-
-      media.className =
-        "post-media";
-
-
-      media.onclick =
-        function() {
-
-          openViewer(
-            postData
-          );
-
-        };
-
-
-      post.appendChild(
-        media
-      );
-
-    }
-
-  }
-
-
-  /* ACTIONS */
-
-  const actions =
-    document.createElement("div");
-
-  actions.className =
-    "actions";
-
-
-  /* LIKE */
-
-  const likeButton =
-    document.createElement("button");
-
-
-  function updateLike() {
-
-    /*
-      IMPORTANT:
-      Button always says LIKE.
-      It will NOT change to UNLIKE.
-    */
-
-    likeButton.textContent =
-      "❤️ Like " +
-      (
-        Number(
-          postData.likeCount
-        ) || 0
-      );
-
-  }
-
-
-  updateLike();
-
-
-  likeButton.onclick =
-    function(event) {
-
-      event.stopPropagation();
-
-
-      /*
-        Toggle the like state
-      */
-
-      postData.liked =
-        postData.liked !== true;
-
-
-      if (postData.liked) {
-
-        postData.likeCount =
-          (
-            Number(
-              postData.likeCount
-            ) || 0
-          ) + 1;
-
-      } else {
-
-        postData.likeCount =
-          Math.max(
-            0,
-            (
-              Number(
-                postData.likeCount
-              ) || 0
-            ) - 1
-          );
-
-      }
-
-
-      savePosts(posts);
-
-      updateLike();
-
-    };
-
-
-  /* COMMENT */
-
-  const commentButton =
-    document.createElement("button");
-
-
-  commentButton.textContent =
-    "💬 Comment " +
-    (
-      Array.isArray(
-        postData.comments
-      )
-      ? postData.comments.length
-      : 0
-    );
-
-
-  commentButton.onclick =
-    function(event) {
-
-      event.stopPropagation();
-
-
-      const comment =
-        prompt(
-          "💬 Write your comment:"
-        );
-
-
-      if (
-        !comment ||
-        comment.trim() === ""
-      ) {
-
-        return;
-
-      }
-
-
-      if (
-        !Array.isArray(
-          postData.comments
-        )
-      ) {
-
-        postData.comments = [];
-
-      }
-
-
-      postData.comments.push(
-        comment.trim()
-      );
-
-
-      savePosts(posts);
-
-      loadProfile();
-
-    };
-
-
-  /* SHARE */
-
-  const shareButton =
-    document.createElement("button");
-
-
-  shareButton.textContent =
-    "↗️ Share";
-
-
-  shareButton.onclick =
-    function(event) {
-
-      event.stopPropagation();
-
-
-      const text =
-        postData.text ||
-        "Check out my post on AI Social!";
-
-
-      if (
-        navigator.share
-      ) {
-
-        navigator.share({
-
-          title:
-            "AI Social",
-
-          text:
-            text,
-
-          url:
-            window.location.href
-
-        });
-
-      }
-
-      else if (
-        navigator.clipboard
-      ) {
-
-        navigator.clipboard
-          .writeText(text)
-          .then(
-            function() {
-
-              alert(
-                "✅ Post copied!"
-              );
-
-            }
-          );
-
-      }
-
-    };
-
-
-  actions.appendChild(
-    likeButton
-  );
-
-  actions.appendChild(
-    commentButton
-  );
-
-  actions.appendChild(
-    shareButton
-  );
-
-
-  post.appendChild(
-    actions
-  );
-
-
-  /* COMMENTS */
-
-  if (
-    Array.isArray(
-      postData.comments
-    ) &&
-    postData.comments.length > 0
-  ) {
-
-    const comments =
-      document.createElement("div");
-
-    comments.className =
-      "comments";
-
-
-    postData.comments.forEach(
-      function(comment) {
-
-        const item =
-          document.createElement("div");
-
-        item.className =
-          "comment";
-
-        item.textContent =
-          "💬 " +
-          comment;
-
-        comments.appendChild(
-          item
-        );
-
-      }
-    );
-
-
-    post.appendChild(
-      comments
-    );
-
-  }
-
-
-  /* DELETE */
-
-  const deleteButton =
-    document.createElement("button");
-
-
-  deleteButton.className =
-    "delete-button";
-
-
-  deleteButton.textContent =
-    "🗑️ Delete Post";
-
-
-  deleteButton.onclick =
-    function(event) {
-
-      event.stopPropagation();
-
-
-      const answer =
-        confirm(
-          "🗑️ Delete this post?"
-        );
-
-
-      if (!answer) return;
-
-
-      posts.splice(
-        index,
-        1
-      );
-
-
-      savePosts(posts);
-
-      loadProfile();
-
-    };
-
-
-  post.appendChild(
-    deleteButton
-  );
-
-
-  document
-    .getElementById("myPosts")
-    .appendChild(post);
-
-}
-
-
-/* =========================
-BIG POST VIEW
-========================= */
-
-function openViewer(postData) {
-
-  const viewer =
-    document.getElementById(
+  /* POSTS
