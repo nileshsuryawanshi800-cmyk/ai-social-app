@@ -161,7 +161,32 @@ accept="image/,video/"
 
 «»
 
-<div class="preview-box">  <img id="preview" alt="Photo preview"><video
+<div class="preview-box"> <!-- SOUND -->
+
+<label class="file-label" for="soundInput">
+🎵 Add Sound / Music
+</label>
+
+<input
+  id="soundInput"
+  type="file"
+  accept="audio/*"
+  onchange="selectSound(event)"
+>
+
+<audio
+  id="soundPreview"
+  controls
+  style="display:none;width:100%;margin-top:12px;"
+></audio>
+
+<button
+  id="removeSoundButton"
+  onclick="removeSound()"
+  style="display:none;width:100%;margin-top:10px;padding:12px;border:1px solid #ddd;border-radius:20px;background:white;"
+>
+❌ Remove Sound
+</button>  <img id="preview" alt="Photo preview"><video
 id="videoPreview"
 controls
 playsinline
