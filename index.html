@@ -18,12 +18,11 @@ content="width=device-width, initial-scale=1.0">
 
 * {
   box-sizing: border-box;
-  margin: 0;
-  padding: 0;
   font-family: Arial, sans-serif;
 }
 
 body {
+  margin: 0;
   background: #f5f5f5;
   color: #111;
   padding-bottom: 80px;
@@ -45,25 +44,28 @@ header {
 
 header h1 {
   font-size: 22px;
+  margin: 0;
 }
 
 .ai-button {
   background: #111;
   color: white;
   border: none;
-  padding: 10px 14px;
-  border-radius: 20px;
-  cursor: pointer;
+  padding: 11px 15px;
+  border-radius: 22px;
+  font-size: 15px;
 }
 
 /* WELCOME */
 
 .welcome {
-  padding: 25px 18px;
+  background: white;
+  padding: 22px 18px;
+  border-bottom: 1px solid #eee;
 }
 
 .welcome h2 {
-  margin-bottom: 8px;
+  margin: 0 0 7px;
 }
 
 /* POSTS */
@@ -75,38 +77,35 @@ header h1 {
 .post {
   background: white;
   margin: 12px;
-  border-radius: 15px;
+  border-radius: 16px;
   overflow: hidden;
   box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
 
-/* POST HEADER */
+/* PROFILE HEADER */
 
 .post-header {
   padding: 15px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
 }
 
-.post-header-profile {
+.profile-link {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   cursor: pointer;
+  width: fit-content;
 }
 
 .post-avatar {
-  width: 45px;
-  height: 45px;
+  width: 52px;
+  height: 52px;
   border-radius: 50%;
   background: #ddd;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  flex-shrink: 0;
-  font-size: 25px;
+  font-size: 28px;
 }
 
 .post-avatar img {
@@ -116,86 +115,93 @@ header h1 {
 }
 
 .post-username {
+  font-size: 18px;
   font-weight: bold;
-  font-size: 16px;
 }
 
 /* MEDIA */
 
 .post-media {
   width: 100%;
-  max-height: 600px;
+  max-height: 650px;
   object-fit: contain;
   background: #000;
   display: block;
   cursor: pointer;
 }
 
-/* TEXT */
+/* CAPTION */
 
 .post-content {
-  padding: 0 15px 15px;
-  white-space: pre-wrap;
-  word-wrap: break-word;
+  padding: 15px;
   font-size: 17px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-break: break-word;
   cursor: pointer;
 }
 
-/* ACTIONS */
+/* LARGE ACTION BUTTONS */
 
 .actions {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   gap: 8px;
-  padding: 12px 15px;
+  padding: 12px;
   border-top: 1px solid #eee;
-  flex-wrap: wrap;
 }
 
 .actions button {
   border: none;
-  background: #f5f5f5;
-  padding: 9px 12px;
-  border-radius: 20px;
-  font-size: 14px;
+  background: #f2f2f2;
+  border-radius: 25px;
+  padding: 13px 5px;
+  font-size: 15px;
+  font-weight: bold;
   cursor: pointer;
 }
 
 .actions button:active {
-  transform: scale(0.95);
+  transform: scale(0.96);
+}
+
+/* DELETE */
+
+.delete-button {
+  width: calc(100% - 24px);
+  margin: 0 12px 14px;
+  border: 1px solid #ffdddd;
+  background: #fff5f5;
+  color: red;
+  border-radius: 25px;
+  padding: 13px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
 }
 
 /* COMMENTS */
 
 .comments {
-  padding: 0 15px 10px;
+  padding: 0 15px 12px;
 }
 
 .comment {
-  margin-top: 8px;
-  padding: 8px;
   background: #f5f5f5;
-  border-radius: 10px;
+  padding: 9px 12px;
+  border-radius: 12px;
+  margin-top: 7px;
 }
 
 .comment-name {
   font-weight: bold;
 }
 
-/* DELETE */
-
-.delete-button {
-  border: none;
-  background: none;
-  color: red;
-  padding: 10px 15px 15px;
-  cursor: pointer;
-}
-
 /* EMPTY */
 
 .empty {
   text-align: center;
-  padding: 30px;
+  padding: 40px 20px;
   color: #777;
 }
 
@@ -212,49 +218,74 @@ nav {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  z-index: 100;
+  z-index: 500;
 }
 
 nav button {
   border: none;
   background: none;
   font-size: 14px;
-  cursor: pointer;
   padding: 5px;
 }
 
-/* POST VIEWER */
+/* FULL POST VIEW */
 
 #postViewer {
   display: none;
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.92);
-  z-index: 1000;
+  background: rgba(0,0,0,0.94);
+  z-index: 2000;
   overflow-y: auto;
-  padding: 20px;
+  padding: 20px 10px;
 }
 
 .viewer-box {
   max-width: 700px;
-  margin: 30px auto;
+  margin: 45px auto 30px;
   background: white;
-  border-radius: 15px;
+  border-radius: 18px;
   overflow: hidden;
 }
 
 .viewer-close {
   position: fixed;
-  top: 15px;
-  right: 15px;
-  background: white;
+  top: 12px;
+  right: 12px;
+  width: 48px;
+  height: 48px;
   border: none;
   border-radius: 50%;
+  background: white;
+  font-size: 25px;
+  z-index: 2001;
+}
+
+.viewer-profile {
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.viewer-avatar {
   width: 45px;
   height: 45px;
-  font-size: 25px;
-  cursor: pointer;
-  z-index: 1001;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #ddd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+}
+
+.viewer-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .viewer-media {
@@ -265,9 +296,15 @@ nav button {
 }
 
 .viewer-content {
-  padding: 15px;
+  padding: 16px;
   font-size: 17px;
   white-space: pre-wrap;
+}
+
+.viewer-info {
+  padding: 14px 16px;
+  border-top: 1px solid #eee;
+  font-size: 15px;
 }
 
 </style>
@@ -291,13 +328,9 @@ onclick="goAI()">
 
 <section class="welcome">
 
-<h2>
-Welcome 👋
-</h2>
+<h2>Welcome 👋</h2>
 
-<p>
-Connect, share and chat with AI.
-</p>
+<p>Connect, share and chat with AI.</p>
 
 </section>
 
@@ -305,7 +338,7 @@ Connect, share and chat with AI.
 <div id="posts"></div>
 
 
-<!-- POST VIEWER -->
+<!-- FULL POST -->
 
 <div id="postViewer">
 
@@ -357,38 +390,23 @@ NAVIGATION
 ========================= */
 
 function goHome() {
-
-  window.location.href =
-    "index.html";
-
+  window.location.href = "index.html";
 }
 
 function goSearch() {
-
-  window.location.href =
-    "search.html";
-
+  window.location.href = "search.html";
 }
 
 function goCreate() {
-
-  window.location.href =
-    "create.html";
-
+  window.location.href = "create.html";
 }
 
 function goAI() {
-
-  window.location.href =
-    "chat.html";
-
+  window.location.href = "chat.html";
 }
 
 function goProfile() {
-
-  window.location.href =
-    "profile.html";
-
+  window.location.href = "profile.html";
 }
 
 
@@ -414,7 +432,7 @@ function getPosts() {
 
 
 /* =========================
-SAVE POSTS
+SAVE
 ========================= */
 
 function savePosts(posts) {
@@ -422,6 +440,31 @@ function savePosts(posts) {
   localStorage.setItem(
     "posts",
     JSON.stringify(posts)
+  );
+
+}
+
+
+/* =========================
+PROFILE DATA
+========================= */
+
+function getUsername(post) {
+
+  return (
+    post.username ||
+    localStorage.getItem("username") ||
+    "AI Social User"
+  );
+
+}
+
+function getProfileImage(post) {
+
+  return (
+    post.profileImage ||
+    localStorage.getItem("profileImage") ||
+    ""
   );
 
 }
@@ -446,8 +489,8 @@ function loadPosts() {
 
     postsBox.innerHTML =
       '<div class="empty">' +
-      'No posts yet.<br>' +
-      'Tap ➕ Create to make your first post! 📸' +
+      'No posts yet.<br><br>' +
+      'Tap ➕ Create to make your first post 📸' +
       '</div>';
 
     return;
@@ -457,11 +500,6 @@ function loadPosts() {
 
   posts.forEach(function(postData, index) {
 
-
-    /* =========================
-    POST CONTAINER
-    ========================= */
-
     const post =
       document.createElement("div");
 
@@ -470,7 +508,7 @@ function loadPosts() {
 
 
     /* =========================
-    POST HEADER
+    HEADER
     ========================= */
 
     const header =
@@ -484,10 +522,8 @@ function loadPosts() {
       document.createElement("div");
 
     profileLink.className =
-      "post-header-profile";
+      "profile-link";
 
-
-    /* PROFILE CLICK */
 
     profileLink.onclick =
       function(event) {
@@ -500,8 +536,6 @@ function loadPosts() {
       };
 
 
-    /* AVATAR */
-
     const avatar =
       document.createElement("div");
 
@@ -509,16 +543,17 @@ function loadPosts() {
       "post-avatar";
 
 
-    if (postData.profileImage) {
+    const profileImage =
+      getProfileImage(postData);
+
+
+    if (profileImage) {
 
       const img =
         document.createElement("img");
 
       img.src =
-        postData.profileImage;
-
-      img.alt =
-        "Profile";
+        profileImage;
 
       avatar.appendChild(img);
 
@@ -530,8 +565,6 @@ function loadPosts() {
     }
 
 
-    /* USERNAME */
-
     const username =
       document.createElement("div");
 
@@ -539,9 +572,7 @@ function loadPosts() {
       "post-username";
 
     username.textContent =
-      postData.username ||
-      localStorage.getItem("username") ||
-      "AI Social User";
+      getUsername(postData);
 
 
     profileLink.appendChild(
@@ -565,13 +596,15 @@ function loadPosts() {
     MEDIA
     ========================= */
 
-    if (postData.media) {
+    if (
+      postData.media &&
+      postData.mediaType
+    ) {
 
       let media = null;
 
 
       if (
-        postData.mediaType &&
         postData.mediaType
           .toLowerCase()
           .startsWith("image/")
@@ -586,8 +619,7 @@ function loadPosts() {
       }
 
 
-      else if (
-        postData.mediaType &&
+      if (
         postData.mediaType
           .toLowerCase()
           .startsWith("video/")
@@ -634,22 +666,22 @@ function loadPosts() {
 
 
     /* =========================
-    TEXT
+    CAPTION
     ========================= */
 
     if (postData.text) {
 
-      const content =
+      const caption =
         document.createElement("div");
 
-      content.className =
+      caption.className =
         "post-content";
 
-      content.textContent =
+      caption.textContent =
         postData.text;
 
 
-      content.onclick =
+      caption.onclick =
         function(event) {
 
           event.stopPropagation();
@@ -660,7 +692,7 @@ function loadPosts() {
 
 
       post.appendChild(
-        content
+        caption
       );
 
     }
@@ -683,24 +715,26 @@ function loadPosts() {
       document.createElement("button");
 
 
-    function updateLikeButton() {
+    function updateLike() {
 
       const liked =
         postData.liked === true;
 
       const count =
-        Number(postData.likeCount) || 0;
+        Number(
+          postData.likeCount
+        ) || 0;
+
 
       likeButton.textContent =
-        (liked
-          ? "❤️ Unlike "
-          : "🤍 Like ") +
-        count;
+        liked
+        ? "❤️ Unlike " + count
+        : "🤍 Like " + count;
 
     }
 
 
-    updateLikeButton();
+    updateLike();
 
 
     likeButton.onclick =
@@ -718,18 +752,22 @@ function loadPosts() {
         if (postData.liked) {
 
           postData.likeCount =
-            (Number(
-              postData.likeCount
-            ) || 0) + 1;
+            (
+              Number(
+                postData.likeCount
+              ) || 0
+            ) + 1;
 
         } else {
 
           postData.likeCount =
             Math.max(
               0,
-              (Number(
-                postData.likeCount
-              ) || 0) - 1
+              (
+                Number(
+                  postData.likeCount
+                ) || 0
+              ) - 1
             );
 
         }
@@ -737,7 +775,7 @@ function loadPosts() {
 
         savePosts(posts);
 
-        updateLikeButton();
+        updateLike();
 
       };
 
@@ -759,7 +797,7 @@ function loadPosts() {
 
         const comment =
           prompt(
-            "💬 Write your comment:"
+            "Write your comment:"
           );
 
 
@@ -848,20 +886,8 @@ function loadPosts() {
     if (
       Array.isArray(
         postData.comments
-      ) &&
-      postData.comments.length > 0
+      )
     ) {
-
-      const title =
-        document.createElement("strong");
-
-      title.textContent =
-        "💬 Comments";
-
-      commentsBox.appendChild(
-        title
-      );
-
 
       postData.comments.forEach(
         function(comment) {
@@ -880,10 +906,8 @@ function loadPosts() {
             "comment-name";
 
           name.textContent =
-            (
-              postData.username ||
-              "You"
-            ) + ": ";
+            getUsername(postData) +
+            ": ";
 
 
           item.appendChild(
@@ -932,13 +956,11 @@ function loadPosts() {
         event.stopPropagation();
 
 
-        const answer =
-          confirm(
-            "🗑️ Are you sure you want to delete this post?"
-          );
-
-
-        if (!answer) {
+        if (
+          !confirm(
+            "Are you sure you want to delete this post?"
+          )
+        ) {
 
           return;
 
@@ -973,7 +995,7 @@ function loadPosts() {
 
 
 /* =========================
-OPEN POST
+OPEN LARGE POST
 ========================= */
 
 function openPost(postData) {
@@ -992,39 +1014,91 @@ function openPost(postData) {
   box.innerHTML = "";
 
 
-  /* USER */
+  /* PROFILE */
 
-  const user =
+  const profile =
     document.createElement("div");
 
-  user.style.padding =
-    "15px";
+  profile.className =
+    "viewer-profile";
 
-  user.style.fontWeight =
-    "bold";
 
-  user.textContent =
-    "👤 " +
-    (
-      postData.username ||
-      "AI Social User"
-    );
+  const avatar =
+    document.createElement("div");
+
+  avatar.className =
+    "viewer-avatar";
+
+
+  const image =
+    getProfileImage(postData);
+
+
+  if (image) {
+
+    const img =
+      document.createElement("img");
+
+    img.src =
+      image;
+
+    avatar.appendChild(img);
+
+  } else {
+
+    avatar.textContent =
+      "👤";
+
+  }
+
+
+  const name =
+    document.createElement("span");
+
+  name.textContent =
+    getUsername(postData);
+
+
+  profile.appendChild(
+    avatar
+  );
+
+  profile.appendChild(
+    name
+  );
+
+
+  /* Clicking name in viewer */
+
+  profile.onclick =
+    function() {
+
+      window.location.href =
+        "profile.html";
+
+    };
+
+
+  profile.style.cursor =
+    "pointer";
 
 
   box.appendChild(
-    user
+    profile
   );
 
 
   /* MEDIA */
 
-  if (postData.media) {
+  if (
+    postData.media &&
+    postData.mediaType
+  ) {
 
     let media = null;
 
 
     if (
-      postData.mediaType &&
       postData.mediaType
         .toLowerCase()
         .startsWith("image/")
@@ -1039,8 +1113,7 @@ function openPost(postData) {
     }
 
 
-    else if (
-      postData.mediaType &&
+    if (
       postData.mediaType
         .toLowerCase()
         .startsWith("video/")
@@ -1078,7 +1151,7 @@ function openPost(postData) {
   }
 
 
-  /* TEXT */
+  /* CAPTION */
 
   if (postData.text) {
 
@@ -1098,19 +1171,21 @@ function openPost(postData) {
   }
 
 
-  /* VIEWER INFO */
+  /* INFO */
 
   const info =
     document.createElement("div");
 
-  info.style.padding =
-    "15px";
+  info.className =
+    "viewer-info";
 
   info.textContent =
     "❤️ " +
-    (Number(
-      postData.likeCount
-    ) || 0) +
+    (
+      Number(
+        postData.likeCount
+      ) || 0
+    ) +
     "    💬 " +
     (
       Array.isArray(
@@ -1132,6 +1207,10 @@ function openPost(postData) {
 }
 
 
+/* =========================
+CLOSE
+========================= */
+
 function closePost() {
 
   document.getElementById(
@@ -1149,10 +1228,7 @@ SHARE
 function sharePost(postData) {
 
   const shareText =
-    (
-      postData.username ||
-      "AI Social User"
-    ) +
+    getUsername(postData) +
     "\n\n" +
     (
       postData.text ||
@@ -1175,11 +1251,6 @@ function sharePost(postData) {
       url:
         window.location.href
 
-    })
-    .catch(function(error) {
-
-      console.log(error);
-
     });
 
     return;
@@ -1198,14 +1269,7 @@ function sharePost(postData) {
       .then(function() {
 
         alert(
-          "✅ Post copied to clipboard!"
-        );
-
-      })
-      .catch(function() {
-
-        alert(
-          "⚠️ Could not copy the post."
+          "✅ Post copied!"
         );
 
       });
@@ -1216,7 +1280,7 @@ function sharePost(postData) {
 
 
   alert(
-    "⚠️ Sharing is not supported on this device."
+    "Sharing is not supported."
   );
 
 }
@@ -1239,17 +1303,10 @@ if (
 
   navigator.serviceWorker
     .register("./sw.js")
-    .then(function() {
-
-      console.log(
-        "Service Worker registered"
-      );
-
-    })
     .catch(function(error) {
 
       console.log(
-        "Service Worker error:",
+        "Service worker error:",
         error
       );
 
