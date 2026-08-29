@@ -1370,7 +1370,17 @@ function createNewAccount(){
   window.location.href = "signup.html";
 
 }
-    
+
+ function restoreOldProfile(){
+
+  if(!localStorage.getItem("username")){
+    localStorage.setItem(
+      "username",
+      "astryx.soul12"
+    );
+  }
+
+ }   
 loadProfile();
 
 </script></body>
