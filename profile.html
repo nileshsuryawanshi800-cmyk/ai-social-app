@@ -1,12 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 
 <meta charset="UTF-8">
-
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Profile - AI Social</title>
 
@@ -30,6 +27,9 @@ header{
   border-bottom:1px solid #ddd;
   font-size:21px;
   font-weight:bold;
+  position:sticky;
+  top:0;
+  z-index:50;
 }
 
 .profile{
@@ -39,8 +39,8 @@ header{
 }
 
 .profile-avatar{
-  width:100px;
-  height:100px;
+  width:110px;
+  height:110px;
   border-radius:50%;
   background:#ddd;
   margin:auto;
@@ -48,7 +48,7 @@ header{
   display:flex;
   align-items:center;
   justify-content:center;
-  font-size:48px;
+  font-size:50px;
 }
 
 .profile-avatar img{
@@ -67,6 +67,7 @@ header{
   margin-top:8px;
   color:#666;
   font-size:15px;
+  white-space:pre-wrap;
 }
 
 .stats{
@@ -216,6 +217,7 @@ header{
   padding:9px 12px;
   border-radius:12px;
   margin-top:7px;
+  word-break:break-word;
 }
 
 .delete-button{
@@ -236,6 +238,8 @@ header{
   padding:35px 20px;
 }
 
+/* NAVIGATION */
+
 nav{
   position:fixed;
   bottom:0;
@@ -247,7 +251,7 @@ nav{
   display:flex;
   justify-content:space-around;
   align-items:center;
-  z-index:100;
+  z-index:500;
 }
 
 nav button{
@@ -257,7 +261,6 @@ nav button{
   padding:5px;
   cursor:pointer;
 }
-
 
 /* ACCOUNT POPUP */
 
@@ -356,7 +359,6 @@ nav button{
   border-radius:25px;
   background:white;
 }
-
 
 /* EDIT PROFILE */
 
@@ -494,44 +496,31 @@ nav button{
 }
 
 </style>
-
 </head>
 
 <body>
-
 
 <header>
 👤 Profile
 </header>
 
-
 <section class="profile">
 
 <div class="profile-avatar">
 
-<img
-id="profileImage"
-alt="Profile photo"
->
+<img id="profileImage" alt="Profile photo">
 
 <span id="profileIcon">👤</span>
 
 </div>
 
-
-<div
-class="username"
-id="username">
+<div class="username" id="username">
 AI Social User
 </div>
 
-
-<div
-class="bio"
-id="bio">
+<div class="bio" id="bio">
 Welcome to my AI Social profile 🚀
 </div>
-
 
 <div class="stats">
 
@@ -552,13 +541,11 @@ Welcome to my AI Social profile 🚀
 
 </div>
 
-
 <button
 class="profile-button edit-button"
 onclick="editProfile()">
 ✏️ Edit Profile
 </button>
-
 
 <button
 class="profile-button account-button"
@@ -568,11 +555,9 @@ onclick="openAccounts()">
 
 </section>
 
-
 <div class="posts-title">
 📸 My Posts
 </div>
-
 
 <div id="myPosts"></div>
 
@@ -585,22 +570,15 @@ onclick="openAccounts()">
 
 <h2>✏️ Edit Profile</h2>
 
-
 <div class="edit-photo-area">
 
 <div class="edit-photo-preview">
 
-<img
-id="editPhotoPreview"
-alt="Edit profile photo"
->
+<img id="editPhotoPreview" alt="Edit profile photo">
 
-<span id="editPhotoIcon">
-👤
-</span>
+<span id="editPhotoIcon">👤</span>
 
 </div>
-
 
 <input
 type="file"
@@ -610,13 +588,11 @@ style="display:none"
 onchange="selectProfilePhoto(event)"
 >
 
-
 <button
 class="choose-photo"
 onclick="document.getElementById('profilePhotoInput').click()">
 📸 Choose Profile Photo
 </button>
-
 
 <div class="photo-buttons">
 
@@ -646,15 +622,11 @@ onclick="document.getElementById('profilePhotoInput').click()">
 
 </div>
 
-
-<div
-class="photo-status"
-id="photoStatus">
+<div class="photo-status" id="photoStatus">
 Choose a photo to edit it.
 </div>
 
 </div>
-
 
 <label class="edit-label">
 Username
@@ -667,7 +639,6 @@ type="text"
 placeholder="Username"
 >
 
-
 <label class="edit-label">
 Bio
 </label>
@@ -678,13 +649,11 @@ id="editBio"
 placeholder="Write your bio..."
 ></textarea>
 
-
 <button
 class="save-edit"
 onclick="saveEditedProfile()">
 💾 Save Profile
 </button>
-
 
 <button
 class="cancel-edit"
@@ -693,7 +662,6 @@ Cancel
 </button>
 
 </div>
-
 </div>
 
 
@@ -720,7 +688,6 @@ Close
 </button>
 
 </div>
-
 </div>
 
 
@@ -753,7 +720,6 @@ Close
 
 <script>
 
-
 /* =========================
 NAVIGATION
 ========================= */
@@ -780,21 +746,19 @@ function goProfile(){
 
 
 /* =========================
-ACCOUNT SYSTEM
+ACCOUNTS
 ========================= */
 
 function getAccounts(){
 
   try{
 
-    const accounts =
+    const data =
       JSON.parse(
         localStorage.getItem("accounts") || "[]"
       );
 
-    return Array.isArray(accounts)
-      ? accounts
-      : [];
+    return Array.isArray(data) ? data : [];
 
   }catch(error){
 
@@ -803,7 +767,6 @@ function getAccounts(){
   }
 
 }
-
 
 function saveAccounts(accounts){
 
@@ -820,38 +783,24 @@ function getActiveAccount(){
   const accounts =
     getAccounts();
 
-  if(accounts.length===0){
-
+  if(accounts.length === 0){
     return null;
-
   }
 
-
   let activeId =
-    localStorage.getItem(
-      "activeAccountId"
-    );
-
+    localStorage.getItem("activeAccountId");
 
   let account =
-    accounts.find(
-      function(item){
+    accounts.find(function(item){
 
-        return String(item.id) ===
-          String(activeId);
+      return String(item.id) ===
+        String(activeId);
 
-      }
-    );
-
-
-  /*
-    If no active account exists,
-    use the first account.
-  */
+    });
 
   if(!account){
 
-    account=accounts[0];
+    account = accounts[0];
 
     localStorage.setItem(
       "activeAccountId",
@@ -860,16 +809,14 @@ function getActiveAccount(){
 
   }
 
-
   return account;
 
 }
 
 
-/*
-  Keep old localStorage keys synchronized
-  for compatibility with older pages.
-*/
+/* =========================
+SYNC OLD STORAGE
+========================= */
 
 function syncLegacyData(account){
 
@@ -877,24 +824,20 @@ function syncLegacyData(account){
     return;
   }
 
-
   localStorage.setItem(
     "username",
     account.username || ""
   );
-
 
   localStorage.setItem(
     "bio",
     account.bio || ""
   );
 
-
   localStorage.setItem(
     "profileImage",
     account.profileImage || ""
   );
-
 
   localStorage.setItem(
     "posts",
@@ -909,6 +852,90 @@ function syncLegacyData(account){
 
 
 /* =========================
+MIGRATE OLD POSTS
+========================= */
+
+function migrateOldPosts(account){
+
+  if(!account){
+    return;
+  }
+
+  if(!Array.isArray(account.posts)){
+    account.posts=[];
+  }
+
+  /*
+    If old create.html saved posts
+    in localStorage["posts"], bring
+    them into this account once.
+  */
+
+  let oldPosts=[];
+
+  try{
+
+    oldPosts =
+      JSON.parse(
+        localStorage.getItem("posts") || "[]"
+      );
+
+  }catch(error){
+
+    oldPosts=[];
+
+  }
+
+  if(
+    account.posts.length === 0 &&
+    Array.isArray(oldPosts) &&
+    oldPosts.length > 0
+  ){
+
+    account.posts =
+      oldPosts.map(function(post){
+
+        return {
+          ...post,
+          username:
+            account.username ||
+            post.username ||
+            "AI Social User",
+
+          profileImage:
+            account.profileImage ||
+            post.profileImage ||
+            ""
+        };
+
+      });
+
+    const accounts =
+      getAccounts();
+
+    const index =
+      accounts.findIndex(function(item){
+
+        return String(item.id) ===
+          String(account.id);
+
+      });
+
+    if(index !== -1){
+
+      accounts[index].posts =
+        account.posts;
+
+      saveAccounts(accounts);
+
+    }
+
+  }
+
+}
+
+
+/* =========================
 PROFILE PHOTO
 ========================= */
 
@@ -917,17 +944,11 @@ function showProfilePhoto(){
   const account =
     getActiveAccount();
 
-
   const image =
-    document.getElementById(
-      "profileImage"
-    );
+    document.getElementById("profileImage");
 
   const icon =
-    document.getElementById(
-      "profileIcon"
-    );
-
+    document.getElementById("profileIcon");
 
   if(
     account &&
@@ -945,9 +966,7 @@ function showProfilePhoto(){
 
   }else{
 
-    image.removeAttribute(
-      "src"
-    );
+    image.removeAttribute("src");
 
     image.style.display =
       "none";
@@ -969,91 +988,68 @@ function loadProfile(){
   const account =
     getActiveAccount();
 
-
   if(!account){
 
-    document.getElementById(
-      "username"
-    ).textContent =
-      "No Account";
+    document.getElementById("username")
+      .textContent="No Account";
 
-
-    document.getElementById(
-      "bio"
-    ).textContent =
+    document.getElementById("bio")
+      .textContent=
       "Create an account to get started.";
 
+    document.getElementById("postCount")
+      .textContent="0";
 
-    document.getElementById(
-      "myPosts"
-    ).innerHTML =
+    document.getElementById("myPosts")
+      .innerHTML=
       '<div class="empty">' +
       'No account yet.<br><br>' +
-      'Create your first account 🚀' +
+      'Tap Switch / New Account to create one 🚀' +
       '</div>';
-
-
-    document.getElementById(
-      "postCount"
-    ).textContent =
-      "0";
-
 
     return;
 
   }
 
+  migrateOldPosts(account);
 
   if(!Array.isArray(account.posts)){
     account.posts=[];
   }
 
-
   syncLegacyData(account);
 
+  document.getElementById("username")
+    .textContent=
+    account.username || "AI Social User";
 
-  document.getElementById(
-    "username"
-  ).textContent =
-    account.username;
-
-
-  document.getElementById(
-    "bio"
-  ).textContent =
-    account.bio;
-
+  document.getElementById("bio")
+    .textContent=
+    account.bio ||
+    "Welcome to my AI Social profile 🚀";
 
   showProfilePhoto();
 
-
-  document.getElementById(
-    "postCount"
-  ).textContent =
+  document.getElementById("postCount")
+    .textContent=
     account.posts.length;
 
-
   const box =
-    document.getElementById(
-      "myPosts"
-    );
-
+    document.getElementById("myPosts");
 
   box.innerHTML="";
 
+  if(account.posts.length === 0){
 
-  if(account.posts.length===0){
-
-    box.innerHTML =
+    box.innerHTML=
       '<div class="empty">' +
-      'No posts yet.<br>' +
-      'Create your first post 📸' +
+      'No posts yet.<br><br>' +
+      'Tap ➕ Create to make your first post 📸' +
       '</div>';
 
     return;
 
   }
-
 
   account.posts.forEach(
     function(postData,index){
@@ -1082,11 +1078,16 @@ function createPost(
   box
 ){
 
+  const account =
+    getActiveAccount();
+
   const post =
     document.createElement("div");
 
   post.className="post";
 
+
+  /* HEADER */
 
   const header =
     document.createElement("div");
@@ -1102,9 +1103,8 @@ function createPost(
 
   const photo =
     postData.profileImage ||
-    getActiveAccount()?.profileImage ||
+    account?.profileImage ||
     "";
-
 
   if(photo){
 
@@ -1129,21 +1129,14 @@ function createPost(
 
   name.textContent =
     postData.username ||
-    getActiveAccount()?.username ||
+    account?.username ||
     "AI Social User";
 
 
-  header.appendChild(
-    avatar
-  );
+  header.appendChild(avatar);
+  header.appendChild(name);
 
-  header.appendChild(
-    name
-  );
-
-  post.appendChild(
-    header
-  );
+  post.appendChild(header);
 
 
   /* TEXT */
@@ -1158,9 +1151,7 @@ function createPost(
     text.textContent =
       postData.text;
 
-    post.appendChild(
-      text
-    );
+    post.appendChild(text);
 
   }
 
@@ -1189,9 +1180,7 @@ function createPost(
       image.alt =
         "Published photo";
 
-      post.appendChild(
-        image
-      );
+      post.appendChild(image);
 
     }
 
@@ -1207,12 +1196,9 @@ function createPost(
         postData.media;
 
       video.controls=true;
-
       video.playsInline=true;
 
-      post.appendChild(
-        video
-      );
+      post.appendChild(video);
 
     }
 
@@ -1229,12 +1215,12 @@ function createPost(
     soundBox.className="sound-box";
 
 
-    const soundTitle =
+    const title =
       document.createElement("div");
 
-    soundTitle.className="sound-title";
+    title.className="sound-title";
 
-    soundTitle.textContent="🎵 Sound";
+    title.textContent="🎵 Sound";
 
 
     const audio =
@@ -1246,17 +1232,10 @@ function createPost(
       postData.sound;
 
 
-    soundBox.appendChild(
-      soundTitle
-    );
+    soundBox.appendChild(title);
+    soundBox.appendChild(audio);
 
-    soundBox.appendChild(
-      audio
-    );
-
-    post.appendChild(
-      soundBox
-    );
+    post.appendChild(soundBox);
 
   }
 
@@ -1278,8 +1257,7 @@ function createPost(
   function updateLike(){
 
     const count =
-      Number(postData.likeCount)||0;
-
+      Number(postData.likeCount) || 0;
 
     likeButton.textContent =
       postData.liked
@@ -1287,7 +1265,6 @@ function createPost(
         : "🤍 Like " + count;
 
   }
-
 
   updateLike();
 
@@ -1297,7 +1274,6 @@ function createPost(
 
       postData.liked =
         postData.liked !== true;
-
 
       if(postData.liked){
 
@@ -1314,7 +1290,6 @@ function createPost(
 
       }
 
-
       saveCurrentAccountPosts();
 
       updateLike();
@@ -1327,7 +1302,7 @@ function createPost(
   const commentButton =
     document.createElement("button");
 
-  commentButton.textContent =
+  commentButton.textContent=
     "💬 Comment";
 
 
@@ -1335,36 +1310,24 @@ function createPost(
     function(){
 
       const comment =
-        prompt(
-          "Write your comment:"
-        );
-
+        prompt("Write your comment:");
 
       if(
-        comment===null ||
-        comment.trim()===""
+        comment === null ||
+        comment.trim() === ""
       ){
 
         return;
 
       }
 
-
-      if(
-        !Array.isArray(
-          postData.comments
-        )
-      ){
-
+      if(!Array.isArray(postData.comments)){
         postData.comments=[];
-
       }
-
 
       postData.comments.push(
         comment.trim()
       );
-
 
       saveCurrentAccountPosts();
 
@@ -1378,7 +1341,7 @@ function createPost(
   const shareButton =
     document.createElement("button");
 
-  shareButton.textContent =
+  shareButton.textContent=
     "↗️ Share";
 
 
@@ -1390,22 +1353,11 @@ function createPost(
     };
 
 
-  actions.appendChild(
-    likeButton
-  );
+  actions.appendChild(likeButton);
+  actions.appendChild(commentButton);
+  actions.appendChild(shareButton);
 
-  actions.appendChild(
-    commentButton
-  );
-
-  actions.appendChild(
-    shareButton
-  );
-
-
-  post.appendChild(
-    actions
-  );
+  post.appendChild(actions);
 
 
   /* COMMENTS */
@@ -1416,11 +1368,7 @@ function createPost(
   commentsBox.className="comments";
 
 
-  if(
-    Array.isArray(
-      postData.comments
-    )
-  ){
+  if(Array.isArray(postData.comments)){
 
     postData.comments.forEach(
       function(comment){
@@ -1430,22 +1378,17 @@ function createPost(
 
         item.className="comment";
 
-        item.textContent =
+        item.textContent=
           "💬 " + comment;
 
-        commentsBox.appendChild(
-          item
-        );
+        commentsBox.appendChild(item);
 
       }
     );
 
   }
 
-
-  post.appendChild(
-    commentsBox
-  );
+  post.appendChild(commentsBox);
 
 
   /* DELETE */
@@ -1453,10 +1396,10 @@ function createPost(
   const deleteButton =
     document.createElement("button");
 
-  deleteButton.className =
+  deleteButton.className=
     "delete-button";
 
-  deleteButton.textContent =
+  deleteButton.textContent=
     "🗑️ Delete Post";
 
 
@@ -1471,12 +1414,7 @@ function createPost(
 
       }
 
-
-      posts.splice(
-        index,
-        1
-      );
-
+      posts.splice(index,1);
 
       saveCurrentAccountPosts();
 
@@ -1485,20 +1423,15 @@ function createPost(
     };
 
 
-  post.appendChild(
-    deleteButton
-  );
+  post.appendChild(deleteButton);
 
-
-  box.appendChild(
-    post
-  );
+  box.appendChild(post);
 
 }
 
 
 /* =========================
-SAVE CURRENT ACCOUNT POSTS
+SAVE POSTS
 ========================= */
 
 function saveCurrentAccountPosts(){
@@ -1506,86 +1439,12 @@ function saveCurrentAccountPosts(){
   const account =
     getActiveAccount();
 
-
   if(!account){
     return;
   }
-
 
   const accounts =
     getAccounts();
 
-
   const index =
-    accounts.findIndex(
-      function(item){
-
-        return String(item.id) ===
-          String(account.id);
-
-      }
-    );
-
-
-  if(index===-1){
-    return;
-  }
-
-
-  accounts[index].posts =
-    Array.isArray(account.posts)
-      ? account.posts
-      : [];
-
-
-  saveAccounts(accounts);
-
-
-  syncLegacyData(
-    accounts[index]
-  );
-
-}
-
-
-/* =========================
-EDIT PROFILE VARIABLES
-========================= */
-
-let editingPhoto="";
-let photoRotation=0;
-let photoZoom=1;
-let photoFilter="";
-
-
-/* =========================
-OPEN EDIT
-========================= */
-
-function editProfile(){
-
-  const account =
-    getActiveAccount();
-
-
-  if(!account){
-
-    alert(
-      "Please create an account first."
-    );
-
-    return;
-
-  }
-
-
-  document.getElementById(
-    "editUsername"
-  ).value =
-    account.username || "";
-
-
-  document.getElementById(
-    "editBio"
-  ).value =
-    account.bio || ",
+    accounts.findIndex(function(it
