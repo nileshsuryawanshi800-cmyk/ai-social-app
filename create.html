@@ -1,222 +1,240 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Create - AI Social</title><style>
-* {
-  box-sizing: border-box;
-  font-family: Arial, sans-serif;
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Create - AI Social</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  font-family:Arial,sans-serif;
 }
 
-body {
-  margin: 0;
-  background: #f5f5f5;
-  color: #111;
-  padding-bottom: 30px;
+body{
+  margin:0;
+  background:#f5f5f5;
+  color:#111;
+  padding-bottom:30px;
 }
 
-header {
-  background: white;
-  padding: 16px;
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  border-bottom: 1px solid #ddd;
+header{
+  background:white;
+  padding:16px;
+  display:flex;
+  align-items:center;
+  gap:15px;
+  border-bottom:1px solid #ddd;
 }
 
-header button {
-  border: none;
-  background: none;
-  font-size: 28px;
-  cursor: pointer;
+header button{
+  border:none;
+  background:none;
+  font-size:28px;
 }
 
-header h1 {
-  font-size: 20px;
-  margin: 0;
+header h1{
+  font-size:20px;
+  margin:0;
 }
 
-.container {
-  padding: 18px;
+.container{
+  padding:18px;
 }
 
-textarea {
-  width: 100%;
-  height: 110px;
-  padding: 15px;
-  border: 1px solid #ddd;
-  border-radius: 15px;
-  font-size: 16px;
-  resize: none;
-  background: white;
+textarea{
+  width:100%;
+  height:110px;
+  padding:15px;
+  border:1px solid #ddd;
+  border-radius:15px;
+  font-size:16px;
+  resize:none;
+  background:white;
 }
 
-/* SELECT BUTTON */
+/* FILE BUTTON */
 
-.file-label {
-  display: block;
-  width: 100%;
-  margin-top: 15px;
-  padding: 16px;
-  background: white;
-  border: 1px solid #ddd;
-  border-radius: 15px;
-  text-align: center;
-  cursor: pointer;
-  font-weight: bold;
-  font-size: 16px;
+.file-label{
+  display:block;
+  margin-top:15px;
+  padding:16px;
+  background:white;
+  border:1px solid #ddd;
+  border-radius:15px;
+  text-align:center;
+  font-weight:bold;
+  cursor:pointer;
 }
 
-/* KEEP INPUT WORKING LIKE ORIGINAL */
-
-#mediaInput,
-#soundInput {
-  display: none;
+input[type="file"]{
+  display:none;
 }
 
 /* PREVIEW */
 
-.preview-box {
-  margin-top: 15px;
-  background: #000;
-  border-radius: 15px;
-  overflow: hidden;
-  text-align: center;
+.preview-box{
+  margin-top:15px;
+  background:#000;
+  border-radius:15px;
+  overflow:hidden;
+  min-height:20px;
+  text-align:center;
 }
 
-#preview {
-  width: 100%;
-  max-height: 550px;
-  object-fit: contain;
-  display: none;
-  transform-origin: center center;
+#preview{
+  width:100%;
+  max-height:550px;
+  object-fit:contain;
+  display:none;
 }
 
-#videoPreview {
-  width: 100%;
-  max-height: 550px;
-  display: none;
+#videoPreview{
+  width:100%;
+  max-height:550px;
+  display:none;
 }
 
 /* SOUND */
 
-.sound-box {
-  margin-top: 15px;
-  background: white;
-  padding: 15px;
-  border-radius: 15px;
-  display: none;
+.sound-box{
+  display:none;
+  margin-top:15px;
+  padding:15px;
+  background:white;
+  border-radius:15px;
 }
 
-.sound-title {
-  font-weight: bold;
-  margin-bottom: 10px;
+.sound-title{
+  font-weight:bold;
+  margin-bottom:10px;
 }
 
-#soundPreview {
-  width: 100%;
+#soundPreview{
+  width:100%;
 }
 
-.remove-sound-button {
-  width: 100%;
-  margin-top: 10px;
-  padding: 12px;
-  border: 1px solid #ddd;
-  border-radius: 20px;
-  background: white;
-  color: red;
-  font-weight: bold;
+.remove-sound{
+  width:100%;
+  margin-top:10px;
+  padding:12px;
+  border:1px solid #ddd;
+  border-radius:20px;
+  background:white;
+  color:red;
 }
 
-/* EDIT TOOLS */
+/* TOOLS */
 
-.edit-tools,
-.filters,
-.crop-tools {
-  display: none;
-  margin-top: 12px;
-  gap: 8px;
-  flex-wrap: wrap;
+.tools{
+  display:none;
+  margin-top:12px;
+  gap:8px;
+  flex-wrap:wrap;
 }
 
-.edit-tools button,
-.filters button,
-.crop-tools button {
-  border: 1px solid #ddd;
-  background: white;
-  padding: 10px 13px;
-  border-radius: 20px;
-  cursor: pointer;
+.tools button{
+  border:1px solid #ddd;
+  background:white;
+  padding:10px 13px;
+  border-radius:20px;
+  font-weight:bold;
 }
 
-/* CHANGE */
+/* CROP */
 
-.change-button {
-  display: none;
-  width: 100%;
-  margin-top: 10px;
-  padding: 13px;
-  border: 1px solid #ddd;
-  border-radius: 25px;
-  background: white;
-  font-size: 15px;
+.crop-tools{
+  display:none;
+  margin-top:12px;
+  gap:8px;
+  flex-wrap:wrap;
+}
+
+.crop-tools button{
+  border:1px solid #ddd;
+  background:white;
+  padding:10px 13px;
+  border-radius:20px;
 }
 
 /* PUBLISH */
 
-.post-button {
-  width: 100%;
-  margin-top: 18px;
-  padding: 16px;
-  border: none;
-  border-radius: 25px;
-  background: #111;
-  color: white;
-  font-size: 17px;
-  font-weight: bold;
-  cursor: pointer;
+.change-button{
+  display:none;
+  width:100%;
+  margin-top:12px;
+  padding:13px;
+  border:1px solid #ddd;
+  border-radius:25px;
+  background:white;
+  font-weight:bold;
 }
 
-.message {
-  text-align: center;
-  margin-top: 15px;
-  font-weight: bold;
+.publish-button{
+  width:100%;
+  margin-top:18px;
+  padding:16px;
+  border:none;
+  border-radius:25px;
+  background:#111;
+  color:white;
+  font-size:17px;
+  font-weight:bold;
 }
 
-#editCanvas {
-  display: none;
+.message{
+  text-align:center;
+  margin-top:15px;
+  font-weight:bold;
 }
-</style></head><body><header><button onclick="goHome()">←</button>
 
-<h1>➕ Create Post</h1></header><div class="container"><textarea
-  id="postText"
-  placeholder="Write a caption..."
-></textarea><!-- =========================
-PHOTO / VIDEO
-========================= --><label
+#canvas{
+  display:none;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+<button onclick="goHome()">←</button>
+
+<h1>➕ Create Post</h1>
+
+</header>
+
+<div class="container">
+
+<textarea
+id="postText"
+placeholder="Write a caption..."
+></textarea>
+
+
+<!-- PHOTO / VIDEO -->
+
+<label
 class="file-label"
 for="mediaInput"
-
-«»
-
-📸 Select Photo or 🎥 Reel
+>
+📸 Select Photo / 🎥 Reel
 </label>
 
 <input
 id="mediaInput"
 type="file"
-accept="image/,video/"
-onchange="selectMedia(event)"
+accept="image/*,video/*"
+>
 
-«»
 
-<!-- =========================
-SOUND
-========================= --><label
+<!-- SOUND -->
+
+<label
 class="file-label"
 for="soundInput"
-
-«»
-
+>
 🎵 Add Sound / Music
 </label>
 
@@ -224,104 +242,160 @@ for="soundInput"
 id="soundInput"
 type="file"
 accept="audio/*"
-onchange="selectSound(event)"
+>
 
-«»
 
-<!-- SOUND PREVIEW --><div
-  class="sound-box"
-  id="soundBox"
-><div class="sound-title">
+<!-- SOUND PREVIEW -->
+
+<div
+class="sound-box"
+id="soundBox"
+>
+
+<div class="sound-title">
 🎵 Sound Preview
-</div><audio
+</div>
+
+<audio
 id="soundPreview"
 controls
-
-«</audio>»
+></audio>
 
 <button
-type="button"
-class="remove-sound-button"
+class="remove-sound"
 onclick="removeSound()"
-
-«»
-
+>
 ❌ Remove Sound
 </button>
 
-</div><!-- MEDIA PREVIEW --><div class="preview-box"><img
-id="preview"
-alt="Edited photo preview"
+</div>
 
-«»
+
+<!-- MEDIA PREVIEW -->
+
+<div class="preview-box">
+
+<img
+id="preview"
+alt="Photo preview"
+>
 
 <video
 id="videoPreview"
 controls
 playsinline
+></video>
 
-«</video>»
+</div>
 
-</div><!-- PHOTO EDITING --><div
-  class="edit-tools"
-  id="editTools"
-><button onclick="rotatePhoto()">
+
+<!-- EDIT TOOLS -->
+
+<div
+class="tools"
+id="editTools"
+>
+
+<button onclick="rotatePhoto()">
 🔄 Rotate
-</button><button onclick="zoomIn()">
+</button>
+
+<button onclick="zoomIn()">
 🔍 Zoom +
-</button><button onclick="zoomOut()">
+</button>
+
+<button onclick="zoomOut()">
 🔎 Zoom -
-</button><button onclick="resetPhoto()">
+</button>
+
+<button onclick="resetPhoto()">
 ↩️ Reset
-</button></div><!-- FILTERS --><div
-  class="filters"
-  id="filters"
-><button onclick="setFilter('none')">
+</button>
+
+</div>
+
+
+<!-- FILTERS -->
+
+<div
+class="tools"
+id="filters"
+>
+
+<button onclick="setFilter('none')">
 Normal
-</button><button onclick="setFilter('grayscale(1)')">
+</button>
+
+<button onclick="setFilter('grayscale(1)')">
 ⚫ B&W
-</button><button onclick="setFilter('sepia(1)')">
+</button>
+
+<button onclick="setFilter('sepia(1)')">
 🟤 Sepia
-</button><button onclick="setFilter('brightness(1.3)')">
+</button>
+
+<button onclick="setFilter('brightness(1.3)')">
 ☀️ Bright
-</button><button onclick="setFilter('contrast(1.4)')">
+</button>
+
+<button onclick="setFilter('contrast(1.4)')">
 ✨ Contrast
-</button></div><!-- CROP --><div
-  class="crop-tools"
-  id="cropTools"
-><button onclick="cropPhoto(1)">
+</button>
+
+</div>
+
+
+<!-- CROP -->
+
+<div
+class="crop-tools"
+id="cropTools"
+>
+
+<button onclick="cropPhoto(1)">
 🔲 Square
-</button><button onclick="cropPhoto(0.8)">
+</button>
+
+<button onclick="cropPhoto(0.8)">
 📱 Portrait
-</button><button onclick="cropPhoto(16/9)">
+</button>
+
+<button onclick="cropPhoto(16/9)">
 🖼️ Landscape
-</button><button onclick="cancelCrop()">
-❌ Cancel
-</button></div><button
+</button>
+
+</div>
+
+
+<button
 class="change-button"
 id="changeButton"
 onclick="changeMedia()"
-
-«»
-
+>
 🔄 Change Photo / Video
 </button>
 
+
 <button
-class="post-button"
+class="publish-button"
 onclick="publishPost()"
-
-«»
-
+>
 📤 Publish
 </button>
 
-<p
-  id="message"
-  class="message"
-></p><canvas id="editCanvas"></canvas>
 
-</div><script>
+<div
+class="message"
+id="message"
+></div>
+
+
+<canvas id="canvas"></canvas>
+
+</div>
+
+
+<script>
 
 /* =========================
 VARIABLES
@@ -329,7 +403,6 @@ VARIABLES
 
 let selectedMedia = null;
 let selectedSound = null;
-
 let originalImage = null;
 
 let rotation = 0;
@@ -338,37 +411,34 @@ let currentFilter = "none";
 
 
 /* =========================
-HOME
+NAVIGATION
 ========================= */
 
-function goHome() {
-
-  window.location.href =
-    "index.html";
-
+function goHome(){
+  window.location.href="index.html";
 }
 
 
 /* =========================
-SELECT MEDIA
+MEDIA SELECT
 ========================= */
 
-function selectMedia(event) {
+document
+.getElementById("mediaInput")
+.addEventListener("change",function(event){
 
   const file =
     event.target.files[0];
 
-  if (!file) {
+  if(!file){
     return;
   }
 
+  selectedMedia=file;
 
-  selectedMedia = file;
-
-  rotation = 0;
-  zoom = 1;
-  currentFilter = "none";
-
+  rotation=0;
+  zoom=1;
+  currentFilter="none";
 
   const image =
     document.getElementById("preview");
@@ -392,239 +462,171 @@ function selectMedia(event) {
     document.getElementById("message");
 
 
-  image.style.display = "none";
-  video.style.display = "none";
+  image.style.display="none";
+  video.style.display="none";
 
-  tools.style.display = "none";
-  filters.style.display = "none";
-  cropTools.style.display = "none";
+  tools.style.display="none";
+  filters.style.display="none";
+  cropTools.style.display="none";
+
+  change.style.display="block";
 
 
-  change.style.display = "block";
+  /* PHOTO */
 
-
-  /* =========================
-  PHOTO
-  ========================= */
-
-  if (
-    file.type.startsWith("image/")
-  ) {
+  if(file.type.startsWith("image/")){
 
     const url =
       URL.createObjectURL(file);
 
+    image.src=url;
 
-    originalImage =
-      new Image();
+    image.style.display="block";
 
-
-    originalImage.onload =
-      function() {
-
-        image.src = url;
-
-        image.style.display =
-          "block";
-
-        tools.style.display =
-          "flex";
-
-        filters.style.display =
-          "flex";
-
-        applyPreview();
-
-      };
+    tools.style.display="flex";
+    filters.style.display="flex";
+    cropTools.style.display="flex";
 
 
-    originalImage.src =
-      url;
+    originalImage=new Image();
+
+    originalImage.onload=function(){
+
+      applyPreview();
+
+    };
+
+    originalImage.src=url;
 
 
-    message.textContent =
-      "✅ Photo selected. Edit it before publishing.";
+    message.textContent=
+      "✅ Photo selected. You can edit it before publishing.";
 
     return;
-
   }
 
 
-  /* =========================
-  VIDEO
-  ========================= */
+  /* VIDEO */
 
-  if (
-    file.type.startsWith("video/")
-  ) {
+  if(file.type.startsWith("video/")){
 
-    originalImage = null;
-
-
-    video.src =
+    const url =
       URL.createObjectURL(file);
 
+    video.src=url;
 
-    video.style.display =
-      "block";
+    video.style.display="block";
 
+    message.textContent=
+      "✅ Reel selected.";
 
-    video.onloadedmetadata =
-      function() {
+    video.onloadedmetadata=function(){
 
-        if (
-          video.duration > 60
-        ) {
+      if(video.duration > 60){
 
-          alert(
-            "⚠️ Reel must be 1 minute or less."
-          );
+        alert(
+          "⚠️ Reel must be 60 seconds or less."
+        );
 
+        selectedMedia=null;
 
-          selectedMedia =
-            null;
+        video.src="";
+        video.style.display="none";
 
+        change.style.display="none";
 
-          video.src =
-            "";
+        document.getElementById(
+          "mediaInput"
+        ).value="";
 
+        return;
+      }
 
-          video.style.display =
-            "none";
-
-
-          change.style.display =
-            "none";
-
-
-          document.getElementById(
-            "mediaInput"
-          ).value =
-            "";
-
-
-          return;
-
-        }
-
-
-        message.textContent =
-          "✅ Reel selected. Maximum 1 minute.";
-
-      };
-
-
-    return;
+    };
 
   }
 
-}
+});
 
 
 /* =========================
-SOUND
+SOUND SELECT
 ========================= */
 
-function selectSound(event) {
+document
+.getElementById("soundInput")
+.addEventListener("change",function(event){
 
   const file =
     event.target.files[0];
 
-  if (!file) {
+  if(!file){
+    return;
+  }
+
+  if(!file.type.startsWith("audio/")){
+
+    alert("Please select an audio file.");
+
     return;
   }
 
 
-  if (
-    !file.type.startsWith("audio/")
-  ) {
+  if(file.size > 10*1024*1024){
 
     alert(
-      "⚠️ Please select an audio file."
+      "Please select audio under 10 MB."
     );
 
     return;
-
   }
 
 
-  if (
-    file.size >
-    10 * 1024 * 1024
-  ) {
-
-    alert(
-      "⚠️ Sound must be under 10 MB."
-    );
-
-    return;
-
-  }
+  selectedSound=file;
 
 
-  selectedSound =
-    file;
+  const box =
+    document.getElementById("soundBox");
+
+  const preview =
+    document.getElementById("soundPreview");
 
 
-  const soundBox =
-    document.getElementById(
-      "soundBox"
-    );
-
-
-  const soundPreview =
-    document.getElementById(
-      "soundPreview"
-    );
-
-
-  soundPreview.src =
+  preview.src =
     URL.createObjectURL(file);
 
-
-  soundBox.style.display =
-    "block";
+  box.style.display="block";
 
 
   document.getElementById(
     "message"
-  ).textContent =
+  ).textContent=
     "🎵 Sound selected. Press ▶️ to preview.";
 
-}
+});
 
 
 /* =========================
 REMOVE SOUND
 ========================= */
 
-function removeSound() {
+function removeSound(){
 
-  selectedSound =
-    null;
+  selectedSound=null;
 
+  const preview =
+    document.getElementById("soundPreview");
 
-  const sound =
-    document.getElementById(
-      "soundPreview"
-    );
-
-
-  sound.pause();
-
-  sound.src = "";
-
+  preview.pause();
+  preview.src="";
 
   document.getElementById(
     "soundBox"
-  ).style.display =
-    "none";
-
+  ).style.display="none";
 
   document.getElementById(
     "soundInput"
-  ).value =
-    "";
+  ).value="";
 
 }
 
@@ -633,25 +635,20 @@ function removeSound() {
 PREVIEW
 ========================= */
 
-function applyPreview() {
+function applyPreview(){
 
   const image =
-    document.getElementById(
-      "preview"
-    );
+    document.getElementById("preview");
 
-
-  image.style.transform =
-    "rotate(" +
-    rotation +
-    "deg) scale(" +
-    zoom +
+  image.style.transform=
+    "rotate("+
+    rotation+
+    "deg) scale("+
+    zoom+
     ")";
 
-
-  image.style.filter =
+  image.style.filter=
     currentFilter;
-
 }
 
 
@@ -659,22 +656,19 @@ function applyPreview() {
 ROTATE
 ========================= */
 
-function rotatePhoto() {
+function rotatePhoto(){
 
-  rotation += 90;
-
-
-  if (
-    rotation >= 360
-  ) {
-
-    rotation = 0;
-
+  if(!originalImage){
+    return;
   }
 
+  rotation+=90;
+
+  if(rotation>=360){
+    rotation=0;
+  }
 
   applyPreview();
-
 }
 
 
@@ -682,41 +676,27 @@ function rotatePhoto() {
 ZOOM
 ========================= */
 
-function zoomIn() {
+function zoomIn(){
 
-  zoom += 0.1;
+  zoom+=0.1;
 
-
-  if (
-    zoom > 2
-  ) {
-
-    zoom = 2;
-
+  if(zoom>2){
+    zoom=2;
   }
 
-
   applyPreview();
-
 }
 
 
-function zoomOut() {
+function zoomOut(){
 
-  zoom -= 0.1;
+  zoom-=0.1;
 
-
-  if (
-    zoom < 0.5
-  ) {
-
-    zoom = 0.5;
-
+  if(zoom<0.5){
+    zoom=0.5;
   }
 
-
   applyPreview();
-
 }
 
 
@@ -724,28 +704,11 @@ function zoomOut() {
 FILTER
 ========================= */
 
-function setFilter(filter) {
+function setFilter(filter){
 
-  currentFilter =
-    filter;
-
-  applyPreview();
-
-}
-
-
-/* =========================
-RESET
-========================= */
-
-function resetPhoto() {
-
-  rotation = 0;
-  zoom = 1;
-  currentFilter = "none";
+  currentFilter=filter;
 
   applyPreview();
-
 }
 
 
@@ -753,44 +716,14 @@ function resetPhoto() {
 CROP
 ========================= */
 
-function startCrop() {
+function cropPhoto(ratio){
 
-  document.getElementById(
-    "cropTools"
-  ).style.display =
-    "flex";
-
-}
-
-
-function cancelCrop() {
-
-  document.getElementById(
-    "cropTools"
-  ).style.display =
-    "none";
-
-}
-
-
-function cropPhoto(ratio) {
-
-  if (!originalImage) {
-
-    alert(
-      "⚠️ Select a photo first."
-    );
-
+  if(!originalImage){
     return;
-
   }
 
-
   const canvas =
-    document.getElementById(
-      "editCanvas"
-    );
-
+    document.getElementById("canvas");
 
   const ctx =
     canvas.getContext("2d");
@@ -804,179 +737,168 @@ function cropPhoto(ratio) {
 
 
   const originalRatio =
-    width / height;
+    width/height;
 
 
   let cropWidth;
   let cropHeight;
 
 
-  if (
-    originalRatio > ratio
-  ) {
+  if(originalRatio > ratio){
 
-    cropHeight =
-      height;
+    cropHeight=height;
+    cropWidth=height*ratio;
 
-    cropWidth =
-      height * ratio;
+  }else{
 
-  } else {
-
-    cropWidth =
-      width;
-
-    cropHeight =
-      width / ratio;
+    cropWidth=width;
+    cropHeight=width/ratio;
 
   }
 
 
   const x =
-    (width - cropWidth) / 2;
+    (width-cropWidth)/2;
 
   const y =
-    (height - cropHeight) / 2;
+    (height-cropHeight)/2;
 
 
-  canvas.width =
-    cropWidth;
-
-  canvas.height =
-    cropHeight;
+  canvas.width=cropWidth;
+  canvas.height=cropHeight;
 
 
   ctx.drawImage(
-
     originalImage,
-
     x,
     y,
     cropWidth,
     cropHeight,
-
     0,
     0,
     cropWidth,
     cropHeight
-
   );
 
 
-  canvas.toBlob(
+  canvas.toBlob(function(blob){
 
-    function(blob) {
-
-      if (!blob) {
-        return;
-      }
+    if(!blob){
+      return;
+    }
 
 
-      selectedMedia =
-        new File(
-
-          [blob],
-
-          "edited-photo.jpg",
-
-          {
-            type:
-              "image/jpeg"
-          }
-
-        );
+    selectedMedia =
+      new File(
+        [blob],
+        "edited-photo.jpg",
+        {
+          type:"image/jpeg"
+        }
+      );
 
 
-      const url =
-        URL.createObjectURL(
-          selectedMedia
-        );
+    const url =
+      URL.createObjectURL(selectedMedia);
 
 
-      originalImage =
-        new Image();
+    originalImage=new Image();
 
 
-      originalImage.onload =
-        function() {
+    originalImage.onload=function(){
 
-          rotation = 0;
-          zoom = 1;
+      rotation=0;
+      zoom=1;
 
-          applyPreview();
+      applyPreview();
 
-        };
-
-
-      originalImage.src =
-        url;
+    };
 
 
-      document.getElementById(
-        "preview"
-      ).src =
-        url;
+    originalImage.src=url;
 
 
-      document.getElementById(
-        "cropTools"
-      ).style.display =
-        "none";
+    document.getElementById(
+      "preview"
+    ).src=url;
 
 
-      document.getElementById(
-        "message"
-      ).textContent =
-        "✅ Crop applied.";
+    document.getElementById(
+      "message"
+    ).textContent=
+      "✅ Crop applied.";
 
-    },
-
-    "image/jpeg",
-
-    0.92
-
-  );
+  },"image/jpeg",0.92);
 
 }
 
 
 /* =========================
-CHANGE MEDIA
+RESET
 ========================= */
 
-function changeMedia() {
+function resetPhoto(){
 
-  document.getElementById(
-    "mediaInput"
-  ).click();
+  if(!selectedMedia){
+    return;
+  }
+
+  rotation=0;
+  zoom=1;
+  currentFilter="none";
+
+  applyPreview();
+}
+
+
+/* =========================
+CHANGE
+========================= */
+
+function changeMedia(){
+
+  document
+  .getElementById("mediaInput")
+  .click();
 
 }
 
 
 /* =========================
-POST STORAGE
+GET POSTS
 ========================= */
 
-function getPosts() {
+function getPosts(){
 
-  try {
+  try{
 
-    return JSON.parse(
-      localStorage.getItem(
-        "posts"
-      ) || "[]"
-    );
+    const saved =
+      localStorage.getItem("posts");
 
-  } catch(error) {
+    if(!saved){
+      return [];
+    }
+
+    const posts =
+      JSON.parse(saved);
+
+    return Array.isArray(posts)
+      ? posts
+      : [];
+
+  }catch(error){
 
     return [];
 
   }
-
 }
 
 
-function savePosts(posts) {
+/* =========================
+SAVE POSTS
+========================= */
+
+function savePosts(posts){
 
   localStorage.setItem(
     "posts",
@@ -990,28 +912,21 @@ function savePosts(posts) {
 FILE TO DATA URL
 ========================= */
 
-function fileToDataURL(file) {
+function fileToDataURL(file){
 
   return new Promise(
-    function(resolve, reject) {
+    function(resolve,reject){
 
       const reader =
         new FileReader();
 
+      reader.onload=function(event){
 
-      reader.onload =
-        function(event) {
+        resolve(event.target.result);
 
-          resolve(
-            event.target.result
-          );
+      };
 
-        };
-
-
-      reader.onerror =
-        reject;
-
+      reader.onerror=reject;
 
       reader.readAsDataURL(file);
 
@@ -1022,129 +937,107 @@ function fileToDataURL(file) {
 
 
 /* =========================
-CREATE EDITED PHOTO
+CREATE FINAL PHOTO
 ========================= */
 
-function createEditedImage() {
+function createEditedImage(){
 
-  return new Promise(
-    function(resolve) {
+  return new Promise(function(resolve){
 
-      if (!originalImage) {
+    if(!originalImage){
 
-        resolve(null);
-
-        return;
-
-      }
-
-
-      const canvas =
-        document.getElementById(
-          "editCanvas"
-        );
-
-
-      const ctx =
-        canvas.getContext("2d");
-
-
-      const width =
-        originalImage.width;
-
-      const height =
-        originalImage.height;
-
-
-      const angle =
-        rotation *
-        Math.PI /
-        180;
-
-
-      const sin =
-        Math.abs(
-          Math.sin(angle)
-        );
-
-
-      const cos =
-        Math.abs(
-          Math.cos(angle)
-        );
-
-
-      const newWidth =
-        width * cos +
-        height * sin;
-
-
-      const newHeight =
-        width * sin +
-        height * cos;
-
-
-      canvas.width =
-        newWidth;
-
-
-      canvas.height =
-        newHeight;
-
-
-      ctx.save();
-
-
-      ctx.translate(
-
-        canvas.width / 2,
-
-        canvas.height / 2
-
-      );
-
-
-      ctx.rotate(angle);
-
-
-      ctx.filter =
-        currentFilter;
-
-
-      ctx.drawImage(
-
-        originalImage,
-
-        -width / 2,
-
-        -height / 2,
-
-        width,
-
-        height
-
-      );
-
-
-      ctx.restore();
-
-
-      canvas.toBlob(
-
-        function(blob) {
-
-          resolve(blob);
-
-        },
-
-        "image/jpeg",
-
-        0.92
-
-      );
+      resolve(null);
+      return;
 
     }
-  );
+
+
+    const canvas =
+      document.getElementById("canvas");
+
+    const ctx =
+      canvas.getContext("2d");
+
+
+    const width =
+      originalImage.width;
+
+    const height =
+      originalImage.height;
+
+
+    const angle =
+      rotation*Math.PI/180;
+
+
+    const sin =
+      Math.abs(Math.sin(angle));
+
+    const cos =
+      Math.abs(Math.cos(angle));
+
+
+    const newWidth =
+      width*cos+
+      height*sin;
+
+    const newHeight =
+      width*sin+
+      height*cos;
+
+
+    canvas.width=
+      newWidth*zoom;
+
+    canvas.height=
+      newHeight*zoom;
+
+
+    ctx.save();
+
+
+    ctx.translate(
+      canvas.width/2,
+      canvas.height/2
+    );
+
+
+    ctx.rotate(angle);
+
+
+    ctx.scale(
+      zoom,
+      zoom
+    );
+
+
+    ctx.filter=
+      currentFilter;
+
+
+    ctx.drawImage(
+      originalImage,
+      -width/2,
+      -height/2,
+      width,
+      height
+    );
+
+
+    ctx.restore();
+
+
+    canvas.toBlob(
+      function(blob){
+
+        resolve(blob);
+
+      },
+      "image/jpeg",
+      0.92
+    );
+
+  });
 
 }
 
@@ -1153,38 +1046,32 @@ function createEditedImage() {
 PUBLISH
 ========================= */
 
-async function publishPost() {
+async function publishPost(){
+
+  const message =
+    document.getElementById("message");
 
   const text =
     document
-      .getElementById(
-        "postText"
-      )
-      .value
-      .trim();
+    .getElementById("postText")
+    .value
+    .trim();
 
 
-  const message =
-    document.getElementById(
-      "message"
-    );
-
-
-  if (
-    text === "" &&
+  if(
+    text==="" &&
     !selectedMedia
-  ) {
+  ){
 
-    message.textContent =
-      "⚠️ Write a caption or select media.";
+    message.textContent=
+      "⚠️ Write a caption or select a photo/video.";
 
     return;
-
   }
 
 
-  message.textContent =
-    "⏳ Preparing post...";
+  message.textContent=
+    "⏳ Publishing...";
 
 
   const posts =
@@ -1192,39 +1079,32 @@ async function publishPost() {
 
 
   const username =
-    localStorage.getItem(
-      "username"
-    ) ||
+    localStorage.getItem("username") ||
     "You";
 
 
   const profileImage =
-    localStorage.getItem(
-      "profileImage"
-    ) ||
+    localStorage.getItem("profileImage") ||
     null;
 
 
-  /* =========================
-  SAVE SOUND
-  ========================= */
+  /* SOUND */
 
-  let soundData =
-    null;
+  let soundData=null;
 
 
-  if (selectedSound) {
+  if(selectedSound){
 
-    try {
+    try{
 
-      soundData =
+      soundData=
         await fileToDataURL(
           selectedSound
         );
 
-    } catch(error) {
+    }catch(error){
 
-      message.textContent =
+      message.textContent=
         "⚠️ Could not save sound.";
 
       return;
@@ -1238,36 +1118,36 @@ async function publishPost() {
   TEXT ONLY
   ========================= */
 
-  if (!selectedMedia) {
+  if(!selectedMedia){
 
     posts.unshift({
 
-      id: Date.now(),
+      id:Date.now(),
 
-      username: username,
+      username:username,
 
-      profileImage: profileImage,
+      profileImage:profileImage,
 
-      text: text,
+      text:text,
 
-      media: null,
+      media:null,
 
-      mediaType: null,
+      mediaType:null,
 
-      sound: soundData,
+      sound:soundData,
 
       soundType:
         selectedSound
-          ? selectedSound.type
-          : null,
+        ? selectedSound.type
+        : null,
 
-      liked: false,
+      liked:false,
 
-      likeCount: 0,
+      likeCount:0,
 
-      comments: [],
+      comments:[],
 
-      createdAt: Date.now()
+      createdAt:Date.now()
 
     });
 
@@ -1277,7 +1157,6 @@ async function publishPost() {
     finish();
 
     return;
-
   }
 
 
@@ -1285,26 +1164,23 @@ async function publishPost() {
   VIDEO
   ========================= */
 
-  if (
-    selectedMedia.type.startsWith(
-      "video/"
-    )
-  ) {
+  if(
+    selectedMedia.type.startsWith("video/")
+  ){
 
-    if (
+    if(
       selectedMedia.size >
-      20 * 1024 * 1024
-    ) {
+      20*1024*1024
+    ){
 
-      message.textContent =
+      message.textContent=
         "⚠️ Reel must be under 20 MB.";
 
       return;
-
     }
 
 
-    try {
+    try{
 
       const videoData =
         await fileToDataURL(
@@ -1314,33 +1190,32 @@ async function publishPost() {
 
       posts.unshift({
 
-        id: Date.now(),
+        id:Date.now(),
 
-        username: username,
+        username:username,
 
-        profileImage: profileImage,
+        profileImage:profileImage,
 
-        text: text,
+        text:text,
 
-        media: videoData,
+        media:videoData,
 
-        mediaType:
-          selectedMedia.type,
+        mediaType:selectedMedia.type,
 
-        sound: soundData,
+        sound:soundData,
 
         soundType:
           selectedSound
-            ? selectedSound.type
-            : null,
+          ? selectedSound.type
+          : null,
 
-        liked: false,
+        liked:false,
 
-        likeCount: 0,
+        likeCount:0,
 
-        comments: [],
+        comments:[],
 
-        createdAt: Date.now()
+        createdAt:Date.now()
 
       });
 
@@ -1349,16 +1224,14 @@ async function publishPost() {
 
       finish();
 
-    } catch(error) {
+    }catch(error){
 
-      message.textContent =
+      message.textContent=
         "⚠️ Could not save Reel.";
 
     }
 
-
     return;
-
   }
 
 
@@ -1366,60 +1239,57 @@ async function publishPost() {
   PHOTO
   ========================= */
 
-  message.textContent =
+  message.textContent=
     "⏳ Saving edited photo...";
 
 
-  const editedBlob =
+  const blob =
     await createEditedImage();
 
 
-  if (!editedBlob) {
+  if(!blob){
 
-    message.textContent =
+    message.textContent=
       "⚠️ Could not create edited photo.";
 
     return;
-
   }
 
 
-  try {
+  try{
 
     const photoData =
-      await fileToDataURL(
-        editedBlob
-      );
+      await fileToDataURL(blob);
 
 
     posts.unshift({
 
-      id: Date.now(),
+      id:Date.now(),
 
-      username: username,
+      username:username,
 
-      profileImage: profileImage,
+      profileImage:profileImage,
 
-      text: text,
+      text:text,
 
-      media: photoData,
+      media:photoData,
 
-      mediaType: "image/jpeg",
+      mediaType:"image/jpeg",
 
-      sound: soundData,
+      sound:soundData,
 
       soundType:
         selectedSound
-          ? selectedSound.type
-          : null,
+        ? selectedSound.type
+        : null,
 
-      liked: false,
+      liked:false,
 
-      likeCount: 0,
+      likeCount:0,
 
-      comments: [],
+      comments:[],
 
-      createdAt: Date.now()
+      createdAt:Date.now()
 
     });
 
@@ -1428,10 +1298,10 @@ async function publishPost() {
 
     finish();
 
-  } catch(error) {
+  }catch(error){
 
-    message.textContent =
-      "⚠️ Photo or sound is too large for browser storage.";
+    message.textContent=
+      "⚠️ Photo is too large for browser storage.";
 
   }
 
@@ -1442,28 +1312,24 @@ async function publishPost() {
 FINISH
 ========================= */
 
-function finish() {
+function finish(){
 
   document.getElementById(
     "message"
-  ).textContent =
+  ).textContent=
     "✅ Published successfully!";
 
 
-  setTimeout(
+  setTimeout(function(){
 
-    function() {
+    window.location.href=
+      "index.html";
 
-      window.location.href =
-        "index.html";
-
-    },
-
-    700
-
-  );
+  },700);
 
 }
 
-</script></body>
-  </html>
+</script>
+
+</body>
+</html>
