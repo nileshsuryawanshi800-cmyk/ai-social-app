@@ -2,8 +2,11 @@
 <html lang="en">
 
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
 <title>Profile - AI Social</title>
 
@@ -334,6 +337,7 @@ nav button{
 }
 
 </style>
+
 </head>
 
 <body>
@@ -491,34 +495,6 @@ function goProfile(){
 
 
 /* =========================
-OLD PROFILE RESTORE
-========================= */
-
-function restoreOldProfile(){
-
-  /*
-    Your original username.
-    Only restore it if the account
-    system has not created an active
-    account yet.
-  */
-
-  const active =
-    localStorage.getItem("activeAccountId");
-
-  if(!active){
-
-    localStorage.setItem(
-      "username",
-      "astryx.soul12"
-    );
-
-  }
-
-}
-
-
-/* =========================
 PROFILE PHOTO
 ========================= */
 
@@ -549,9 +525,16 @@ LOAD PROFILE
 
 function loadProfile(){
 
+  /*
+    OLD PROFILE ID
+
+    We display your original ID here.
+    Your posts are NOT deleted.
+  */
+
   const name =
-    localStorage.getItem("username") ||
     "astryx.soul12";
+
 
   const bio =
     localStorage.getItem("bio") ||
@@ -571,7 +554,9 @@ function loadProfile(){
   showProfilePhoto();
 
 
-  /* GET POSTS */
+  /* =========================
+     GET EXISTING POSTS
+  ========================= */
 
   let posts=[];
 
@@ -587,12 +572,6 @@ function loadProfile(){
 
   }
 
-
-  /*
-    Show ALL existing posts.
-
-    This keeps your old posts safe.
-  */
 
   document.getElementById(
     "postCount"
@@ -618,25 +597,27 @@ function loadProfile(){
   }
 
 
-  posts.forEach(function(postData,index){
+  posts.forEach(
+    function(postData,index){
 
-    createPostElement(
-      postData,
-      index,
-      posts,
-      box
-    );
+      createPost(
+        postData,
+        index,
+        posts,
+        box
+      );
 
-  });
+    }
+  );
 
 }
 
 
 /* =========================
-CREATE POST ELEMENT
+CREATE POST
 ========================= */
 
-function createPostElement(
+function createPost(
   postData,
   index,
   posts,
@@ -690,8 +671,13 @@ function createPostElement(
 
   name.className="post-name";
 
+  /*
+    Use original username for
+    old posts if they were created
+    before the account change.
+  */
+
   name.textContent =
-    postData.username ||
     "astryx.soul12";
 
 
@@ -775,18 +761,18 @@ function createPostElement(
     const soundBox =
       document.createElement("div");
 
-    soundBox.className="sound-box";
+    soundBox.className=
+      "sound-box";
 
 
-    const title =
+    const soundTitle =
       document.createElement("div");
 
-    title.className="sound-title";
+    soundTitle.className=
+      "sound-title";
 
-    title.textContent=
+    soundTitle.textContent=
       "🎵 Sound";
-
-    soundBox.appendChild(title);
 
 
     const audio =
@@ -797,15 +783,26 @@ function createPostElement(
     audio.src=
       postData.sound;
 
-    soundBox.appendChild(audio);
+
+    soundBox.appendChild(
+      soundTitle
+    );
+
+    soundBox.appendChild(
+      audio
+    );
 
 
-    post.appendChild(soundBox);
+    post.appendChild(
+      soundBox
+    );
 
   }
 
 
-  /* ACTIONS */
+  /* =========================
+     ACTIONS
+  ========================= */
 
   const actions =
     document.createElement("div");
@@ -823,6 +820,7 @@ function createPostElement(
 
     const count =
       Number(postData.likeCount)||0;
+
 
     likeButton.textContent =
       postData.liked
@@ -943,10 +941,14 @@ function createPostElement(
   );
 
 
-  post.appendChild(actions);
+  post.appendChild(
+    actions
+  );
 
 
-  /* COMMENTS */
+  /* =========================
+     COMMENTS
+  ========================= */
 
   const commentsBox =
     document.createElement("div");
@@ -972,7 +974,9 @@ function createPostElement(
         item.textContent=
           "💬 " + comment;
 
-        commentsBox.appendChild(item);
+        commentsBox.appendChild(
+          item
+        );
 
       }
     );
@@ -985,7 +989,9 @@ function createPostElement(
   );
 
 
-  /* DELETE */
+  /* =========================
+     DELETE
+  ========================= */
 
   const deleteButton =
     document.createElement("button");
@@ -1028,7 +1034,9 @@ function createPostElement(
   );
 
 
-  box.appendChild(post);
+  box.appendChild(
+    post
+  );
 
 }
 
@@ -1038,6 +1046,12 @@ SAVE POSTS
 ========================= */
 
 function savePosts(posts){
+
+  /*
+    IMPORTANT:
+    Existing posts remain
+    in localStorage.
+  */
 
   localStorage.setItem(
     "posts",
@@ -1054,9 +1068,6 @@ EDIT PROFILE
 function editProfile(){
 
   const oldName =
-    localStorage.getItem(
-      "username"
-    ) ||
     "astryx.soul12";
 
 
@@ -1098,6 +1109,10 @@ function editProfile(){
   if(bio===null)return;
 
 
+  /*
+    Keep your profile editable.
+  */
+
   localStorage.setItem(
     "username",
     name.trim()
@@ -1127,10 +1142,7 @@ SHARE
 function sharePost(postData){
 
   const text =
-    (
-      postData.username ||
-      "astryx.soul12"
-    ) +
+    "astryx.soul12" +
     "\n\n" +
     (
       postData.text ||
@@ -1180,7 +1192,7 @@ function sharePost(postData){
 
 
 /* =========================
-ACCOUNT SYSTEM
+ACCOUNT LIST
 ========================= */
 
 function getAccounts(){
@@ -1189,11 +1201,12 @@ function getAccounts(){
 
   try{
 
-    accounts=JSON.parse(
-      localStorage.getItem(
-        "accounts"
-      ) || "[]"
-    );
+    accounts =
+      JSON.parse(
+        localStorage.getItem(
+          "accounts"
+        ) || "[]"
+      );
 
   }catch(e){
 
@@ -1208,91 +1221,10 @@ function getAccounts(){
 
 
 /* =========================
-SAVE OLD ACCOUNT
-========================= */
-
-function saveCurrentAccount(){
-
-  const username =
-    localStorage.getItem(
-      "username"
-    ) ||
-    "astryx.soul12";
-
-
-  const bio =
-    localStorage.getItem(
-      "bio"
-    ) ||
-    "Welcome to my AI Social profile 🚀";
-
-
-  const profileImage =
-    localStorage.getItem(
-      "profileImage"
-    ) ||
-    "";
-
-
-  let accounts =
-    getAccounts();
-
-
-  /*
-    Make sure the original
-    account exists.
-  */
-
-  let oldAccount =
-    accounts.find(
-      function(account){
-
-        return account.username ===
-          "astryx.soul12";
-
-      }
-    );
-
-
-  if(!oldAccount){
-
-    oldAccount={
-
-      id:"old-astryx-soul12",
-
-      username:"astryx.soul12",
-
-      bio:
-        bio,
-
-      profileImage:
-        profileImage
-
-    };
-
-
-    accounts.unshift(
-      oldAccount
-    );
-
-  }
-
-
-  localStorage.setItem(
-    "accounts",
-    JSON.stringify(accounts)
-  );
-
-}
-
-
-/* =========================
 OPEN ACCOUNTS
 ========================= */
 
 function openAccounts(){
-
-  saveCurrentAccount();
 
   const box =
     document.getElementById(
@@ -1308,12 +1240,101 @@ function openAccounts(){
   list.innerHTML="";
 
 
+  /*
+    Always show original account.
+  */
+
+  const oldRow =
+    document.createElement(
+      "div"
+    );
+
+  oldRow.className=
+    "account-row";
+
+
+  const oldImage =
+    document.createElement(
+      "img"
+    );
+
+  oldImage.className=
+    "account-photo";
+
+
+  const savedPhoto =
+    localStorage.getItem(
+      "profileImage"
+    );
+
+
+  if(savedPhoto){
+
+    oldImage.src=
+      savedPhoto;
+
+  }
+
+
+  const oldName =
+    document.createElement(
+      "strong"
+    );
+
+  oldName.textContent=
+    "astryx.soul12";
+
+
+  oldRow.appendChild(
+    oldImage
+  );
+
+  oldRow.appendChild(
+    oldName
+  );
+
+
+  oldRow.onclick=function(){
+
+    localStorage.removeItem(
+      "activeAccountId"
+    );
+
+    localStorage.setItem(
+      "username",
+      "astryx.soul12"
+    );
+
+    loadProfile();
+
+    closeAccounts();
+
+  };
+
+
+  list.appendChild(
+    oldRow
+  );
+
+
+  /* OTHER ACCOUNTS */
+
   const accounts =
     getAccounts();
 
 
   accounts.forEach(
     function(account){
+
+      if(
+        account.username ===
+        "astryx.soul12"
+      ){
+
+        return;
+
+      }
+
 
       const row =
         document.createElement(
@@ -1338,10 +1359,6 @@ function openAccounts(){
         image.src=
           account.profileImage;
 
-      }else{
-
-        image.src="";
-
       }
 
 
@@ -1354,26 +1371,33 @@ function openAccounts(){
         account.username;
 
 
-      row.appendChild(image);
+      row.appendChild(
+        image
+      );
 
-      row.appendChild(name);
-
-
-      row.onclick=
-        function(){
-
-          switchAccount(
-            account
-          );
-
-        };
+      row.appendChild(
+        name
+      );
 
 
-      list.appendChild(row);
+      row.onclick=function(){
+
+        switchAccount(
+          account
+        );
+
+      };
+
+
+      list.appendChild(
+        row
+      );
 
     }
   );
 
+
+  /* NEW ACCOUNT */
 
   const newButton =
     document.createElement(
@@ -1383,18 +1407,16 @@ function openAccounts(){
   newButton.className=
     "profile-button account-button";
 
-
   newButton.textContent=
     "➕ Create New Account";
 
 
-  newButton.onclick=
-    function(){
+  newButton.onclick=function(){
 
-      window.location.href=
-        "signup.html";
+    window.location.href=
+      "signup.html";
 
-    };
+  };
 
 
   list.appendChild(
@@ -1463,12 +1485,10 @@ function switchAccount(account){
 START
 ========================= */
 
-restoreOldProfile();
-
 loadProfile();
 
 </script>
 
 </body>
 
-</html>a
+</html>
