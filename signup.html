@@ -1,12 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
 <title>Create Account - AI Social</title>
 
 <style>
+
 *{
   box-sizing:border-box;
   font-family:Arial,sans-serif;
@@ -101,6 +106,7 @@ textarea{
   color:white;
   font-size:17px;
   font-weight:bold;
+  cursor:pointer;
 }
 
 .back-button{
@@ -111,6 +117,7 @@ textarea{
   border-radius:25px;
   background:white;
   font-size:15px;
+  cursor:pointer;
 }
 
 .message{
@@ -118,7 +125,9 @@ textarea{
   margin-top:15px;
   font-weight:bold;
 }
+
 </style>
+
 </head>
 
 <body>
@@ -134,194 +143,359 @@ Join AI Social
 <div class="card">
 
 <div class="avatar">
-  <img id="photoPreview">
-  <span id="avatarIcon">👤</span>
+
+<img
+id="photoPreview"
+alt="Profile photo"
+>
+
+<span id="avatarIcon">👤</span>
+
 </div>
 
-<label class="file-button" for="photoInput">
+
+<label
+class="file-button"
+for="photoInput"
+>
 📸 Choose Profile Photo
 </label>
 
-<input
-  id="photoInput"
-  type="file"
-  accept="image/*"
-  onchange="selectPhoto(event)"
->
 
 <input
-  id="name"
-  type="text"
-  placeholder="Your name"
+id="photoInput"
+type="file"
+accept="image/*"
+onchange="selectPhoto(event)"
 >
 
+
 <input
-  id="username"
-  type="text"
-  placeholder="Choose a username"
+id="name"
+type="text"
+placeholder="Your name"
+autocomplete="name"
 >
+
+
+<input
+id="username"
+type="text"
+placeholder="Choose a username"
+autocomplete="username"
+>
+
 
 <textarea
-  id="bio"
-  placeholder="Write your bio..."
+id="bio"
+placeholder="Write your bio..."
 ></textarea>
 
+
 <button
-  class="create-button"
-  onclick="createAccount()"
+class="create-button"
+onclick="createAccount()"
 >
 🚀 Create Account
 </button>
 
+
 <button
-  class="back-button"
-  onclick="goProfile()"
+class="back-button"
+onclick="goProfile()"
 >
 ← Back to Profile
 </button>
 
+
 <p
-  id="message"
-  class="message"
+id="message"
+class="message"
 ></p>
 
 </div>
 
 </div>
 
+
 <script>
 
-let profilePhoto = null;
+let profilePhoto = "";
 
 
-/* PHOTO */
+/* =========================
+SELECT PHOTO
+========================= */
 
 function selectPhoto(event){
 
   const file =
     event.target.files[0];
 
-  if(!file)return;
+  if(!file){
+    return;
+  }
+
 
   if(!file.type.startsWith("image/")){
 
     alert("Please select an image.");
 
+    event.target.value="";
+
     return;
   }
+
+
+  /*
+    Keep profile photos reasonably small
+    because this version uses localStorage.
+  */
+
+  if(file.size > 5 * 1024 * 1024){
+
+    alert(
+      "Please choose a profile photo under 5 MB."
+    );
+
+    event.target.value="";
+
+    return;
+  }
+
 
   const reader =
     new FileReader();
 
+
   reader.onload=function(e){
 
-    profilePhoto=e.target.result;
+    profilePhoto =
+      e.target.result;
 
-    document.getElementById(
-      "photoPreview"
-    ).src=profilePhoto;
 
-    document.getElementById(
-      "photoPreview"
-    ).style.display="block";
+    const preview =
+      document.getElementById(
+        "photoPreview"
+      );
 
-    document.getElementById(
-      "avatarIcon"
-    ).style.display="none";
+
+    const icon =
+      document.getElementById(
+        "avatarIcon"
+      );
+
+
+    preview.src =
+      profilePhoto;
+
+    preview.style.display =
+      "block";
+
+    icon.style.display =
+      "none";
 
   };
+
 
   reader.readAsDataURL(file);
 
 }
 
 
-/* CREATE ACCOUNT */
+/* =========================
+GET ACCOUNTS
+========================= */
+
+function getAccounts(){
+
+  try{
+
+    const saved =
+      JSON.parse(
+        localStorage.getItem("accounts") || "[]"
+      );
+
+
+    if(Array.isArray(saved)){
+      return saved;
+    }
+
+  }catch(error){
+
+    console.log(
+      "Could not read accounts:",
+      error
+    );
+
+  }
+
+
+  return [];
+
+}
+
+
+/* =========================
+SAVE ACCOUNTS
+========================= */
+
+function saveAccounts(accounts){
+
+  localStorage.setItem(
+    "accounts",
+    JSON.stringify(accounts)
+  );
+
+}
+
+
+/* =========================
+CREATE ACCOUNT
+========================= */
 
 function createAccount(){
 
   const name =
-    document.getElementById("name")
-    .value.trim();
+    document
+      .getElementById("name")
+      .value
+      .trim();
+
 
   let username =
-    document.getElementById("username")
-    .value.trim();
+    document
+      .getElementById("username")
+      .value
+      .trim();
+
 
   const bio =
-    document.getElementById("bio")
-    .value.trim();
+    document
+      .getElementById("bio")
+      .value
+      .trim();
 
 
   if(!name){
 
-    alert("Please enter your name.");
+    alert(
+      "Please enter your name."
+    );
 
     return;
+
   }
 
 
   if(!username){
 
-    alert("Please choose a username.");
+    alert(
+      "Please choose a username."
+    );
 
     return;
+
   }
 
 
+  /*
+    Remove @ if the user typed it.
+  */
+
   username =
-    username.replace(/^@/,"");
+    username.replace(/^@+/,"");
+
+
+  /*
+    Allow letters, numbers,
+    underscore and dot.
+  */
+
+  if(!/^[a-zA-Z0-9._]+$/.test(username)){
+
+    alert(
+      "Username can contain only letters, numbers, dots and underscores."
+    );
+
+    return;
+
+  }
 
 
   if(username.length < 3){
 
-    alert("Username must be at least 3 characters.");
+    alert(
+      "Username must be at least 3 characters."
+    );
 
     return;
-  }
-
-
-  let accounts=[];
-
-
-  try{
-
-    accounts =
-      JSON.parse(
-        localStorage.getItem("accounts") || "[]"
-      );
-
-  }catch(e){
-
-    accounts=[];
 
   }
 
+
+  if(username.length > 30){
+
+    alert(
+      "Username must be 30 characters or less."
+    );
+
+    return;
+
+  }
+
+
+  const accounts =
+    getAccounts();
+
+
+  /*
+    Check duplicate username.
+  */
 
   const exists =
-    accounts.some(function(account){
+    accounts.some(
+      function(account){
 
-      return account.username.toLowerCase()
+        return String(
+          account.username || ""
+        ).toLowerCase()
         === username.toLowerCase();
 
-    });
+      }
+    );
 
 
   if(exists){
 
-    alert("This username already exists.");
+    alert(
+      "This username already exists."
+    );
 
     return;
+
   }
 
 
-  const account={
+  /*
+    Create a unique account ID.
+  */
 
-    id:Date.now(),
+  const accountId =
+    Date.now().toString()
+    + "-"
+    + Math.random()
+      .toString(36)
+      .substring(2,8);
 
-    name:name,
 
-    username:username,
+  const account = {
+
+    id: accountId,
+
+    name: name,
+
+    username: username,
 
     bio:
       bio ||
@@ -330,40 +504,61 @@ function createAccount(){
     profileImage:
       profilePhoto || "",
 
-    posts:[]
+    posts: [],
+
+    createdAt:
+      Date.now()
 
   };
 
 
+  /*
+    Add account to accounts list.
+  */
+
   accounts.push(account);
 
 
-  localStorage.setItem(
-    "accounts",
-    JSON.stringify(accounts)
-  );
+  saveAccounts(accounts);
 
 
   /*
-    Make the new account
-    the currently active account
+    Make this the active account.
   */
 
   localStorage.setItem(
     "activeAccountId",
-    String(account.id)
+    accountId
   );
 
 
-/*
-  Do NOT replace the old profile.
-  Save the new account separately.
-*/
+  /*
+    Also keep these values temporarily
+    for compatibility with your old files.
+  */
 
-localStorage.setItem(
-  "activeAccountId",
-  String(account.id)
-);
+  localStorage.setItem(
+    "username",
+    username
+  );
+
+
+  localStorage.setItem(
+    "bio",
+    account.bio
+  );
+
+
+  localStorage.setItem(
+    "profileImage",
+    account.profileImage
+  );
+
+
+  localStorage.setItem(
+    "posts",
+    JSON.stringify(account.posts)
+  );
 
 
   document.getElementById(
@@ -372,17 +567,26 @@ localStorage.setItem(
     "✅ Account created successfully!";
 
 
-  setTimeout(function(){
+  /*
+    Go to profile.
+  */
 
-    window.location.href =
-      "profile.html";
+  setTimeout(
+    function(){
 
-  },700);
+      window.location.href =
+        "profile.html";
+
+    },
+    700
+  );
 
 }
 
 
-/* PROFILE */
+/* =========================
+GO PROFILE
+========================= */
 
 function goProfile(){
 
@@ -394,4 +598,5 @@ function goProfile(){
 </script>
 
 </body>
-  </html>
+
+</html>
