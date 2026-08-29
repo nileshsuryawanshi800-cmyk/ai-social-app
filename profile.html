@@ -1527,10 +1527,732 @@ RESET PHOTO
 function resetPhoto(){
 
   if(!editingPhoto){
+    return;
+  }
+
+  photoRotation=0;
+  photoZoom=1;
+  photoFilter="";
+
+  updatePhotoPreview();
+
+  document.getElementById(
+    "photoStatus"
+  ).textContent="Photo reset ✅";
+
+}
+
+
+/* =========================
+SAVE EDITED PROFILE
+========================= */
+
+function saveEditedProfile(){
+
+  const usernameInput =
+    document.getElementById("editUsername");
+
+  const bioInput =
+    document.getElementById("editBio");
+
+
+  const newUsername =
+    usernameInput.value.trim();
+
+  const newBio =
+    bioInput.value.trim();
+
+
+  if(newUsername===""){
+
+    alert("Username cannot be empty.");
 
     return;
 
   }
 
 
-  photoR
+  /* SAVE USERNAME */
+
+  localStorage.setItem(
+    "username",
+    newUsername
+  );
+
+
+  /* SAVE BIO */
+
+  localStorage.setItem(
+    "bio",
+    newBio
+  );
+
+
+  /*
+    SAVE PROFILE PHOTO
+
+    The edited preview is saved
+    as the profile photo.
+  */
+
+  if(editingPhoto){
+
+    saveEditedPhoto(function(){
+
+      localStorage.setItem(
+        "profileImage",
+        editingPhoto
+      );
+
+      finishProfileSave(
+        newUsername,
+        newBio
+      );
+
+    });
+
+  }else{
+
+    finishProfileSave(
+      newUsername,
+      newBio
+    );
+
+  }
+
+}
+
+
+/* =========================
+SAVE EDITED PHOTO
+========================= */
+
+function saveEditedPhoto(callback){
+
+  if(!editingPhoto){
+
+    callback();
+
+    return;
+
+  }
+
+
+  const image =
+    new Image();
+
+
+  image.onload=function(){
+
+    const canvas =
+      document.createElement("canvas");
+
+    const size=600;
+
+    canvas.width=size;
+    canvas.height=size;
+
+
+    const ctx =
+      canvas.getContext("2d");
+
+
+    /*
+      Make a square image.
+      This keeps the profile photo
+      properly cropped.
+    */
+
+    const scale =
+      Math.max(
+        size / image.width,
+        size / image.height
+      );
+
+
+    const width =
+      image.width * scale;
+
+    const height =
+      image.height * scale;
+
+
+    const x =
+      (size-width)/2;
+
+    const y =
+      (size-height)/2;
+
+
+    ctx.save();
+
+
+    /*
+      Move to center so rotation
+      works correctly.
+    */
+
+    ctx.translate(
+      size/2,
+      size/2
+    );
+
+
+    ctx.rotate(
+      photoRotation *
+      Math.PI / 180
+    );
+
+
+    ctx.scale(
+      photoZoom,
+      photoZoom
+    );
+
+
+    /*
+      Apply filter
+    */
+
+    if(photoFilter){
+
+      ctx.filter=photoFilter;
+
+    }
+
+
+    ctx.drawImage(
+      image,
+      -width/2,
+      -height/2,
+      width,
+      height
+    );
+
+
+    ctx.restore();
+
+
+    /*
+      Convert edited image to
+      smaller JPEG for localStorage.
+    */
+
+    editingPhoto =
+      canvas.toDataURL(
+        "image/jpeg",
+        0.88
+      );
+
+
+    callback();
+
+  };
+
+
+  image.onerror=function(){
+
+    alert(
+      "Could not process this photo."
+    );
+
+  };
+
+
+  image.src=editingPhoto;
+
+}
+
+
+/* =========================
+FINISH PROFILE SAVE
+========================= */
+
+function finishProfileSave(
+  username,
+  bio
+){
+
+  /*
+    Update existing posts so
+    profile name/photo also
+    appear correctly.
+  */
+
+  let posts=[];
+
+
+  try{
+
+    posts=JSON.parse(
+      localStorage.getItem("posts") || "[]"
+    );
+
+    if(!Array.isArray(posts)){
+      posts=[];
+    }
+
+  }catch(error){
+
+    posts=[];
+
+  }
+
+
+  posts.forEach(function(post){
+
+    /*
+      Only update the post if it
+      doesn't have its own saved
+      profile information.
+    */
+
+    post.username=username;
+
+
+    if(editingPhoto){
+
+      post.profileImage=
+        editingPhoto;
+
+    }
+
+  });
+
+
+  localStorage.setItem(
+    "posts",
+    JSON.stringify(posts)
+  );
+
+
+  /*
+    Close popup
+  */
+
+  closeEditProfile();
+
+
+  /*
+    Reload profile
+  */
+
+  loadProfile();
+
+
+  alert(
+    "✅ Profile updated successfully!"
+  );
+
+}
+
+
+/* =========================
+CLOSE EDIT PROFILE
+========================= */
+
+function closeEditProfile(){
+
+  document.getElementById(
+    "editBox"
+  ).style.display="none";
+
+}
+
+
+/* =========================
+SHARE POST
+========================= */
+
+function sharePost(postData){
+
+  const username =
+    localStorage.getItem("username") ||
+    "astryx.soul12";
+
+
+  const text =
+    username +
+    "\n\n" +
+    (
+      postData.text ||
+      "Check out my post on AI Social!"
+    );
+
+
+  if(
+    navigator.share
+  ){
+
+    navigator.share({
+
+      title:"AI Social",
+
+      text:text,
+
+      url:window.location.href
+
+    }).catch(function(){
+
+      /* User cancelled sharing */
+
+    });
+
+    return;
+
+  }
+
+
+  if(
+    navigator.clipboard
+  ){
+
+    navigator.clipboard
+      .writeText(text)
+      .then(function(){
+
+        alert(
+          "✅ Post copied!"
+        );
+
+      })
+      .catch(function(){
+
+        alert(
+          "Sharing is not supported."
+        );
+
+      });
+
+    return;
+
+  }
+
+
+  alert(
+    "Sharing is not supported."
+  );
+
+}
+
+
+/* =========================
+ACCOUNTS
+========================= */
+
+function getAccounts(){
+
+  let accounts=[];
+
+
+  try{
+
+    accounts=JSON.parse(
+      localStorage.getItem("accounts") || "[]"
+    );
+
+
+    if(!Array.isArray(accounts)){
+      accounts=[];
+    }
+
+  }catch(error){
+
+    accounts=[];
+
+  }
+
+
+  return accounts;
+
+}
+
+
+/* =========================
+OPEN ACCOUNTS
+========================= */
+
+function openAccounts(){
+
+  const box =
+    document.getElementById(
+      "accountBox"
+    );
+
+
+  const list =
+    document.getElementById(
+      "accountList"
+    );
+
+
+  list.innerHTML="";
+
+
+  /* CURRENT ACCOUNT */
+
+  const currentRow =
+    document.createElement("div");
+
+  currentRow.className=
+    "account-row";
+
+
+  const currentImage =
+    document.createElement("img");
+
+  currentImage.className=
+    "account-photo";
+
+
+  const savedPhoto =
+    localStorage.getItem(
+      "profileImage"
+    );
+
+
+  if(savedPhoto){
+
+    currentImage.src=
+      savedPhoto;
+
+  }
+
+
+  const currentName =
+    document.createElement("strong");
+
+  currentName.textContent=
+    localStorage.getItem(
+      "username"
+    ) || "astryx.soul12";
+
+
+  currentRow.appendChild(
+    currentImage
+  );
+
+  currentRow.appendChild(
+    currentName
+  );
+
+
+  currentRow.onclick=function(){
+
+    closeAccounts();
+
+    loadProfile();
+
+  };
+
+
+  list.appendChild(
+    currentRow
+  );
+
+
+  /* SAVED ACCOUNTS */
+
+  const accounts =
+    getAccounts();
+
+
+  accounts.forEach(function(account){
+
+    if(
+      account.username ===
+      currentName.textContent
+    ){
+
+      return;
+
+    }
+
+
+    const row =
+      document.createElement("div");
+
+    row.className=
+      "account-row";
+
+
+    const image =
+      document.createElement("img");
+
+    image.className=
+      "account-photo";
+
+
+    if(account.profileImage){
+
+      image.src=
+        account.profileImage;
+
+    }
+
+
+    const name =
+      document.createElement("strong");
+
+    name.textContent=
+      account.username ||
+      "Account";
+
+
+    row.appendChild(image);
+    row.appendChild(name);
+
+
+    row.onclick=function(){
+
+      switchAccount(account);
+
+    };
+
+
+    list.appendChild(row);
+
+  });
+
+
+  /* NEW ACCOUNT */
+
+  const newButton =
+    document.createElement("button");
+
+  newButton.className=
+    "profile-button account-button";
+
+  newButton.textContent=
+    "➕ Create New Account";
+
+
+  newButton.onclick=function(){
+
+    window.location.href=
+      "signup.html";
+
+  };
+
+
+  list.appendChild(
+    newButton
+  );
+
+
+  box.style.display=
+    "block";
+
+}
+
+
+/* =========================
+CLOSE ACCOUNTS
+========================= */
+
+function closeAccounts(){
+
+  document.getElementById(
+    "accountBox"
+  ).style.display=
+    "none";
+
+}
+
+
+/* =========================
+SWITCH ACCOUNT
+========================= */
+
+function switchAccount(account){
+
+  if(!account){
+    return;
+  }
+
+
+  localStorage.setItem(
+    "activeAccountId",
+    String(account.id || "")
+  );
+
+
+  localStorage.setItem(
+    "username",
+    account.username ||
+    "astryx.soul12"
+  );
+
+
+  localStorage.setItem(
+    "bio",
+    account.bio || ""
+  );
+
+
+  localStorage.setItem(
+    "profileImage",
+    account.profileImage || ""
+  );
+
+
+  closeAccounts();
+
+  loadProfile();
+
+}
+
+
+/* =========================
+CLOSE POPUPS BY BACKGROUND
+========================= */
+
+document.getElementById(
+  "editBox"
+).addEventListener(
+  "click",
+  function(event){
+
+    if(
+      event.target ===
+      this
+    ){
+
+      closeEditProfile();
+
+    }
+
+  }
+);
+
+
+document.getElementById(
+  "accountBox"
+).addEventListener(
+  "click",
+  function(event){
+
+    if(
+      event.target ===
+      this
+    ){
+
+      closeAccounts();
+
+    }
+
+  }
+);
+
+
+/* =========================
+START PROFILE
+========================= */
+
+loadProfile();
+
+</script>
+
+</body>
+
+</html>
