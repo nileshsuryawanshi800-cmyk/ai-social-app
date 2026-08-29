@@ -355,25 +355,15 @@ function createAccount(){
   );
 
 
-  /*
-    Keep compatibility with
-    your current app
-  */
+/*
+  Do NOT replace the old profile.
+  Save the new account separately.
+*/
 
-  localStorage.setItem(
-    "username",
-    account.username
-  );
-
-  localStorage.setItem(
-    "bio",
-    account.bio
-  );
-
-  localStorage.setItem(
-    "profileImage",
-    account.profileImage
-  );
+localStorage.setItem(
+  "activeAccountId",
+  String(account.id)
+);
 
 
   document.getElementById(
