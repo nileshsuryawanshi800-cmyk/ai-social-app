@@ -1849,3 +1849,409 @@ function finishProfileSave(
 /* =========================
 CLOSE EDIT PROFILE
 ========================= */
+
+  function closeEditProfile(){
+
+  document.getElementById(
+    "editBox"
+  ).style.display="none";
+
+}
+
+
+/* =========================
+SHARE POST
+========================= */
+
+function sharePost(postData){
+
+  const username =
+    localStorage.getItem("username") ||
+    "astryx.soul12";
+
+
+  const text =
+    username +
+    "\n\n" +
+    (
+      postData.text ||
+      "Check out my post on AI Social!"
+    );
+
+
+  if(
+    navigator.share
+  ){
+
+    navigator.share({
+
+      title:"AI Social",
+
+      text:text,
+
+      url:window.location.href
+
+    }).catch(function(){
+
+      /* User cancelled sharing */
+
+    });
+
+    return;
+
+  }
+
+
+  if(
+    navigator.clipboard
+  ){
+
+    navigator.clipboard
+      .writeText(text)
+      .then(function(){
+
+        alert(
+          "✅ Post copied!"
+        );
+
+      })
+      .catch(function(){
+
+        alert(
+          "Sharing is not supported."
+        );
+
+      });
+
+    return;
+
+  }
+
+
+  alert(
+    "Sharing is not supported."
+  );
+
+}
+
+
+/* =========================
+ACCOUNTS
+========================= */
+
+function getAccounts(){
+
+  let accounts=[];
+
+
+  try{
+
+    accounts=JSON.parse(
+      localStorage.getItem("accounts") || "[]"
+    );
+
+
+    if(!Array.isArray(accounts)){
+      accounts=[];
+    }
+
+  }catch(error){
+
+    accounts=[];
+
+  }
+
+
+  return accounts;
+
+}
+
+
+/* =========================
+OPEN ACCOUNTS
+========================= */
+
+function openAccounts(){
+
+  const box =
+    document.getElementById(
+      "accountBox"
+    );
+
+
+  const list =
+    document.getElementById(
+      "accountList"
+    );
+
+
+  list.innerHTML="";
+
+
+  /* CURRENT ACCOUNT */
+
+  const currentRow =
+    document.createElement("div");
+
+  currentRow.className=
+    "account-row";
+
+
+  const currentImage =
+    document.createElement("img");
+
+  currentImage.className=
+    "account-photo";
+
+
+  const savedPhoto =
+    localStorage.getItem(
+      "profileImage"
+    );
+
+
+  if(savedPhoto){
+
+    currentImage.src=
+      savedPhoto;
+
+  }
+
+
+  const currentName =
+    document.createElement("strong");
+
+  currentName.textContent=
+    localStorage.getItem(
+      "username"
+    ) || "astryx.soul12";
+
+
+  currentRow.appendChild(
+    currentImage
+  );
+
+  currentRow.appendChild(
+    currentName
+  );
+
+
+  currentRow.onclick=function(){
+
+    closeAccounts();
+
+    loadProfile();
+
+  };
+
+
+  list.appendChild(
+    currentRow
+  );
+
+
+  /* SAVED ACCOUNTS */
+
+  const accounts =
+    getAccounts();
+
+
+  accounts.forEach(function(account){
+
+    if(
+      account.username ===
+      currentName.textContent
+    ){
+
+      return;
+
+    }
+
+
+    const row =
+      document.createElement("div");
+
+    row.className=
+      "account-row";
+
+
+    const image =
+      document.createElement("img");
+
+    image.className=
+      "account-photo";
+
+
+    if(account.profileImage){
+
+      image.src=
+        account.profileImage;
+
+    }
+
+
+    const name =
+      document.createElement("strong");
+
+    name.textContent=
+      account.username ||
+      "Account";
+
+
+    row.appendChild(image);
+    row.appendChild(name);
+
+
+    row.onclick=function(){
+
+      switchAccount(account);
+
+    };
+
+
+    list.appendChild(row);
+
+  });
+
+
+  /* NEW ACCOUNT */
+
+  const newButton =
+    document.createElement("button");
+
+  newButton.className=
+    "profile-button account-button";
+
+  newButton.textContent=
+    "➕ Create New Account";
+
+
+  newButton.onclick=function(){
+
+    window.location.href=
+      "signup.html";
+
+  };
+
+
+  list.appendChild(
+    newButton
+  );
+
+
+  box.style.display=
+    "block";
+
+}
+
+
+/* =========================
+CLOSE ACCOUNTS
+========================= */
+
+function closeAccounts(){
+
+  document.getElementById(
+    "accountBox"
+  ).style.display=
+    "none";
+
+}
+
+
+/* =========================
+SWITCH ACCOUNT
+========================= */
+
+function switchAccount(account){
+
+  if(!account){
+    return;
+  }
+
+
+  localStorage.setItem(
+    "activeAccountId",
+    String(account.id || "")
+  );
+
+
+  localStorage.setItem(
+    "username",
+    account.username ||
+    "astryx.soul12"
+  );
+
+
+  localStorage.setItem(
+    "bio",
+    account.bio || ""
+  );
+
+
+  localStorage.setItem(
+    "profileImage",
+    account.profileImage || ""
+  );
+
+
+  closeAccounts();
+
+  loadProfile();
+
+}
+
+
+/* =========================
+CLOSE POPUPS BY BACKGROUND
+========================= */
+
+document.getElementById(
+  "editBox"
+).addEventListener(
+  "click",
+  function(event){
+
+    if(
+      event.target ===
+      this
+    ){
+
+      closeEditProfile();
+
+    }
+
+  }
+);
+
+
+document.getElementById(
+  "accountBox"
+).addEventListener(
+  "click",
+  function(event){
+
+    if(
+      event.target ===
+      this
+    ){
+
+      closeAccounts();
+
+    }
+
+  }
+);
+
+
+/* =========================
+START PROFILE
+========================= */
+
+loadProfile();
+
+</script>
+
+</body>
+
+</html>
