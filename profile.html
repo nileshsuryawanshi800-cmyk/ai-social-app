@@ -1447,4 +1447,359 @@ function saveCurrentAccountPosts(){
     getAccounts();
 
   const index =
-    accounts.findIndex(function(it
+    accounts.findIndex(function(it const account =
+    getActiveAccount();
+
+  if(!account){
+    return;
+  }
+
+  const accounts =
+    getAccounts();
+
+  const index =
+    accounts.findIndex(function(item){
+
+      return String(item.id) ===
+        String(account.id);
+
+    });
+
+  if(index === -1){
+    return;
+  }
+
+  accounts[index].posts =
+    Array.isArray(account.posts)
+      ? account.posts
+      : [];
+
+  saveAccounts(accounts);
+
+  syncLegacyData(accounts[index]);
+
+}
+
+
+/* =========================
+EDIT VARIABLES
+========================= */
+
+let editingPhoto="";
+let photoRotation=0;
+let photoZoom=1;
+let photoFilter="none";
+let originalPhoto="";
+
+
+/* =========================
+EDIT PROFILE
+========================= */
+
+function editProfile(){
+
+  const account =
+    getActiveAccount();
+
+  if(!account){
+
+    alert(
+      "Please create an account first."
+    );
+
+    return;
+
+  }
+
+
+  document.getElementById("editUsername")
+    .value=
+    account.username || "";
+
+
+  document.getElementById("editBio")
+    .value=
+    account.bio || "";
+
+
+  editingPhoto =
+    account.profileImage || "";
+
+  originalPhoto =
+    editingPhoto;
+
+  photoRotation=0;
+  photoZoom=1;
+  photoFilter="none";
+
+
+  const preview =
+    document.getElementById(
+      "editPhotoPreview"
+    );
+
+  const icon =
+    document.getElementById(
+      "editPhotoIcon"
+    );
+
+
+  if(editingPhoto){
+
+    preview.src=
+      editingPhoto;
+
+    preview.style.display=
+      "block";
+
+    icon.style.display=
+      "none";
+
+    applyPhotoPreview();
+
+    document.getElementById(
+      "photoStatus"
+    ).textContent=
+      "Photo ready to edit.";
+
+  }else{
+
+    preview.removeAttribute("src");
+
+    preview.style.display=
+      "none";
+
+    icon.style.display=
+      "block";
+
+    document.getElementById(
+      "photoStatus"
+    ).textContent=
+      "Choose a photo to edit it.";
+
+  }
+
+
+  document.getElementById(
+    "editBox"
+  ).style.display="block";
+
+}
+
+
+/* =========================
+SELECT PHOTO
+========================= */
+
+function selectProfilePhoto(event){
+
+  const file =
+    event.target.files[0];
+
+  if(!file){
+    return;
+  }
+
+  if(!file.type.startsWith("image/")){
+
+    alert("Please choose an image.");
+
+    return;
+
+  }
+
+
+  const reader =
+    new FileReader();
+
+
+  reader.onload =
+    function(e){
+
+      editingPhoto=
+        e.target.result;
+
+      originalPhoto=
+        editingPhoto;
+
+      photoRotation=0;
+      photoZoom=1;
+      photoFilter="none";
+
+
+      const preview =
+        document.getElementById(
+          "editPhotoPreview"
+        );
+
+      const icon =
+        document.getElementById(
+          "editPhotoIcon"
+        );
+
+
+      preview.src=
+        editingPhoto;
+
+      preview.style.display=
+        "block";
+
+      icon.style.display=
+        "none";
+
+
+      applyPhotoPreview();
+
+
+      document.getElementById(
+        "photoStatus"
+      ).textContent=
+        "Photo selected.";
+
+    };
+
+
+  reader.readAsDataURL(file);
+
+}
+
+
+/* =========================
+PHOTO PREVIEW
+========================= */
+
+function applyPhotoPreview(){
+
+  const preview =
+    document.getElementById(
+      "editPhotoPreview"
+    );
+
+  preview.style.transform=
+    "rotate("+
+    photoRotation+
+    "deg) scale("+
+    photoZoom+
+    ")";
+
+  preview.style.filter=
+    photoFilter;
+
+}
+
+
+/* =========================
+ROTATE
+========================= */
+
+function rotatePhoto(){
+
+  if(!editingPhoto){
+    return;
+  }
+
+  photoRotation += 90;
+
+  if(photoRotation >= 360){
+    photoRotation=0;
+  }
+
+  applyPhotoPreview();
+
+}
+
+
+/* =========================
+ZOOM
+========================= */
+
+function zoomIn(){
+
+  if(!editingPhoto){
+    return;
+  }
+
+  photoZoom += 0.1;
+
+  if(photoZoom > 2){
+    photoZoom=2;
+  }
+
+  applyPhotoPreview();
+
+}
+
+
+function zoomOut(){
+
+  if(!editingPhoto){
+    return;
+  }
+
+  photoZoom -= 0.1;
+
+  if(photoZoom < 0.5){
+    photoZoom=0.5;
+  }
+
+  applyPhotoPreview();
+
+}
+
+
+/* =========================
+FILTERS
+========================= */
+
+function blackWhite(){
+
+  if(!editingPhoto){
+    return;
+  }
+
+  photoFilter=
+    photoFilter === "grayscale(1)"
+      ? "none"
+      : "grayscale(1)";
+
+  applyPhotoPreview();
+
+}
+
+
+function sepiaPhoto(){
+
+  if(!editingPhoto){
+    return;
+  }
+
+  photoFilter=
+    photoFilter === "sepia(1)"
+      ? "none"
+      : "sepia(1)";
+
+  applyPhotoPreview();
+
+}
+
+
+/* =========================
+RESET PHOTO
+========================= */
+
+function resetPhoto(){
+
+  if(!editingPhoto){
+    return;
+  }
+
+  photoRotation=0;
+  photoZoom=1;
+  photoFilter="none";
+
+  applyPhotoPreview();
+
+}
+
+
+/*
