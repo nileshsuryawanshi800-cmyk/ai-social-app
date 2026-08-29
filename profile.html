@@ -1803,3 +1803,635 @@ function resetPhoto(){
 
 
 /*
+=========================
+SAVE EDITED PROFILE
+========================= */
+
+async function saveEditedProfile(){
+
+  const account =
+    getActiveAccount();
+
+  if(!account){
+    return;
+  }
+
+
+  let username =
+    document.getElementById(
+      "editUsername"
+    ).value.trim();
+
+
+  let bio =
+    document.getElementById(
+      "editBio"
+    ).value.trim();
+
+
+  username=
+    username.replace(/^@/,"");
+
+
+  if(username.length < 3){
+
+    alert(
+      "Username must be at least 3 characters."
+    );
+
+    return;
+
+  }
+
+
+  const accounts =
+    getAccounts();
+
+
+  const duplicate =
+    accounts.some(function(item){
+
+      return (
+        String(item.id) !==
+        String(account.id)
+      ) &&
+      String(item.username || "")
+        .toLowerCase() ===
+      username.toLowerCase();
+
+    });
+
+
+  if(duplicate){
+
+    alert(
+      "This username is already used."
+    );
+
+    return;
+
+  }
+
+
+  const index =
+    accounts.findIndex(function(item){
+
+      return String(item.id) ===
+        String(account.id);
+
+    });
+
+
+  if(index === -1){
+    return;
+  }
+
+
+  /*
+    Create a final edited photo
+    when rotation, zoom or filter
+    has been used.
+  */
+
+  if(editingPhoto){
+
+    try{
+
+      editingPhoto =
+        await createEditedProfileImage();
+
+    }catch(error){
+
+      console.log(error);
+
+    }
+
+  }
+
+
+  accounts[index].username=
+    username;
+
+  accounts[index].bio=
+    bio ||
+    "Welcome to my AI Social profile 🚀";
+
+  accounts[index].profileImage=
+    editingPhoto || "";
+
+
+  /*
+    Update profile information
+    inside all posts belonging
+    to this account.
+  */
+
+  if(Array.isArray(accounts[index].posts)){
+
+    accounts[index].posts =
+      accounts[index].posts.map(
+        function(post){
+
+          return {
+            ...post,
+            username:
+              username,
+            profileImage:
+              editingPhoto || ""
+          };
+
+        }
+      );
+
+  }
+
+
+  saveAccounts(accounts);
+
+  localStorage.setItem(
+    "activeAccountId",
+    String(accounts[index].id)
+  );
+
+  syncLegacyData(
+    accounts[index]
+  );
+
+
+  closeEditProfile();
+
+  loadProfile();
+
+}
+
+
+/* =========================
+CREATE EDITED PROFILE IMAGE
+========================= */
+
+function createEditedProfileImage(){
+
+  return new Promise(function(resolve,reject){
+
+    if(!editingPhoto){
+
+      resolve("");
+
+      return;
+
+    }
+
+
+    const img =
+      new Image();
+
+
+    img.onload =
+      function(){
+
+        const canvas =
+          document.createElement("canvas");
+
+        const ctx =
+          canvas.getContext("2d");
+
+
+        const width =
+          img.width;
+
+        const height =
+          img.height;
+
+
+        const angle =
+          photoRotation *
+          Math.PI / 180;
+
+
+        const sin =
+          Math.abs(Math.sin(angle));
+
+        const cos =
+          Math.abs(Math.cos(angle));
+
+
+        let newWidth =
+          width*cos +
+          height*sin;
+
+        let newHeight =
+          width*sin +
+          height*cos;
+
+
+        canvas.width=
+          newWidth;
+
+        canvas.height=
+          newHeight;
+
+
+        ctx.save();
+
+
+        ctx.translate(
+          newWidth/2,
+          newHeight/2
+        );
+
+
+        ctx.rotate(angle);
+
+        ctx.scale(
+          photoZoom,
+          photoZoom
+        );
+
+
+        ctx.filter=
+          photoFilter;
+
+
+        ctx.drawImage(
+          img,
+          -width/2,
+          -height/2
+        );
+
+
+        ctx.restore();
+
+
+        canvas.toBlob(
+          function(blob){
+
+            if(!blob){
+
+              reject(
+                new Error(
+                  "Could not create image."
+                )
+              );
+
+              return;
+
+            }
+
+
+            const reader =
+              new FileReader();
+
+
+            reader.onload =
+              function(){
+
+                resolve(
+                  reader.result
+                );
+
+              };
+
+
+            reader.onerror=
+              reject;
+
+            reader.readAsDataURL(blob);
+
+          },
+          "image/jpeg",
+          0.92
+        );
+
+      };
+
+
+    img.onerror=
+      reject;
+
+
+    img.src=
+      editingPhoto;
+
+  });
+
+}
+
+
+/* =========================
+CLOSE EDIT
+========================= */
+
+function closeEditProfile(){
+
+  document.getElementById(
+    "editBox"
+  ).style.display="none";
+
+}
+
+
+/* =========================
+ACCOUNT POPUP
+========================= */
+
+function openAccounts(){
+
+  renderAccounts();
+
+  document.getElementById(
+    "accountBox"
+  ).style.display="block";
+
+}
+
+
+function closeAccounts(){
+
+  document.getElementById(
+    "accountBox"
+  ).style.display="none";
+
+}
+
+
+/* =========================
+RENDER ACCOUNTS
+========================= */
+
+function renderAccounts(){
+
+  const list =
+    document.getElementById(
+      "accountList"
+    );
+
+  const accounts =
+    getAccounts();
+
+  const active =
+    getActiveAccount();
+
+  list.innerHTML="";
+
+
+  if(accounts.length===0){
+
+    list.innerHTML=
+      '<div class="empty">' +
+      'No accounts yet.' +
+      '</div>';
+
+    return;
+
+  }
+
+
+  accounts.forEach(function(account){
+
+    const row =
+      document.createElement("div");
+
+    row.className="account-row";
+
+
+    if(
+      active &&
+      String(active.id) ===
+      String(account.id)
+    ){
+
+      row.classList.add("active");
+
+    }
+
+
+    let avatar;
+
+
+    if(account.profileImage){
+
+      avatar =
+        document.createElement("img");
+
+      avatar.className=
+        "account-photo";
+
+      avatar.src=
+        account.profileImage;
+
+    }else{
+
+      avatar =
+        document.createElement("div");
+
+      avatar.className=
+        "account-default";
+
+      avatar.textContent="👤";
+
+    }
+
+
+    const details =
+      document.createElement("div");
+
+
+    const name =
+      document.createElement("div");
+
+    name.className="account-name";
+
+    name.textContent=
+      account.name ||
+      account.username ||
+      "AI Social User";
+
+
+    const username =
+      document.createElement("div");
+
+    username.className=
+      "account-username";
+
+    username.textContent=
+      "@" +
+      (account.username || "");
+
+
+    details.appendChild(name);
+    details.appendChild(username);
+
+
+    row.appendChild(avatar);
+    row.appendChild(details);
+
+
+    if(
+      active &&
+      String(active.id) ===
+      String(account.id)
+    ){
+
+      const label =
+        document.createElement("div");
+
+      label.className=
+        "active-label";
+
+      label.textContent=
+        "✓ Active";
+
+      row.appendChild(label);
+
+    }
+
+
+    row.onclick =
+      function(){
+
+        switchAccount(account.id);
+
+      };
+
+
+    list.appendChild(row);
+
+  });
+
+}
+
+
+/* =========================
+SWITCH ACCOUNT
+========================= */
+
+function switchAccount(id){
+
+  const accounts =
+    getAccounts();
+
+  const account =
+    accounts.find(function(item){
+
+      return String(item.id) ===
+        String(id);
+
+    });
+
+
+  if(!account){
+    return;
+  }
+
+
+  localStorage.setItem(
+    "activeAccountId",
+    String(account.id)
+  );
+
+
+  syncLegacyData(account);
+
+  closeAccounts();
+
+  loadProfile();
+
+}
+
+
+/* =========================
+NEW ACCOUNT
+========================= */
+
+function createNewAccount(){
+
+  window.location.href=
+    "signup.html";
+
+}
+
+
+/* =========================
+SHARE
+========================= */
+
+function sharePost(postData){
+
+  const account =
+    getActiveAccount();
+
+  const username =
+    postData.username ||
+    account?.username ||
+    "AI Social User";
+
+
+  const shareText =
+    username +
+    "\n\n" +
+    (
+      postData.text ||
+      "Check out my post on AI Social!"
+    );
+
+
+  if(navigator.share){
+
+    navigator.share({
+
+      title:"AI Social",
+
+      text:shareText,
+
+      url:window.location.href
+
+    }).catch(function(){
+
+    });
+
+    return;
+
+  }
+
+
+  if(navigator.clipboard){
+
+    navigator.clipboard
+      .writeText(shareText)
+      .then(function(){
+
+        alert(
+          "✅ Post copied!"
+        );
+
+      })
+      .catch(function(){
+
+        alert(
+          "Could not copy post."
+        );
+
+      });
+
+    return;
+
+  }
+
+
+  alert(
+    "Sharing is not supported."
+  );
+
+}
+
+
+/* =========================
+START
+========================= */
+
+loadProfile();
+
+</script>
+
+</body>
+</html>
