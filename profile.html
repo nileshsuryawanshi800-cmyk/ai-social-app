@@ -1,17 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-
+<!DOCTYPE html><html lang="en">
 <head>
-
 <meta charset="UTF-8">
-
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
-
-<title>Profile - AI Social</title>
-
-<style>
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Profile - AI Social</title><style>
 *{
   box-sizing:border-box;
   font-family:Arial,sans-serif;
@@ -24,8 +15,6 @@ body{
   padding-bottom:80px;
 }
 
-/* HEADER */
-
 header{
   background:white;
   padding:18px;
@@ -33,8 +22,6 @@ header{
   font-size:21px;
   font-weight:bold;
 }
-
-/* PROFILE */
 
 .profile{
   background:white;
@@ -79,9 +66,7 @@ header{
   margin-top:25px;
 }
 
-.stat{
-  text-align:center;
-}
+.stat{text-align:center}
 
 .stat strong{
   display:block;
@@ -92,8 +77,6 @@ header{
   color:#777;
   font-size:14px;
 }
-
-/* BUTTONS */
 
 .profile-button{
   width:100%;
@@ -117,8 +100,6 @@ header{
   color:#111;
 }
 
-/* POSTS */
-
 .posts-title{
   padding:20px;
   font-size:19px;
@@ -132,8 +113,6 @@ header{
   overflow:hidden;
   box-shadow:0 2px 8px rgba(0,0,0,.08);
 }
-
-/* POST HEADER */
 
 .post-header{
   padding:15px;
@@ -166,16 +145,12 @@ header{
   font-weight:bold;
 }
 
-/* TEXT */
-
 .post-text{
   padding:0 15px 15px;
   font-size:17px;
   white-space:pre-wrap;
   word-break:break-word;
 }
-
-/* MEDIA */
 
 .post-media{
   width:100%;
@@ -184,8 +159,6 @@ header{
   background:#000;
   display:block;
 }
-
-/* SOUND */
 
 .sound-box{
   padding:12px 15px;
@@ -200,8 +173,6 @@ header{
 .sound-box audio{
   width:100%;
 }
-
-/* ACTIONS */
 
 .actions{
   display:grid;
@@ -225,8 +196,6 @@ header{
   transform:scale(.96);
 }
 
-/* COMMENTS */
-
 .comments{
   padding:0 15px 12px;
 }
@@ -237,8 +206,6 @@ header{
   border-radius:12px;
   margin-top:7px;
 }
-
-/* DELETE */
 
 .delete-button{
   width:calc(100% - 24px);
@@ -252,15 +219,11 @@ header{
   font-weight:bold;
 }
 
-/* EMPTY */
-
 .empty{
   text-align:center;
   color:#777;
   padding:35px 20px;
 }
-
-/* NAV */
 
 nav{
   position:fixed;
@@ -283,8 +246,6 @@ nav button{
   padding:5px;
   cursor:pointer;
 }
-
-/* ACCOUNT POPUP */
 
 #accountBox{
   display:none;
@@ -336,9 +297,7 @@ nav button{
   color:white;
 }
 
-/* =========================
-EDIT PROFILE POPUP
-========================= */
+/* EDIT PROFILE */
 
 #editBox{
   display:none;
@@ -362,8 +321,6 @@ EDIT PROFILE POPUP
   margin-top:0;
   text-align:center;
 }
-
-/* PHOTO EDIT */
 
 .edit-photo-area{
   text-align:center;
@@ -417,8 +374,6 @@ EDIT PROFILE POPUP
   margin-bottom:10px;
 }
 
-/* INPUTS */
-
 .edit-label{
   display:block;
   font-weight:bold;
@@ -445,8 +400,6 @@ EDIT PROFILE POPUP
   resize:vertical;
 }
 
-/* SAVE EDIT */
-
 .save-edit{
   width:100%;
   margin-top:20px;
@@ -469,133 +422,44 @@ EDIT PROFILE POPUP
   font-size:15px;
 }
 
-/* PHOTO STATUS */
-
 .photo-status{
   font-size:13px;
   color:#777;
   margin-top:8px;
 }
-
-</style>
-
-</head>
-
-<body>
-
-<header>
-👤 Profile
-</header>
-
-
-<!-- PROFILE -->
-
-<section class="profile">
-
-<div class="profile-avatar">
-
-<img
-id="profileImage"
-alt="Profile photo"
->
-
-</div>
-
-
-<div
-class="username"
-id="username">
-astryx.soul12
-</div>
-
-
-<div
-class="bio"
-id="bio">
+</style></head><body><header>👤 Profile</header><section class="profile"><div class="profile-avatar">
+  <img id="profileImage" alt="Profile photo">
+</div><div class="username" id="username">astryx.soul12</div><div class="bio" id="bio">
 Welcome to my AI Social profile 🚀
-</div>
-
-
-<div class="stats">
-
-<div class="stat">
+</div><div class="stats"><div class="stat">
 <strong id="postCount">0</strong>
 <span>Posts</span>
-</div>
-
-<div class="stat">
+</div><div class="stat">
 <strong>0</strong>
 <span>Followers</span>
-</div>
-
-<div class="stat">
+</div><div class="stat">
 <strong>0</strong>
 <span>Following</span>
-</div>
-
-</div>
-
-
-<button
-class="profile-button edit-button"
+</div></div><button class="profile-button edit-button"
 onclick="editProfile()">
 ✏️ Edit Profile
 </button>
 
-
-<button
-class="profile-button account-button"
+<button class="profile-button account-button"
 onclick="openAccounts()">
 🔄 Switch / New Account
 </button>
 
-</section>
+</section><div class="posts-title">📸 My Posts</div><div id="myPosts"></div><!-- EDIT PROFILE --><div id="editBox"><div class="edit-panel"><h2>✏️ Edit Profile</h2><div class="edit-photo-area"><div class="edit-photo-preview"><img id="editPhotoPreview" alt="Edit profile photo"><span id="editPhotoIcon">👤</span>
 
-
-<div class="posts-title">
-📸 My Posts
-</div>
-
-
-<div id="myPosts"></div>
-
-
-<!-- =========================
-EDIT PROFILE
-========================= -->
-
-<div id="editBox">
-
-<div class="edit-panel">
-
-<h2>✏️ Edit Profile</h2>
-
-
-<div class="edit-photo-area">
-
-<div class="edit-photo-preview">
-
-<img
-id="editPhotoPreview"
-alt="Edit profile photo"
->
-
-<span
-id="editPhotoIcon">
-👤
-</span>
-
-</div>
-
-
-<input
+</div><input
 type="file"
 id="profilePhotoInput"
 accept="image/*"
 style="display:none"
 onchange="selectProfilePhoto(event)"
->
 
+«»
 
 <button
 class="choose-photo"
@@ -603,74 +467,41 @@ onclick="document.getElementById('profilePhotoInput').click()">
 📸 Choose Profile Photo
 </button>
 
+<div class="photo-buttons"><button onclick="rotatePhoto()">🔄 Rotate</button>
 
-<div class="photo-buttons">
+<button onclick="zoomIn()">🔍 Zoom +</button>
 
-<button onclick="rotatePhoto()">
-🔄 Rotate
-</button>
+<button onclick="zoomOut()">🔎 Zoom −</button>
 
-<button onclick="zoomIn()">
-🔍 Zoom +
-</button>
+<button onclick="blackWhite()">⚫ B&W</button>
 
-<button onclick="zoomOut()">
-🔎 Zoom −
-</button>
+<button onclick="sepiaPhoto()">🟤 Sepia</button>
 
-<button onclick="blackWhite()">
-⚫ B&W
-</button>
+<button onclick="resetPhoto()">↩️ Reset</button>
 
-<button onclick="sepiaPhoto()">
-🟤 Sepia
-</button>
-
-<button onclick="resetPhoto()">
-↩️ Reset
-</button>
-
-</div>
-
-
-<div
-class="photo-status"
-id="photoStatus">
+</div><div class="photo-status" id="photoStatus">
 Choose a photo to edit it.
-</div>
-
-</div>
-
-
-<label class="edit-label">
-Username
-</label>
+</div></div><label class="edit-label">Username</label>
 
 <input
 class="edit-input"
 id="editUsername"
 type="text"
 placeholder="Username"
->
 
+«»
 
-<label class="edit-label">
-Bio
-</label>
+<label class="edit-label">Bio</label>
 
 <textarea
 class="edit-textarea"
 id="editBio"
 placeholder="Write your bio..."
-></textarea>
-
-
-<button
+></textarea><button
 class="save-edit"
 onclick="saveEditedProfile()">
 💾 Save Profile
 </button>
-
 
 <button
 class="cancel-edit"
@@ -679,65 +510,26 @@ Cancel
 </button>
 
 </div>
-
-</div>
-
-
-<!-- =========================
-ACCOUNT POPUP
-========================= -->
-
-<div id="accountBox">
-
-<div class="account-panel">
-
-<h2>👤 Accounts</h2>
-
-<div id="accountList"></div>
-
-<button
+</div><!-- ACCOUNT POPUP --><div id="accountBox"><div class="account-panel"><h2>👤 Accounts</h2><div id="accountList"></div><button
 class="close-account"
 onclick="closeAccounts()">
 Close
 </button>
 
 </div>
+</div><!-- NAVIGATION --><nav><button onclick="goHome()">🏠<br>Home</button>
 
-</div>
+<button onclick="goSearch()">🔍<br>Search</button>
 
+<button onclick="goCreate()">➕<br>Create</button>
 
-<!-- NAVIGATION -->
+<button onclick="goAI()">🤖<br>AI</button>
 
-<nav>
+<button onclick="goProfile()">👤<br>Profile</button>
 
-<button onclick="goHome()">
-🏠<br>Home
-</button>
+</nav><script>
 
-<button onclick="goSearch()">
-🔍<br>Search
-</button>
-
-<button onclick="goCreate()">
-➕<br>Create
-</button>
-
-<button onclick="goAI()">
-🤖<br>AI
-</button>
-
-<button onclick="goProfile()">
-👤<br>Profile
-</button>
-
-</nav>
-
-
-<script>
-
-/* =========================
-NAVIGATION
-========================= */
+/* NAVIGATION */
 
 function goHome(){
   window.location.href="index.html";
@@ -760,87 +552,61 @@ function goProfile(){
 }
 
 
-/* =========================
-PROFILE PHOTO
-========================= */
+/* PROFILE PHOTO */
 
 function showProfilePhoto(){
 
-  const image =
-    document.getElementById("profileImage");
+  const image=document.getElementById("profileImage");
 
-  const saved =
-    localStorage.getItem("profileImage");
+  const saved=localStorage.getItem("profileImage");
 
   if(saved){
-
     image.src=saved;
-
+    image.style.display="block";
   }else{
-
     image.removeAttribute("src");
-
   }
-
 }
 
 
-/* =========================
-LOAD PROFILE
-========================= */
+/* LOAD PROFILE */
 
 function loadProfile(){
 
-  const name =
+  const name=
     localStorage.getItem("username") ||
     "astryx.soul12";
 
-
-  const bio =
+  const bio=
     localStorage.getItem("bio") ||
     "Welcome to my AI Social profile 🚀";
 
+  document.getElementById("username").textContent=name;
 
-  document.getElementById(
-    "username"
-  ).textContent=name;
-
-
-  document.getElementById(
-    "bio"
-  ).textContent=bio;
-
+  document.getElementById("bio").textContent=bio;
 
   showProfilePhoto();
-
-
-  /* GET POSTS */
 
   let posts=[];
 
   try{
-
     posts=JSON.parse(
       localStorage.getItem("posts") || "[]"
     );
 
+    if(!Array.isArray(posts)){
+      posts=[];
+    }
+
   }catch(error){
-
     posts=[];
-
   }
 
+  document.getElementById("postCount").textContent=posts.length;
 
-  document.getElementById(
-    "postCount"
-  ).textContent=posts.length;
-
-
-  const box =
-    document.getElementById("myPosts");
+  const box=document.getElementById("myPosts");
 
   box.innerHTML="";
-
 
   if(posts.length===0){
 
@@ -851,58 +617,41 @@ function loadProfile(){
       '</div>';
 
     return;
-
   }
 
+  posts.forEach(function(postData,index){
 
-  posts.forEach(
-    function(postData,index){
+    createPost(
+      postData,
+      index,
+      posts,
+      box
+    );
 
-      createPost(
-        postData,
-        index,
-        posts,
-        box
-      );
-
-    }
-  );
-
+  });
 }
 
 
-/* =========================
-CREATE POST
-========================= */
+/* CREATE POST */
 
-function createPost(
-  postData,
-  index,
-  posts,
-  box
-){
+function createPost(postData,index,posts,box){
 
-  const post =
-    document.createElement("div");
+  const post=document.createElement("div");
 
   post.className="post";
 
 
-  /* HEADER */
-
-  const header =
-    document.createElement("div");
+  const header=document.createElement("div");
 
   header.className="post-header";
 
 
-  const avatar =
-    document.createElement("div");
+  const avatar=document.createElement("div");
 
   avatar.className="post-avatar";
 
 
-  const photo =
+  const photo=
     postData.profileImage ||
     localStorage.getItem("profileImage") ||
     "";
@@ -910,8 +659,7 @@ function createPost(
 
   if(photo){
 
-    const img =
-      document.createElement("img");
+    const img=document.createElement("img");
 
     img.src=photo;
 
@@ -924,18 +672,18 @@ function createPost(
   }
 
 
-  const name =
-    document.createElement("div");
+  const name=document.createElement("div");
 
   name.className="post-name";
 
-  name.textContent =
+  name.textContent=
     postData.username ||
     localStorage.getItem("username") ||
     "astryx.soul12";
 
 
   header.appendChild(avatar);
+
   header.appendChild(name);
 
   post.appendChild(header);
@@ -945,13 +693,11 @@ function createPost(
 
   if(postData.text){
 
-    const text =
-      document.createElement("div");
+    const text=document.createElement("div");
 
     text.className="post-text";
 
-    text.textContent=
-      postData.text;
+    text.textContent=postData.text;
 
     post.appendChild(text);
 
@@ -960,27 +706,17 @@ function createPost(
 
   /* MEDIA */
 
-  if(
-    postData.media &&
-    postData.mediaType
-  ){
+  if(postData.media && postData.mediaType){
 
-    const type =
-      postData.mediaType.toLowerCase();
-
+    const type=postData.mediaType.toLowerCase();
 
     if(type.startsWith("image/")){
 
-      const image =
-        document.createElement("img");
+      const image=document.createElement("img");
 
       image.className="post-media";
 
-      image.src=
-        postData.media;
-
-      image.alt=
-        "Published photo";
+      image.src=postData.media;
 
       post.appendChild(image);
 
@@ -989,13 +725,11 @@ function createPost(
 
     if(type.startsWith("video/")){
 
-      const video =
-        document.createElement("video");
+      const video=document.createElement("video");
 
       video.className="post-media";
 
-      video.src=
-        postData.media;
+      video.src=postData.media;
 
       video.controls=true;
 
@@ -1012,72 +746,50 @@ function createPost(
 
   if(postData.sound){
 
-    const soundBox =
-      document.createElement("div");
+    const soundBox=document.createElement("div");
 
-    soundBox.className=
-      "sound-box";
+    soundBox.className="sound-box";
 
+    const title=document.createElement("div");
 
-    const soundTitle =
-      document.createElement("div");
+    title.className="sound-title";
 
-    soundTitle.className=
-      "sound-title";
+    title.textContent="🎵 Sound";
 
-    soundTitle.textContent=
-      "🎵 Sound";
-
-
-    const audio =
-      document.createElement("audio");
+    const audio=document.createElement("audio");
 
     audio.controls=true;
 
-    audio.src=
-      postData.sound;
+    audio.src=postData.sound;
 
+    soundBox.appendChild(title);
 
-    soundBox.appendChild(
-      soundTitle
-    );
+    soundBox.appendChild(audio);
 
-    soundBox.appendChild(
-      audio
-    );
-
-
-    post.appendChild(
-      soundBox
-    );
+    post.appendChild(soundBox);
 
   }
 
 
   /* ACTIONS */
 
-  const actions =
-    document.createElement("div");
+  const actions=document.createElement("div");
 
   actions.className="actions";
 
 
-  /* LIKE */
-
-  const likeButton =
-    document.createElement("button");
+  const likeButton=document.createElement("button");
 
 
   function updateLike(){
 
-    const count =
+    const count=
       Number(postData.likeCount)||0;
 
-
-    likeButton.textContent =
+    likeButton.textContent=
       postData.liked
-      ? "❤️ Liked " + count
-      : "🤍 Like " + count;
+      ? "❤️ Liked "+count
+      : "🤍 Like "+count;
 
   }
 
@@ -1087,25 +799,23 @@ function createPost(
 
   likeButton.onclick=function(){
 
-    postData.liked =
-      postData.liked !== true;
-
+    postData.liked=
+      postData.liked!==true;
 
     if(postData.liked){
 
-      postData.likeCount =
+      postData.likeCount=
         (Number(postData.likeCount)||0)+1;
 
     }else{
 
-      postData.likeCount =
+      postData.likeCount=
         Math.max(
           0,
           (Number(postData.likeCount)||0)-1
         );
 
     }
-
 
     savePosts(posts);
 
@@ -1114,48 +824,26 @@ function createPost(
   };
 
 
-  /* COMMENT */
+  const commentButton=document.createElement("button");
 
-  const commentButton =
-    document.createElement("button");
-
-  commentButton.textContent=
-    "💬 Comment";
+  commentButton.textContent="💬 Comment";
 
 
   commentButton.onclick=function(){
 
-    const comment =
-      prompt(
-        "Write your comment:"
-      );
-
-
-    if(
-      comment===null ||
-      comment.trim()===""
-    ){
-
-      return;
-
-    }
-
-
-    if(
-      !Array.isArray(
-        postData.comments
-      )
-    ){
-
-      postData.comments=[];
-
-    }
-
-
-    postData.comments.push(
-      comment.trim()
+    const comment=prompt(
+      "Write your comment:"
     );
 
+    if(!comment || comment.trim()===""){
+      return;
+    }
+
+    if(!Array.isArray(postData.comments)){
+      postData.comments=[];
+    }
+
+    postData.comments.push(comment.trim());
 
     savePosts(posts);
 
@@ -1164,111 +852,69 @@ function createPost(
   };
 
 
-  /* SHARE */
+  const shareButton=document.createElement("button");
 
-  const shareButton =
-    document.createElement("button");
-
-  shareButton.textContent=
-    "↗️ Share";
-
+  shareButton.textContent="↗️ Share";
 
   shareButton.onclick=function(){
-
     sharePost(postData);
-
   };
 
 
-  actions.appendChild(
-    likeButton
-  );
+  actions.appendChild(likeButton);
 
-  actions.appendChild(
-    commentButton
-  );
+  actions.appendChild(commentButton);
 
-  actions.appendChild(
-    shareButton
-  );
+  actions.appendChild(shareButton);
 
-
-  post.appendChild(
-    actions
-  );
+  post.appendChild(actions);
 
 
   /* COMMENTS */
 
-  const commentsBox =
-    document.createElement("div");
+  const commentsBox=document.createElement("div");
 
-  commentsBox.className=
-    "comments";
+  commentsBox.className="comments";
 
 
-  if(
-    Array.isArray(
-      postData.comments
-    )
-  ){
+  if(Array.isArray(postData.comments)){
 
-    postData.comments.forEach(
-      function(comment){
+    postData.comments.forEach(function(comment){
 
-        const item =
-          document.createElement("div");
+      const item=document.createElement("div");
 
-        item.className="comment";
+      item.className="comment";
 
-        item.textContent=
-          "💬 " + comment;
+      item.textContent="💬 "+comment;
 
-        commentsBox.appendChild(
-          item
-        );
+      commentsBox.appendChild(item);
 
-      }
-    );
+    });
 
   }
 
 
-  post.appendChild(
-    commentsBox
-  );
+  post.appendChild(commentsBox);
 
 
   /* DELETE */
 
-  const deleteButton =
-    document.createElement("button");
+  const deleteButton=document.createElement("button");
 
-  deleteButton.className=
-    "delete-button";
+  deleteButton.className="delete-button";
 
-  deleteButton.textContent=
-    "🗑️ Delete Post";
+  deleteButton.textContent="🗑️ Delete Post";
 
 
   deleteButton.onclick=function(){
 
-    if(
-      !confirm(
-        "Are you sure you want to delete this post?"
-      )
-    ){
-
+    if(!confirm(
+      "Are you sure you want to delete this post?"
+    )){
       return;
-
     }
 
-
-    posts.splice(
-      index,
-      1
-    );
-
+    posts.splice(index,1);
 
     savePosts(posts);
 
@@ -1277,21 +923,14 @@ function createPost(
   };
 
 
-  post.appendChild(
-    deleteButton
-  );
+  post.appendChild(deleteButton);
 
-
-  box.appendChild(
-    post
-  );
+  box.appendChild(post);
 
 }
 
 
-/* =========================
-SAVE POSTS
-========================= */
+/* SAVE POSTS */
 
 function savePosts(posts){
 
@@ -1307,40 +946,35 @@ function savePosts(posts){
 EDIT PROFILE
 ========================= */
 
-let editingPhoto = "";
+let editingPhoto="";
 
-let photoRotation = 0;
+let photoRotation=0;
 
-let photoZoom = 1;
+let photoZoom=1;
 
-let photoFilter = "";
+let photoFilter="";
 
 
-/* OPEN EDIT PROFILE */
+/* OPEN EDIT */
 
 function editProfile(){
 
-  const oldName =
+  const oldName=
     localStorage.getItem("username") ||
     "astryx.soul12";
 
-  const oldBio =
+  const oldBio=
     localStorage.getItem("bio") ||
     "Welcome to my AI Social profile 🚀";
 
-  document.getElementById(
-    "editUsername"
-  ).value=oldName;
 
-  document.getElementById(
-    "editBio"
-  ).value=oldBio;
+  document.getElementById("editUsername").value=oldName;
+
+  document.getElementById("editBio").value=oldBio;
 
 
-  editingPhoto =
-    localStorage.getItem(
-      "profileImage"
-    ) || "";
+  editingPhoto=
+    localStorage.getItem("profileImage") || "";
 
 
   photoRotation=0;
@@ -1350,48 +984,42 @@ function editProfile(){
   photoFilter="";
 
 
-  const preview =
-    document.getElementById(
-      "editPhotoPreview"
-    );
+  const preview=
+    document.getElementById("editPhotoPreview");
 
-  const icon =
-    document.getElementById(
-      "editPhotoIcon"
-    );
+  const icon=
+    document.getElementById("editPhotoIcon");
 
 
   if(editingPhoto){
 
-    preview.src=
-      editingPhoto;
+    preview.src=editingPhoto;
 
-    preview.style.display=
-      "block";
+    preview.style.display="block";
 
-    icon.style.display=
-      "none";
+    icon.style.display="none";
 
   }else{
 
     preview.removeAttribute("src");
 
-    preview.style.display=
-      "none";
+    preview.style.display="none";
 
-    icon.style.display=
-      "block";
+    icon.style.display="block";
 
   }
+
+
+  document.getElementById("photoStatus").textContent=
+    editingPhoto
+    ? "Current profile photo"
+    : "Choose a photo to edit it.";
 
 
   updatePhotoPreview();
 
 
-  document.getElementById(
-    "editBox"
-  ).style.display=
-    "block";
+  document.getElementById("editBox").style.display="block";
 
 }
 
@@ -1400,37 +1028,28 @@ function editProfile(){
 
 function selectProfilePhoto(event){
 
-  const file =
-    event.target.files[0];
+  const file=event.target.files[0];
 
   if(!file){
+    return;
+  }
+
+
+  if(!file.type.startsWith("image/")){
+
+    alert("Please select an image.");
 
     return;
 
   }
 
 
-  if(
-    !file.type.startsWith("image/")
-  ){
-
-    alert(
-      "Please select an image."
-    );
-
-    return;
-
-  }
-
-
-  const reader =
-    new FileReader();
+  const reader=new FileReader();
 
 
   reader.onload=function(){
 
-    editingPhoto=
-      reader.result;
+    editingPhoto=reader.result;
 
     photoRotation=0;
 
@@ -1439,30 +1058,21 @@ function selectProfilePhoto(event){
     photoFilter="";
 
 
-    const preview =
-      document.getElementById(
-        "editPhotoPreview"
-      );
+    const preview=
+      document.getElementById("editPhotoPreview");
 
-    const icon =
-      document.getElementById(
-        "editPhotoIcon"
-      );
+    const icon=
+      document.getElementById("editPhotoIcon");
 
 
-    preview.src=
-      editingPhoto;
+    preview.src=editingPhoto;
 
-    preview.style.display=
-      "block";
+    preview.style.display="block";
 
-    icon.style.display=
-      "none";
+    icon.style.display="none";
 
 
-    document.getElementById(
-      "photoStatus"
-    ).textContent=
+    document.getElementById("photoStatus").textContent=
       "Photo selected ✅";
 
 
@@ -1480,20 +1090,13 @@ function selectProfilePhoto(event){
 
 function updatePhotoPreview(){
 
-  const preview =
-    document.getElementById(
-      "editPhotoPreview"
-    );
+  const preview=
+    document.getElementById("editPhotoPreview");
 
   preview.style.transform=
-    "rotate(" +
-    photoRotation +
-    "deg) scale(" +
-    photoZoom +
-    ")";
+    "rotate("+photoRotation+"deg) scale("+photoZoom+")";
 
-  preview.style.filter=
-    photoFilter;
+  preview.style.filter=photoFilter;
 
 }
 
@@ -1504,24 +1107,17 @@ function rotatePhoto(){
 
   if(!editingPhoto){
 
-    alert(
-      "Please choose a photo first."
-    );
+    alert("Please choose a photo first.");
 
     return;
 
   }
 
-
-  photoRotation += 90;
-
+  photoRotation+=90;
 
   if(photoRotation>=360){
-
     photoRotation=0;
-
   }
-
 
   updatePhotoPreview();
 
@@ -1534,21 +1130,16 @@ function zoomIn(){
 
   if(!editingPhoto){
 
-    alert(
-      "Please choose a photo first."
-    );
+    alert("Please choose a photo first.");
 
     return;
 
   }
 
-
-  photoZoom=
-    Math.min(
-      2,
-      photoZoom+.1
-    );
-
+  photoZoom=Math.min(
+    2,
+    photoZoom+0.1
+  );
 
   updatePhotoPreview();
 
@@ -1561,21 +1152,16 @@ function zoomOut(){
 
   if(!editingPhoto){
 
-    alert(
-      "Please choose a photo first."
-    );
+    alert("Please choose a photo first.");
 
     return;
 
   }
 
-
-  photoZoom=
-    Math.max(
-      1,
-      photoZoom-.1
-    );
-
+  photoZoom=Math.max(
+    1,
+    photoZoom-0.1
+  );
 
   updatePhotoPreview();
 
@@ -1588,29 +1174,22 @@ function blackWhite(){
 
   if(!editingPhoto){
 
-    alert(
-      "Please choose a photo first."
-    );
+    alert("Please choose a photo first.");
 
     return;
 
   }
 
 
-  if(
-    photoFilter ===
-    "grayscale(100%)"
-  ){
+  if(photoFilter==="grayscale(100%)"){
 
     photoFilter="";
 
   }else{
 
-    photoFilter=
-      "grayscale(100%)";
+    photoFilter="grayscale(100%)";
 
   }
-
 
   updatePhotoPreview();
 
@@ -1623,29 +1202,22 @@ function sepiaPhoto(){
 
   if(!editingPhoto){
 
-    alert(
-      "Please choose a photo first."
-    );
+    alert("Please choose a photo first.");
 
     return;
 
   }
 
 
-  if(
-    photoFilter ===
-    "sepia(100%)"
-  ){
+  if(photoFilter==="sepia(100%)"){
 
     photoFilter="";
 
   }else{
 
-    photoFilter=
-      "sepia(100%)";
+    photoFilter="sepia(100%)";
 
   }
-
 
   updatePhotoPreview();
 
@@ -1667,6 +1239,158 @@ function resetPhoto(){
 }
 
 
-/* SAVE PROFILE */
+/* =========================
+SAVE EDITED PROFILE
+========================= */
 
-functio
+function saveEditedProfile(){
+
+  const name=
+    document.getElementById("editUsername")
+    .value
+    .trim();
+
+  const bio=
+    document.getElementById("editBio")
+    .value
+    .trim();
+
+
+  if(name===""){
+
+    alert("Username cannot be empty.");
+
+    return;
+
+  }
+
+
+  localStorage.setItem(
+    "username",
+    name
+  );
+
+
+  localStorage.setItem(
+    "bio",
+    bio
+  );
+
+
+  /*
+    Save edited profile photo.
+    The edited preview remains
+    attached to the profile.
+  */
+
+  if(editingPhoto){
+
+    saveEditedPhotoToStorage();
+
+  }
+
+
+  /*
+    Update existing posts with
+    the new profile information.
+  */
+
+  updatePostsProfile(
+    name,
+    editingPhoto
+  );
+
+
+  closeEditProfile();
+
+  loadProfile();
+
+
+  alert("✅ Profile updated successfully!");
+
+}
+
+
+/* =========================
+SAVE EDITED PHOTO
+========================= */
+
+function saveEditedPhotoToStorage(){
+
+  /*
+    If no editing photo exists,
+    do nothing.
+  */
+
+  if(!editingPhoto){
+    return;
+  }
+
+
+  /*
+    Create a canvas so rotation,
+    zoom and filters are actually
+    saved into the image.
+  */
+
+  const img=new Image();
+
+
+  img.onload=function(){
+
+    const size=500;
+
+    const canvas=document.createElement("canvas");
+
+    canvas.width=size;
+
+    canvas.height=size;
+
+    const ctx=canvas.getContext("2d");
+
+
+    ctx.clearRect(
+      0,
+      0,
+      size,
+      size
+    );
+
+
+    ctx.save();
+
+
+    ctx.translate(
+      size/2,
+      size/2
+    );
+
+
+    ctx.rotate(
+      photoRotation*Math.PI/180
+    );
+
+
+    ctx.scale(
+      photoZoom,
+      photoZoom
+    );
+
+
+    if(photoFilter){
+      ctx.filter=photoFilter;
+    }
+
+
+    const scale=
+      Math.max(
+        size/img.width,
+        size/img.height
+      );
+
+
+    const width=
+      img.width*scale;
+
+    const height=
+      img.height*
