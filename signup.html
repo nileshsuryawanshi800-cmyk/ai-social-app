@@ -494,28 +494,99 @@ function createAccount(){
     for compatibility with your old files.
   */
 
-  localStorage.setItem(
-    "username",
-    username
-  );
+function createAccount(){
+
+  const name =
+    document
+      .getElementById("name")
+      .value
+      .trim();
 
 
-  localStorage.setItem(
-    "bio",
-    account.bio
-  );
+  let username =
+    document
+      .getElementById("username")
+      .value
+      .trim();
 
 
-  localStorage.setItem(
-    "profileImage",
-    account.profileImage
-  );
+  const bio =
+    document
+      .getElementById("bio")
+      .value
+      .trim();
 
 
-  localStorage.setItem(
-    "posts",
-    JSON.stringify(account.posts)
-  );
+  if(!name){
+
+    alert("Please enter your name.");
+
+    return;
+  }
+
+
+  if(!username){
+
+    alert("Please choose a username.");
+
+    return;
+  }
+
+
+  username =
+    username.replace(/^@+/,"");
+
+
+  if(!/^[a-zA-Z0-9._]+$/.test(username)){
+
+    alert(
+      "Username can contain only letters, numbers, dots and underscores."
+    );
+
+    return;
+  }
+
+
+  if(username.length < 3){
+
+    alert(
+      "Username must be at least 3 characters."
+    );
+
+    return;
+  }
+
+
+  if(username.length > 30){
+
+    alert(
+      "Username must be 30 characters or less."
+    );
+
+    return;
+  }
+
+
+  const result =
+    createAccountFromSystem({
+
+      name: name,
+
+      username: username,
+
+      bio: bio,
+
+      profileImage: profilePhoto
+
+    });
+
+
+  if(!result.success){
+
+    alert(result.error);
+
+    return;
+  }
 
 
   document.getElementById(
@@ -524,21 +595,14 @@ function createAccount(){
     "✅ Account created successfully!";
 
 
-  /*
-    Go to profile.
-  */
+  setTimeout(function(){
 
-  setTimeout(
-    function(){
+    window.location.href =
+      "profile.html";
 
-      window.location.href =
-        "profile.html";
+  },700);
 
-    },
-    700
-  );
-
-}
+  }
 
 
 /* =========================
