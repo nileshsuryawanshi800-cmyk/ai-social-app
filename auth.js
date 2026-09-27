@@ -9,8 +9,7 @@ function getAccounts() {
 }
 
 
-function createAccount(data) {
-
+function createAccountFromSystem(data) {
     const accounts =
         getAccounts();
 
