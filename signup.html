@@ -303,37 +303,6 @@ function selectPhoto(event){
 }
 
 
-/* =========================
-GET ACCOUNTS
-========================= */
-
-function getAccounts(){
-
-  try{
-
-    const saved =
-      JSON.parse(
-        localStorage.getItem("accounts") || "[]"
-      );
-
-
-    if(Array.isArray(saved)){
-      return saved;
-    }
-
-  }catch(error){
-
-    console.log(
-      "Could not read accounts:",
-      error
-    );
-
-  }
-
-
-  return [];
-
-}
 
 
 /* =========================
