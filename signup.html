@@ -621,6 +621,255 @@ function goProfile(){
 <script src="./js/app.js"></script>
 <script src="./js/auth.js"></script>
 
-</body>
+<script>
 
+let profilePhoto = "";
+
+
+/* =========================
+   SELECT PROFILE PHOTO
+========================= */
+
+function selectPhoto(event) {
+
+    const file =
+        event.target.files[0];
+
+    if (!file) {
+        return;
+    }
+
+    if (!file.type.startsWith("image/")) {
+
+        alert("Please select an image.");
+
+        event.target.value = "";
+
+        return;
+    }
+
+    if (file.size > 5 * 1024 * 1024) {
+
+        alert(
+            "Please choose a profile photo under 5 MB."
+        );
+
+        event.target.value = "";
+
+        return;
+    }
+
+    const reader =
+        new FileReader();
+
+    reader.onload = function(e) {
+
+        profilePhoto =
+            e.target.result;
+
+        const preview =
+            document.getElementById(
+                "photoPreview"
+            );
+
+        const icon =
+            document.getElementById(
+                "avatarIcon"
+            );
+
+        preview.src =
+            profilePhoto;
+
+        preview.style.display =
+            "block";
+
+        icon.style.display =
+            "none";
+    };
+
+    reader.readAsDataURL(file);
+}
+
+
+/* =========================
+   CREATE ACCOUNT
+========================= */
+
+function createAccount() {
+
+    const name =
+        document
+            .getElementById("name")
+            .value
+            .trim();
+
+    let username =
+        document
+            .getElementById("username")
+            .value
+            .trim();
+
+    const bio =
+        document
+            .getElementById("bio")
+            .value
+            .trim();
+
+
+    if (!name) {
+
+        alert(
+            "Please enter your name."
+        );
+
+        return;
+    }
+
+
+    if (!username) {
+
+        alert(
+            "Please choose a username."
+        );
+
+        return;
+    }
+
+
+    username =
+        username.replace(/^@+/, "");
+
+
+    if (!/^[a-zA-Z0-9._]+$/.test(username)) {
+
+        alert(
+            "Username can contain only letters, numbers, dots and underscores."
+        );
+
+        return;
+    }
+
+
+    if (username.length < 3) {
+
+        alert(
+            "Username must be at least 3 characters."
+        );
+
+        return;
+    }
+
+
+    if (username.length > 30) {
+
+        alert(
+            "Username must be 30 characters or less."
+        );
+
+        return;
+    }
+
+
+    /* =========================
+       CHECK AUTH SYSTEM
+    ========================= */
+
+    if (
+        typeof createAccountFromSystem
+        !== "function"
+    ) {
+
+        alert(
+            "Account system is not loaded. Please refresh the page."
+        );
+
+        return;
+    }
+
+
+    const result =
+        createAccountFromSystem({
+
+            name: name,
+
+            username: username,
+
+            bio: bio,
+
+            profileImage:
+                profilePhoto
+
+        });
+
+
+    if (!result.success) {
+
+        alert(
+            result.error
+        );
+
+        return;
+    }
+
+
+    /* =========================
+       OLD FILE COMPATIBILITY
+    ========================= */
+
+    localStorage.setItem(
+        "username",
+        result.account.username
+    );
+
+    localStorage.setItem(
+        "bio",
+        result.account.bio
+    );
+
+    localStorage.setItem(
+        "profileImage",
+        result.account.profileImage || ""
+    );
+
+    localStorage.setItem(
+        "activeAccountId",
+        result.account.id
+    );
+
+    localStorage.setItem(
+        "posts",
+        JSON.stringify([])
+    );
+
+
+    document.getElementById(
+        "message"
+    ).textContent =
+        "✅ Account created successfully!";
+
+
+    setTimeout(function() {
+
+        window.location.href =
+            "profile.html";
+
+    }, 700);
+
+}
+
+
+/* =========================
+   GO PROFILE
+========================= */
+
+function goProfile() {
+
+    window.location.href =
+        "profile.html";
+
+}
+
+</script>
+
+</body>
 </html>
