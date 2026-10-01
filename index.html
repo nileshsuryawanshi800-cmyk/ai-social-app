@@ -1339,6 +1339,59 @@ if (
     });
 
 }
+  function openStoryUpload() {
+    document.getElementById("storyFile").click();
+}
+
+function createStory(event) {
+
+    const file = event.target.files[0];
+
+    if (!file) return;
+
+    if (
+        !file.type.startsWith("image/") &&
+        !file.type.startsWith("video/")
+    ) {
+        alert("Please select an image or video.");
+        return;
+    }
+
+    const reader = new FileReader();
+
+    reader.onload = function(e) {
+
+        const stories =
+            JSON.parse(
+                localStorage.getItem("stories") || "[]"
+            );
+
+        stories.push({
+            id: Date.now(),
+            username:
+                localStorage.getItem("username") ||
+                "You",
+            profileImage:
+                localStorage.getItem("profileImage") || "",
+            media: e.target.result,
+            mediaType: file.type.startsWith("video/")
+                ? "video"
+                : "image",
+            createdAt: Date.now()
+        });
+
+        localStorage.setItem(
+            "stories",
+            JSON.stringify(stories)
+        );
+
+        alert("✅ Story added!");
+
+        location.reload();
+    };
+
+    reader.readAsDataURL(file);
+}
   
 </script>
   
